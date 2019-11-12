@@ -1,0 +1,23 @@
+{
+  "entry": {
+    "main": [
+      "./scripts/main.js",
+      "./styles/main.scss"
+    ],
+    "customizer": [
+      "./scripts/customizer.js"
+    ],
+    "customizer-panel": [
+      "./scripts/customizer-panel.js"
+    ]
+  },
+  "publicPath": "/wp-content/themes/unity-core",
+  "devUrl": "http://devurlhere.test",
+  "proxyUrl": "http://localhost:3000",
+  "cacheBusting": "[name]_[hash:8]",
+  "watch": [
+    "app/**/*.php",
+    "config/**/*.php",
+    "resources/views/**/*.php"
+  ]
+}

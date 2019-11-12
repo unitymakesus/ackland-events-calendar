@@ -1,0 +1,12 @@
+.fl-accordion-button-label {
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
+@for $j from 1 through length($themes-list) {
+  [data-color="#{nth($themes-list, $j)}"] {
+    .fl-accordion-button-label {
+      color: nth($color-secondary-list, $j);
+    }
+  }
+}

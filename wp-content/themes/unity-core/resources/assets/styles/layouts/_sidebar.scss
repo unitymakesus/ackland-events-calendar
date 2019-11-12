@@ -1,0 +1,29 @@
+.sidebar-primary {
+  .content {
+    @extend .container;
+  }
+
+  .wrap {
+    @extend .row;
+
+    .main {
+      @extend .col;
+      @extend .l7;
+      @extend .m8;
+      @extend .s12;
+
+      padding-top: 3em;
+    }
+
+    .sidebar {
+      @extend .col;
+      @extend .l3;
+      @extend .push-l1;
+      @extend .m4;
+      @extend .s12;
+
+      padding-top: 3em;
+      position: relative;
+    }
+  }
+}

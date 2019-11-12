@@ -1,0 +1,48 @@
+.simple-google-rating-badge {
+  background: #ffffff;
+  border-top: 6px solid #00c853;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+  box-sizing: border-box;
+  display: block;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  max-width: 200px;
+  padding: 10px;
+  transition: all 0.3s ease;
+
+  a {
+    display: block;
+    color: #000000 !important;
+    font-weight: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .google-g {
+    float: left;
+    margin-right: 8px;
+  }
+
+  .simple-google-rating-rating {
+    color: #e65100;
+    display: inline;
+    font-size: 20px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .simple-google-rating-stars {
+    [class*="wp-star-"] {
+      line-height: 22px;
+      vertical-align: baseline;
+
+      svg {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  &:hover, &:focus, &:active {
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.46);
+  }
+}

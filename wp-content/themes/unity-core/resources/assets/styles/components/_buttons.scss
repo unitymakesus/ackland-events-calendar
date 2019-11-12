@@ -1,0 +1,57 @@
+.btn {
+  height: auto;
+  font-weight: 700;
+
+  [data-font="3"] & {
+    font-weight: 500;
+  }
+
+  &:not(.btn-small) {
+    padding: 10px 2rem;
+  }
+}
+
+a.btn {
+  color: $color-white;
+}
+
+@for $n from 1 through length($themes-list) {
+  [data-color="#{nth($themes-list, $n)}"] {
+    .btn-primary {
+      background: nth($color-primary-list, $n);
+
+      &:hover, &:active, &:focus {
+        background: darken(nth($color-primary-list, $n), 15%);
+      }
+    }
+
+    .btn-secondary {
+      background: nth($color-secondary-list, $n);
+
+      &:hover, &:active, &:focus {
+        background: darken(nth($color-secondary-list, $n), 15%);
+      }
+    }
+
+    .btn-tertiary {
+      background: nth($color-tertiary-list, $n);
+      color: $color-black;
+
+      &:hover, &:active, &:focus {
+        background: darken(nth($color-tertiary-list, $n), 15%);
+      }
+    }
+  }
+}
+
+.fl-builder-content.fl-builder-content a.fl-button.fl-button {
+  @extend .btn;
+  @extend .btn-primary;
+
+  border: none;
+  font-size: 1em;
+
+  span {
+    color: inherit;
+  }
+}

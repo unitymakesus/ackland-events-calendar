@@ -1,0 +1,137 @@
+.search-form {
+  .banner &, .content &, .footer & {
+    height: auto;
+    // background: $color-purple-dark;
+    // border: 2px solid $color-purple-dark;
+    border-radius: 3px;
+    clear: both;
+    line-height: 2.2rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: calc(2.2rem - 12px);
+      height: calc(2.2rem - 12px);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-image: image('icon-search.svg');
+      pointer-events: none;
+    }
+
+    label {
+      float: left;
+      width: calc(100% - 35px);
+    }
+
+    input.search-field {
+      height: 2.2rem;
+      margin: 0;
+      padding: 0 10px;
+      border: 0 !important;
+      border-radius: 3px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    input.search-submit {
+      display: block;
+      height: 2.2rem;
+      width: 2.2rem;
+      // color: $color-purple-dark;
+      text-indent: -100em;
+      overflow: hidden;
+      border: none;
+      // background: $color-purple-dark;
+      cursor: pointer;
+    }
+  }
+}
+
+// Sign up Contact Form
+.ctct-form-wrapper.ctct-form-wrapper {
+  .ctct-form-field {
+    text-align: center;
+    margin: 0;
+  }
+
+  .ctct-submit {
+    width: 100%;
+
+    @extend .btn;
+    @extend .btn-tertiary;
+  }
+
+  label {
+    font-size: 0.9rem;
+    color: $color-white;
+  }
+
+  input[type="text"], input[type="email"] {
+    border: 1px solid rgba($color-white, 0.7);
+    border-radius: 1px;
+    width: 99.5%;
+    padding: 2px 10px;
+    box-sizing: border-box;
+  }
+
+  .ctct-form abbr {
+    color: $error-color;
+  }
+}
+
+input {
+  &:not([type]), &[type=text], &[type=password], &[type=email], &[type=url], &[type=time], &[type=date], &[type=datetime], &[type=datetime-local], &[type=tel], &[type=number], &[type=search] {
+    &:not(.browser-default) {
+      border: 1px solid $color-grey-light;
+      padding: 0 10px;
+      width: calc(100% - 20px);
+
+      .wp-core-ui &, .wp-link-input & {
+        height: auto;
+        background: $color-white;
+        padding: 8px;
+        border-radius: 3px;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+
+textarea.materialize-textarea {
+  border: 1px solid $color-grey-light;
+}
+
+.input-field label {
+  left: 5px;
+}
+
+.wp-core-ui {
+  [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  select {
+    display: inline-block;
+
+    &#media-attachment-date-filters {
+      width: auto;
+    }
+  }
+}
+
+@for $n from 1 through length($themes-list) {
+  [data-color="#{nth($themes-list, $n)}"] {
+    .input-field {
+      label:not(.label-icon).active {
+        color: nth($color-secondary-list, $n);
+        transform: translateY(-22px) scale(0.8);
+      }
+    }
+  }
+}

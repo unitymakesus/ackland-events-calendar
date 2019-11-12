@@ -1,0 +1,12 @@
+{
+  "name": "simple-google-rating",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "author": "Alisa Herr | Unity Digital Agency",
+  "license": "GPL2",
+  "devDependencies": {
+    "browser-sync": "^2.24.7",
+    "gulp": "^3.9.1",
+    "gulp-compass": "^2.1.0"
+  }
+}

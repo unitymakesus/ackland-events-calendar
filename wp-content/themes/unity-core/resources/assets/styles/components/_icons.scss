@@ -1,0 +1,92 @@
+.social-icons, #menu-social-links, #menu-social {
+  line-height: 1em;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 0;
+    display: inline-block;
+    float: none;
+
+    a {
+      display: block;
+      position: relative;
+      height: 40px;
+      width: 40px;
+      padding: 0;
+      overflow: hidden;
+      text-align: left;
+      text-indent: -100em;
+      // background: $color-teal;
+      // border: 2px solid $color-teal;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        transition: all 0.3s;
+      }
+
+      &:hover, &:active, &:focus {
+        // background: lighten($color-teal, 10%);
+        // border-color: $color-teal;
+
+        @extend .z-depth-2;
+      }
+    }
+
+    &.icon-behance a::before {
+      background-image: image('socialicons/behance.svg');
+    }
+
+    &.icon-dribbble a::before {
+      background-image: image('socialicons/dribbble.svg');
+    }
+
+    &.icon-facebook a::before {
+      background-image: image('socialicons/facebook.svg');
+    }
+
+    &.icon-google a::before {
+      background-image: image('socialicons/google.svg');
+    }
+
+    &.icon-instagram a::before {
+      background-image: image('socialicons/instagram.svg');
+    }
+
+    &.icon-linkedin a::before {
+      background-image: image('socialicons/linkedin.svg');
+    }
+
+    &.icon-tumblr a::before {
+      background-image: image('socialicons/tumblr.svg');
+    }
+
+    &.icon-twitter a::before {
+      background-image: image('socialicons/twitter.svg');
+    }
+
+    &.icon-youtube a::before {
+      background-image: image('socialicons/youtube.svg');
+    }
+
+    &.icon-yelp a::before {
+      background-image: image('socialicons/yelp.svg');
+    }
+
+    &.icon-linkedin-team a::before {
+      background-image: image('socialicons/linkedin-team.svg');
+    }
+
+    &.icon-twitter-team a::before {
+      background-image: image('socialicons/twitter-team.svg');
+    }
+  }
+}

@@ -1,0 +1,187 @@
+html {
+  font-size: 18px;
+
+  &[data-text-size="medium"] {
+    font-size: 20px;
+  }
+
+  &[data-text-size="large"] {
+    font-size: 24px;
+  }
+
+  @media #{$small-and-down} {
+    font-size: 16px;
+  }
+}
+
+body {
+  @for $i from 1 through length($body-fonts-list) {
+    &[data-font="#{$i}"] {
+      font-family: nth($body-fonts-list, $i);
+
+      h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, blockquote {
+        font-family: nth($header-fonts-list, $i);
+      }
+
+      &[data-buttons="1"] .btn {
+        font-family: nth($header-fonts-list, $i);
+      }
+
+      .et_bloom_optin.et_bloom_optin .et_bloom_form_container h2, .et_bloom_optin.et_bloom_optin .et_bloom_form_container h2 span, .et_bloom_optin.et_bloom_optin .et_bloom_form_container h2 strong {
+        font-family: nth($header-fonts-list, $i) !important;
+        font-size: rem-calc(36px) !important;
+      }
+
+      .et_bloom_optin.et_bloom_optin .et_bloom_form_container p {
+        font-family: nth($body-fonts-list, $i) !important;
+        font-size: 1rem !important;
+      }
+    }
+  }
+  @for $j from 1 through length($themes-list) {
+    &[data-color="#{nth($themes-list, $j)}"] {
+      h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+        color: nth($color-1-list, $j);
+      }
+    }
+  }
+
+  &[data-font="3"] {
+    font-size: 1.2rem;
+  }
+}
+
+h1, .h1 {
+  font-size: rem-calc(50px);
+  font-weight: 600;
+}
+
+h2, .h2 {
+  font-size: rem-calc(36px);
+  font-weight: 600;
+  line-height: 1.3em;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h3, .h3 {
+  font-size: rem-calc(24px);
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h4, .h4 {
+  font-size: rem-calc(24px);
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h5, .h5 {
+  font-size: 1rem;
+  text-transform: uppercase;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.entry-content, .fl-module-content.fl-module-content {
+  a {
+    text-decoration: underline;
+    font-weight: bold;
+    transition: all 0.3s;
+
+    &:hover, &:active {
+      text-decoration-style: double;
+      // color: $color-green;
+
+      html[data-contrast="true"] & {
+        color: $color-white;
+      }
+    }
+
+    @for $n from 1 through length($themes-list) {
+      [data-color="#{nth($themes-list, $n)}"] & {
+        color: nth($color-link-list, $n);
+      }
+    }
+  }
+}
+
+p, li, dt, dd {
+  line-height: 1.6em;
+}
+
+dt {
+  font-weight: bold;
+  clear: both;
+}
+
+dd {
+  margin-bottom: 1em;
+  margin-left: 2em;
+
+  @media #{$xsmall-and-down} {
+    margin-left: 1em;
+  }
+}
+
+.entry-content {
+  ul:not(.select-dropdown) {
+    li {
+      list-style: none;
+      position: relative;
+      padding-left: 30px;
+
+      &::before {
+        content: '\2022';
+        display: block;
+        position: absolute;
+        left: 10px;
+        speak: none;
+
+        html[data-contrast="true"] & {
+          color: $color-white;
+        }
+
+        @for $n from 1 through length($themes-list) {
+          [data-color="#{nth($themes-list, $n)}"] & {
+            color: nth($color-bullet-list, $n);
+          }
+        }
+      }
+    }
+  }
+}
+
+blockquote {
+  border-left: 0;
+
+  &.wp-block-pullquote {
+    clear: both;
+    padding-left: 3em;
+    padding-right: 3em;
+  }
+}
+
+.label {
+  // font-family: $font-serif;
+  font-weight: 600;
+}
+
+strong {
+  font-weight: 700;
+  line-height: 1em;
+}
+
+abbr[title] {
+  border-bottom: 0;
+}

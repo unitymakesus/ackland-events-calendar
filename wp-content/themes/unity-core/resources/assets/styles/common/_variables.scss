@@ -1,0 +1,192 @@
+/** Fonts */
+$font-bitter:                 "Bitter", serif;
+$font-source-sans-pro:        "Source Sans Pro", sans-serif;
+$font-didact-gothic:          "Didact Gothic", sans-serif;
+$font-arimo:                  "Arimo", sans-serif;
+$font-fjalla-one:             "Fjalla One", sans-serif;
+$font-crimson-text:           "Crimson Text", serif;
+$font-dancing-script:         "Dancing Script", cursive;
+$font-open-sans:              "Open Sans", sans-serif;
+$font-libre-baskerville:      "Libre Baskerville", serif;
+$font-ovo:                    "Ovo", serif;
+$font-muli:                   "Muli", sans-serif;
+
+$body-fonts-list: $font-source-sans-pro, $font-arimo, $font-crimson-text, $font-open-sans, $font-libre-baskerville, $font-muli;
+$header-fonts-list: $font-bitter, $font-didact-gothic, $font-fjalla-one, $font-dancing-script, $font-open-sans, $font-ovo;
+
+/** Colors */
+// Neutrals
+$color-black:                 #000;
+$color-grey-dark:             #66666E;
+$color-grey-medium:           #9999A1;
+$color-grey-light:            #C5C5CC;
+$color-white:                 #FFF;
+
+// Bright
+$color-bright-1:              #2E827C;
+$color-bright-2:              #2EC4B6;
+$color-bright-3:              #FF9F1C;
+$color-bright-4:              #FFBF69;
+$color-bright-5:              $color-white;
+
+// Chrome
+$color-chrome-1:              $color-black;
+$color-chrome-2:              $color-grey-dark;
+$color-chrome-3:              $color-grey-medium;
+$color-chrome-4:              $color-grey-light;
+$color-chrome-5:              #F9F9FC;
+
+// Executive
+$color-executive-1:           #001514;
+$color-executive-2:           #6B0504;
+$color-executive-3:           #A3320B;
+$color-executive-4:           #E6AF2E;
+$color-executive-5:           #FBFFFE;
+
+// Grass
+$color-grass-1:               #114B5F;
+$color-grass-2:               #1A936F;
+$color-grass-3:               #88D498;
+$color-grass-4:               #C6DABF;
+$color-grass-5:               #F3E9D2;
+
+// Ocean
+$color-ocean-1:               #00171F;
+$color-ocean-2:               #003459;
+$color-ocean-3:               #007EA7;
+$color-ocean-4:               #00A8E8;
+$color-ocean-5:               $color-white;
+
+// Sunrise
+$color-sunrise-1:             #CC5803;
+$color-sunrise-2:             #E2711D;
+$color-sunrise-3:             #FF9505;
+$color-sunrise-4:             #FFB627;
+$color-sunrise-5:             #FFF1DB;
+
+$primary-color:               $color-black;
+$secondary-color:             $color-grey-dark;
+$success-color:               #88D498;
+$error-color:                 #A3320B;
+$link-color:                  #007EA7;
+
+$themes-list: "bright", "chrome", "executive", "grass", "ocean", "sunrise";
+$color-1-list: $color-bright-1, $color-chrome-1, $color-executive-1, $color-grass-1, $color-ocean-1, $color-sunrise-1;
+$color-bullet-list: $color-bright-4, $color-chrome-3, $color-executive-4, $color-grass-4, $color-ocean-4, $color-sunrise-4;
+$color-link-list: $color-bright-2, $color-chrome-1, $color-executive-3, $color-grass-2, $color-ocean-3, $color-sunrise-1;
+$color-primary-list: $color-bright-3, $color-chrome-1, $color-executive-4, $color-grass-4, $color-ocean-4, $color-sunrise-4;
+$color-secondary-list: $color-bright-1, $color-chrome-2, $color-executive-3, $color-grass-1, $color-ocean-2, $color-sunrise-1;
+$color-tertiary-list: $color-bright-5, $color-chrome-5, $color-executive-5, $color-grass-5, $color-ocean-5, $color-sunrise-5;
+$opacity-list: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100;
+
+/** Buttons */
+// Shared styles
+// $button-background-focus: lighten($color-purple, 10%);
+// $button-font-size: 1.2rem;
+// $button-height: 50px;
+// $button-padding: 0 1rem;
+// $button-radius: 0;
+//
+// // Raised buttons
+// $button-raised-background: $color-purple;
+
+/** Navigation */
+$navbar-height: auto;
+$navbar-height-mobile: auto;
+
+/** Footer */
+$footer-font-color: $color-white;
+// $footer-bg-color: $color-teal;
+$footer-copyright-font-color: $color-white;
+// $footer-copyright-bg-color: $color-purple-dark;
+
+/** Box Model  */
+$spacer: 2rem;
+
+/** Modified Grid */
+$xsmall-screen: 600px;
+$xsmall-screen-up: 601px;
+$small-screen-up: 769px;
+$medium-screen-up: 993px;
+$large-screen-up: 1201px;
+$small-screen: 768px;
+$medium-screen: 992px;
+$large-screen: 1200px;
+$small-and-up: "only screen and (min-width : #{$xsmall-screen-up})";
+$xsmall-and-down: "only screen and (max-width : #{$xsmall-screen})";
+
+/** Flow Text  */
+$range : $large-screen - $medium-screen;
+$intervals: 18;
+$interval-size: $range / $intervals;
+
+/** Gradients */
+// Utility mixin from Compass
+@mixin filter-gradient($start-color, $end-color, $orientation: vertical) {
+  $gradient-type: if($orientation == vertical, 0, 1);
+
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=#{$gradient-type}, startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}');
+}
+@mixin triangle($direction, $color) {
+  background-image: -o-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: -moz-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: -ms-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+}
+
+// Rem-calc function from Zurb
+$rem-base: 18px;
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+@function convert-to-rem($value, $base-value: $rem-base) {
+  $value: strip-unit($value) / strip-unit($base-value) * 1rem;
+
+  @return $value;
+}
+@function rem-calc($values, $base-value: $rem-base) {
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+
+  $remValues: ();
+
+  @for $i from 1 through $max {
+    $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+  }
+
+  @return $remValues;
+}
+
+// em-calc function modified from rem-calc
+$em-base: 18px;
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+@function convert-to-em($value, $base-value: $em-base) {
+  $value: strip-unit($value) / strip-unit($base-value) * 1em;
+
+  @return $value;
+}
+@function em-calc($values, $base-value: $em-base) {
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-em(nth($values, 1), $base-value); }
+
+  $emValues: ();
+
+  @for $i from 1 through $max {
+    $emValues: append($emValues, convert-to-em(nth($values, $i), $base-value));
+  }
+
+  @return $emValues;
+}
+
+$asset-base-path: '../images' !default;
+
+// Image relative URL builder
+@function image($file) {
+  @return url($asset-base-path + '/' + $file);
+}
