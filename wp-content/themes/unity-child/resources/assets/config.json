@@ -6,7 +6,7 @@
     ]
   },
   "publicPath": "/wp-content/themes/unity-child",
-  "devUrl": "http://devurlhere.test",
+  "devUrl": "http://events.ackland.test",
   "proxyUrl": "http://localhost:3000",
   "cacheBusting": "[name]_[hash:8]",
   "watch": [
