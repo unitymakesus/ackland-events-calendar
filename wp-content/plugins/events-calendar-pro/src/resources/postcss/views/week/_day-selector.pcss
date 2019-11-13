@@ -1,0 +1,114 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Week Day Selector
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-day-selector {
+		padding-bottom: var(--spacer-3);
+		position: relative;
+
+		@media (--viewport-medium) {
+			@mixin hidden;
+		}
+	}
+
+	.tribe-events-pro-week-day-selector__days-list {
+		display: flex;
+		margin: 0 var(--spacer-2);
+	}
+
+	.tribe-events-pro-week-day-selector__days-list-item {
+		flex: none;
+		width: var(--grid-width-1-of-7);
+	}
+
+	.tribe-events-pro-week-day-selector__day {
+		border: 1px solid transparent;
+		border-radius: var(--border-radius-default);
+		display: block;
+		position: relative;
+		transition: var(--transition-border-color);
+		width: 100%;
+
+		&:hover,
+		&:focus {
+
+			.tribe-events-pro-week-day-selector__day-weekday,
+			.tribe-events-pro-week-day-selector__day-daynum {
+				color: var(--color-accent-secondary-hover);
+			}
+		}
+
+		&:active {
+
+			.tribe-events-pro-week-day-selector__day-weekday,
+			.tribe-events-pro-week-day-selector__day-daynum {
+				color: var(--color-accent-secondary-active);
+			}
+		}
+	}
+
+	.tribe-events-pro-week-day-selector__day--active {
+		border-color: var(--color-accent-primary);
+	}
+
+	.tribe-events-pro-week-day-selector__events-icon {
+		background-color: var(--color-accent-primary);
+		border-radius: 50%;
+		display: block;
+		height: 5px;
+		left: 50%;
+		position: absolute;
+		top: var(--spacer-0);
+		transform: translateX(-50%);
+		width: 5px;
+	}
+
+	.tribe-events-pro-week-day-selector__day-weekday,
+	.tribe-events-pro-week-day-selector__day-daynum {
+		display: block;
+		transition: var(--transition-color);
+	}
+
+	.tribe-events-pro-week-day-selector__day-weekday {
+		margin: 9px 0 -7px;
+		text-transform: uppercase;
+	}
+
+	.tribe-events-pro-week-day-selector__nav {
+		position: absolute;
+		width: 100%;
+		top: calc(50% - var(--spacer-1));
+	}
+
+	.tribe-events-pro-week-day-selector__prev,
+	.tribe-events-pro-week-day-selector__next {
+		background: center / contain no-repeat;
+		display: block;
+		height: 14px;
+		position: absolute;
+		transform: translateY(-50%);
+		width: 9px;
+	}
+
+	.tribe-events-pro-week-day-selector__prev {
+		background-image: svg-inline(caret-left-secondary);
+		left: 0;
+
+		&:hover,
+		&:focus {
+			background-image: svg-inline(caret-left-active);
+		}
+	}
+
+	.tribe-events-pro-week-day-selector__next {
+		background-image: svg-inline(caret-right-secondary);
+		right: 0;
+
+		&:hover,
+		&:focus {
+			background-image: svg-inline(caret-right-active);
+		}
+	}
+}
