@@ -57,6 +57,7 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
         $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_SetUpdaterLog($this->getUpdaterSkin()));
         $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_SetLegacyPhpExecutionData());
         $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_FetchFiles($this->getParameter('multipart_boundary')));
+        $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_DownloadFile($this->getParameter('multipart_boundary')));
 
         $dispatcher->addSubscriber(new MWP_EventListener_MasterResponse_LogResponse($this->getLogger()));
 
@@ -97,6 +98,8 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
         $mapper->addDefinition('clear_transient', new MWP_Action_Definition(array('MWP_Action_ClearTransient', 'execute')));
         $mapper->addDefinition('get_stats', new MWP_Action_Definition('mwp_get_stats', array('hook_name' => 'wp_loaded', 'hook_priority' => MAX_PRIORITY_HOOK)));
         $mapper->addDefinition('get_components_stats', new MWP_Action_Definition(array('MWP_Action_GetComponentsStats', 'execute')));
+        $mapper->addDefinition('upload_file_action', new MWP_Action_Definition('mmb_upload_file_action'));
+        $mapper->addDefinition('download_file_action', new MWP_Action_Definition(array('MWP_Action_DownloadFile', 'execute')));
 
         // Incremental backup actions
         $mapper->addDefinition('list_files', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_ListFiles', 'queryFiles')));

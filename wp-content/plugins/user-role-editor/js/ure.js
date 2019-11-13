@@ -83,7 +83,7 @@ var ure_main = {
                     jQuery('#ure_remove_caps_form').submit();                    
                     jQuery(this).dialog('close');
                 },
-                Cancel: function () {
+                CancelDeleteCapability: function () {
                     jQuery(this).dialog('close');
                 }
             }
@@ -91,7 +91,7 @@ var ure_main = {
         // translate buttons caption
         jQuery('.ui-dialog-buttonpane button:contains("Delete Capability")').attr('id', 'dialog-delete-capability-button');
         jQuery('#dialog-delete-capability-button').html(ure_ui_button_text(ure_data.delete_capability));
-        jQuery('.ui-dialog-buttonpane button:contains("Cancel")').attr('id', 'delete-capability-dialog-cancel-button');
+        jQuery('.ui-dialog-buttonpane button:contains("CancelDeleteCapability")').attr('id', 'delete-capability-dialog-cancel-button');
         jQuery('#delete-capability-dialog-cancel-button').html(ure_ui_button_text(ure_data.cancel));
         jQuery('#ure_remove_caps_select_all').click(this.remove_caps_auto_select);
     },
@@ -195,7 +195,7 @@ jQuery(function ($) {
                             {action: 'add-new-role', user_role_id: role_id, user_role_name: role_name, user_role_copy_from: role_copy_from,
                                 ure_nonce: ure_data.wp_nonce});
                 },
-                Cancel: function () {
+                CancelAddRole: function () {
                     $(this).dialog('close');
                     return false;
                 }
@@ -203,8 +203,8 @@ jQuery(function ($) {
         });
         $('.ui-dialog-buttonpane button:contains("Add Role")').attr('id', 'dialog-add-role-button');
         $('#dialog-add-role-button').html(ure_ui_button_text(ure_data.add_role));
-        $('.ui-dialog-buttonpane button:contains("Cancel")').attr('id', 'add-role-dialog-cancel-button');
-        $('#add-role-dialog-cancel-button').html(ure_ui_button_text(ure_data.cancel));
+        $('.ui-dialog-buttonpane button:contains("CancelAddRole")').attr('id', 'dialog-add-role-cancel-button');
+        $('#dialog-add-role-cancel-button').html(ure_ui_button_text(ure_data.cancel));
 
     }
 
@@ -237,7 +237,7 @@ jQuery(function ($) {
                             {action: 'rename-role', user_role_id: role_id, user_role_name: role_name, ure_nonce: ure_data.wp_nonce}
                     );
                 },
-                Cancel: function () {
+                CancelRenameRole: function () {
                     $(this).dialog('close');
                     return false;
                 }
@@ -245,7 +245,7 @@ jQuery(function ($) {
         });
         $('.ui-dialog-buttonpane button:contains("Rename Role")').attr('id', 'dialog-rename-role-button');
         $('#dialog-rename-role-button').html(ure_ui_button_text(ure_data.rename_role));
-        $('.ui-dialog-buttonpane button:contains("Cancel")').attr('id', 'rename-role-dialog-cancel-button');
+        $('.ui-dialog-buttonpane button:contains("CancelRenameRole")').attr('id', 'rename-role-dialog-cancel-button');
         $('#rename-role-dialog-cancel-button').html(ure_ui_button_text(ure_data.cancel));
         $('#ren_user_role_id').val(ure_current_role);
         $('#ren_user_role_name').val(ure_current_role_name);
@@ -274,23 +274,30 @@ jQuery(function ($) {
             buttons: {
                 'Delete Role': function () {
                     var user_role_id = $('#del_user_role').val();
-                    if (!confirm(ure_data.delete_role)) {
+                    var question = '';
+                    if (user_role_id!=-1) {
+                        question = ure_data.delete_role +' "'+ user_role_id +'"';
+                    } else {
+                        question = $('#del_user_role').find('option:selected').text();
+                    }
+                    question += '?';
+                    if (!confirm(question)) {
                         return false;
                     }
                     $(this).dialog('close');
                     $.ure_postGo(ure_data.page_url,
                             {action: 'delete-role', user_role_id: user_role_id, ure_nonce: ure_data.wp_nonce});
                 },
-                Cancel: function () {
+                CancelDeleteRole: function () {
                     $(this).dialog('close');
                 }
             }
         });
         // translate buttons caption
-        $('.ui-dialog-buttonpane button:contains("Delete Role")').attr('id', 'dialog-delete-button');
-        $('#dialog-delete-button').html(ure_ui_button_text(ure_data.delete_role));
-        $('.ui-dialog-buttonpane button:contains("Cancel")').attr('id', 'delete-role-dialog-cancel-button');
-        $('#delete-role-dialog-cancel-button').html(ure_ui_button_text(ure_data.cancel));
+        $('.ui-dialog-buttonpane button:contains("Delete Role")').attr('id', 'dialog-delete-role-button');
+        $('#dialog-delete-role-button').html( ure_ui_button_text( ure_data.delete_role ) );
+        $('.ui-dialog-buttonpane button:contains("CancelDeleteRole")').attr('id', 'dialog-delete-role-cancel-button');
+        $('#dialog-delete-role-cancel-button').html( ure_ui_button_text( ure_data.cancel ) );
     }
     
 
@@ -328,14 +335,14 @@ jQuery(function ($) {
                     $.ure_postGo(ure_data.page_url,
                             {action: 'add-new-capability', capability_id: capability_id, ure_nonce: ure_data.wp_nonce});
                 },
-                Cancel: function () {
+                CancelAddCapability: function () {
                     $(this).dialog('close');
                 }
             }
         });
         $('.ui-dialog-buttonpane button:contains("Add Capability")').attr('id', 'dialog-add-capability-button');
         $('#dialog-add-capability-button').html(ure_ui_button_text(ure_data.add_capability));
-        $('.ui-dialog-buttonpane button:contains("Cancel")').attr('id', 'add-capability-dialog-cancel-button');
+        $('.ui-dialog-buttonpane button:contains("CancelAddCapability")').attr('id', 'add-capability-dialog-cancel-button');
         $('#add-capability-dialog-cancel-button').html(ure_ui_button_text(ure_data.cancel));
         
     }
@@ -376,7 +383,7 @@ jQuery(function ($) {
                     $.ure_postGo(ure_data.page_url,
                             {action: 'change-default-role', user_role_id: user_role_id, ure_nonce: ure_data.wp_nonce});
                 },
-                Cancel: function () {
+                CancelDefaultRole: function () {
                     $(this).dialog('close');
                 }
             }
@@ -384,7 +391,7 @@ jQuery(function ($) {
         // translate buttons caption
         $('.ui-dialog-buttonpane button:contains("Set New Default Role")').attr('id', 'dialog-default-role-button');
         $('#dialog-default-role-button').html(ure_ui_button_text(ure_data.set_new_default_role));
-        $('.ui-dialog-buttonpane button:contains("Cancel")').attr('id', 'default-role-dialog-cancel-button');
+        $('.ui-dialog-buttonpane button:contains("CancelDefaultRole")').attr('id', 'default-role-dialog-cancel-button');
         $('#default-role-dialog-cancel-button').html(ure_ui_button_text(ure_data.cancel));
     }
     
@@ -449,10 +456,12 @@ function ure_apply_to_all_on_click(cb) {
 // end of ure_apply_to_all_on_click()
 
 
-// turn on checkbox back if clicked to turn off
-function ure_turn_it_back(control) {
-
-    control.checked = true;
+// turn on checkbox back if clicked to turn off - for 'administrator' role only!
+function ure_turn_it_back( event ) {
+    
+    if ( 'administrator'===ure_current_role ) {
+        event.target.checked = true; 
+    }
 
 }
 // end of ure_turn_it_back()
@@ -525,21 +534,34 @@ function ure_refresh_role_view(response) {
         return;
     }
     
-    ure_current_role = response.role_id;
-    ure_current_role_name = response.role_name;        
-    // Select capabilities granted to a newly selected role and exclude others
-    jQuery('.ure-cap-cb').each(function () { // go through all capabilities checkboxes
-        jQuery(this).prop('checked', response.caps.hasOwnProperty(this.id) && response.caps[this.id]);
-    }); 
-    
-    // Recalculate granted capabilities for capabilities groups
-    ure_count_caps_in_groups();
-    ure_select_selectable_element(jQuery('#ure_caps_groups_list'), jQuery('#ure_caps_group_all'));
+    // remove "Granted Only" filter is it was set before current role change
     var granted_only = jQuery('#granted_only').prop('checked');
     if (granted_only) {
         jQuery('#granted_only').prop('checked', false);
         ure_show_granted_caps_only();
     }
+    
+    ure_current_role = response.role_id;
+    ure_current_role_name = response.role_name;        
+    // Select capabilities granted to a newly selected role and exclude others
+    jQuery('.ure-cap-cb').each(function () { // go through all capabilities checkboxes
+        if (this.id.length===0) {
+            return;
+        }
+        jQuery(this).prop('checked', response.caps.hasOwnProperty(this.id) && response.caps[this.id]);
+        if ( ure_data.do_not_revoke_from_admin==1 ) {  
+            var el = document.getElementById(this.id);
+            if ( 'administrator'===ure_current_role ) {
+                el.addEventListener( 'click', ure_turn_it_back );
+            } else {
+                el.removeEventListener( 'click', ure_turn_it_back );
+            }
+        }
+    }); 
+    
+    // Recalculate granted capabilities for capabilities groups
+    ure_count_caps_in_groups();
+    ure_select_selectable_element(jQuery('#ure_caps_groups_list'), jQuery('#ure_caps_group_all'));    
     
     // additional options section
     jQuery('#additional_options').find(':checkbox').each(function() {   // go through all additional options checkboxes
@@ -567,7 +589,7 @@ function ure_role_change(role_name) {
 
 function ure_filter_capabilities(cap_id) {
     var div_list = jQuery('.ure-cap-div');
-    for (i = 0; i < div_list.length; i++) {
+    for (var i = 0; i < div_list.length; i++) {
         if (cap_id !== '' && div_list[i].id.substr(11).indexOf(cap_id) !== -1) {
             jQuery('#'+ div_list[i].id).addClass('ure_tag');
             div_list[i].style.color = '#27CF27';
@@ -576,7 +598,6 @@ function ure_filter_capabilities(cap_id) {
             jQuery('#'+ div_list[i].id).removeClass('ure_tag');
         }
     }
-    ;
 
 }
 // end of ure_filter_capabilities()
@@ -648,13 +669,13 @@ function ure_caps_refresh(group) {
 
 
 function ure_validate_columns(columns) {    
-    if (columns==1 || ure_main.selected_group=='all') {  
+    if (columns==1 || ure_main.selected_group==='all') {  
         return columns;
     }
     
     // Do not split list on columns in case it contains less then < 25 capabilities
-    for (i=0; i<ure_main.caps_counter.length; i++) {
-        if (ure_main.caps_counter[i].id==ure_main.selected_group) {
+    for (var i=0; i<ure_main.caps_counter.length; i++) {
+        if (ure_main.caps_counter[i].id===ure_main.selected_group) {
             if (ure_main.caps_counter[i].total<=25) {
                 columns = 1;
             }
@@ -681,7 +702,7 @@ function ure_init_caps_counter() {
     ure_main.caps_counter = new Array();
     jQuery('#ure_caps_groups_list li').each(function() {
         var group_id = jQuery(this).attr('id').substr(15);
-        group_counter = {'id': group_id, 'total': 0, 'granted':0};
+        var group_counter = {'id': group_id, 'total': 0, 'granted':0};
         ure_main.caps_counter.push(group_counter);
     });
     
@@ -694,7 +715,7 @@ function ure_count_caps_in_groups() {
     jQuery('.ure-cap-div').each(function () {
         var cap_div = jQuery(this);
         var capability = cap_div.attr('id').substr(12);
-        for (i=0; i<ure_main.caps_counter.length; i++) {
+        for (var i=0; i<ure_main.caps_counter.length; i++) {
             if (cap_div.hasClass(ure_main.class_prefix + ure_main.caps_counter[i].id)) {
                 ure_main.caps_counter[i].total++;
                 if (jQuery('#'+ capability).is(':checked')) {
@@ -704,7 +725,7 @@ function ure_count_caps_in_groups() {
         }
     });
     
-    for (i=0; i<ure_main.caps_counter.length; i++) {
+    for (var i=0; i<ure_main.caps_counter.length; i++) {
         var el = jQuery('#ure_caps_group_'+ ure_main.caps_counter[i].id);
         var old_text = el.text();
         var key_pos = old_text.indexOf('(');    // exclude (0/0) text if it is in string already
@@ -725,8 +746,8 @@ function ure_sizes_update() {
 }
 
 
-jQuery(window).resize(function() {
-   ure_sizes_update(); 
+jQuery(window).resize(function () {
+    ure_sizes_update();
 });
 
 
@@ -748,7 +769,7 @@ function ure_show_granted_caps_only() {
                 cap_div.addClass('hidden');
             }
         } else {
-            if (cap_div.hasClass('deprecated') && !show_deprecated) {
+            if (cap_div.hasClass('ure-deprecated') && !show_deprecated) {
                 return;
             }
             if (cap_div.hasClass('hidden')) {

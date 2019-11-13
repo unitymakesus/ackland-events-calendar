@@ -1,11 +1,13 @@
 <?php
 /**
  * @package   Quick_Featured_Images_Tools
- * @author    Martin Stehle <m.stehle@gmx.de>
+ * @author    Martin Stehle <shop@stehle-internet.de>
  * @license   GPL-2.0+
  * @link      http://stehle-internet.de
  * @copyright 2014 Martin Stehle
  */
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Quick_Featured_Images_Tools { // only for debugging: extends Quick_Featured_Images_Base {
 

@@ -56,7 +56,9 @@ class MMB_Core
 
     public function network_admin_notice()
     {
-        if (count(mwp_get_communication_keys()) > 0) {
+        $enabledNotice = $this->isNoticeEnabled();
+
+        if (count(mwp_get_communication_keys()) > 0 || !$enabledNotice) {
             return;
         }
 
@@ -69,7 +71,9 @@ class MMB_Core
 
     public function admin_notice()
     {
-        if (count(mwp_get_communication_keys()) > 0) {
+        $enabledNotice = $this->isNoticeEnabled();
+
+        if (count(mwp_get_communication_keys()) > 0 || !$enabledNotice) {
             return;
         }
 
@@ -78,6 +82,11 @@ class MMB_Core
         $notice               = is_multisite() ? $configuration->getNetworkNotice() : $configuration->getNotice();
 
         echo $notice;
+    }
+
+    private function isNoticeEnabled()
+    {
+        return apply_filters('mwp_admin_notice_enabled', true);
     }
 
     /**

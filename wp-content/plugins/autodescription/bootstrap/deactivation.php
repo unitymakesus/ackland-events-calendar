@@ -1,14 +1,15 @@
 <?php
 /**
-* @package The_SEO_Framework
-*/
-namespace The_SEO_Framework;
+ * @package The_SEO_Framework/Bootstrap\Install
+ */
+
+namespace The_SEO_Framework\Bootstrap;
 
 defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -23,27 +24,12 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-//! @php7+ convert to IIFE
-\The_SEO_Framework\_deactivation_unset_options_autoload();
-\The_SEO_Framework\_deactivation_unset_sitemap();
-
 /**
- * Flush rewrite rules on plugin deactivation.
- *
- * @since 2.6.6
- * @since 2.7.1: 1. Now no longer reinitializes global $wp_rewrite.
- *               2. Now flushes the rules on shutdown.
- * @since 2.8.0: Added namespace and renamed function.
- * @access private
- * @global \WP_Rewrite $wp_rewrite
+ * @since 3.2.4 Applied namspacing to this file. All method names have changed.
  */
-function _deactivation_unset_sitemap() {
 
-	unset( $GLOBALS['wp_rewrite']->extra_rules_top['sitemap\.xml$'] );
-	unset( $GLOBALS['wp_rewrite']->extra_rules_top['sitemap\.xsl$'] );
-
-	\add_action( 'shutdown', 'flush_rewrite_rules' );
-}
+//! @php7+ convert to IIFE
+_deactivation_unset_options_autoload();
 
 /**
  * Turns off autoloading for The SEO Framework main options.
@@ -65,6 +51,7 @@ function _deactivation_unset_options_autoload() {
 		\remove_all_filters( "sanitize_option_{$setting}" );
 
 		$temp_options = $options;
+		//? Write a small difference, so the change will be forwarded to the database.
 		if ( is_array( $temp_options ) )
 			$temp_options['update_buster'] = (int) time();
 

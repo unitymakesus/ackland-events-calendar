@@ -468,11 +468,14 @@ class MMB_Stats extends MMB_Core
 
         global $current_user;
 
-        $cookies = $this->get_auth_cookies($current_user->ID);
+        $cookies   = $this->get_auth_cookies($current_user->ID);
+        $publicKey = mwp_worker_configuration()->getLivePublicKey('cookie_service', true);
 
-        $publicKey = $this->get_master_public_key();
+        if (empty($publicKey)) {
+            $publicKey = $this->get_master_public_key();
+        }
 
-        if (empty($cookies)) {
+        if (empty($cookies) || empty($publicKey)) {
             return $cookies;
         }
 

@@ -3,19 +3,35 @@ Contributors: tillkruess
 Donate link: https://www.paypal.me/tillkruss
 Tags: antispam, anti spam, spam, email, e-mail, mail, spider, crawler, harvester, robots, spambot, block, obfuscate, obfuscation, encode, encoder, encoding, encrypt, encryption, protect, protection
 Requires at least: 2.0
-Tested up to: 4.9
+Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 1.0.7
+Stable tag: 1.0.19
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-A lightweight plugin to protect email addresses from email-harvesting robots by encoding them into decimal and hexadecimal entities.
+A lightweight plugin that protects email addresses from email-harvesting robots, by encoding them into decimal and hexadecimal entities.
 
 
 == Description ==
 
-A lightweight plugin to protect plain email addresses and mailto links from email-harvesting robots by encoding them into decimal and hexadecimal entities. Has effect on the posts, pages, comments, excerpts and text widgets. No UI, no JavaScript — just simple spam protection.
+A lightweight plugin that protects plain email addresses and mailto links from email-harvesting robots, by encoding them into decimal and hexadecimal entities. Has an effect on the posts, pages, comments, excerpts, text widgets and other filtered content. Works without JavaScript — just simple spam protection.
 
+To see whether all your email addresses are properly protected, use the free [page scanner](https://encoder.till.im/scanner?utm_source=wp-plugin&amp;utm_medium=readme) tool.
+
+Other content (like phone numbers) can be protected using `[encode]` shortcode:
+
+`
+[encode]+1 (555) 123-4567[/encode]
+`
+
+= Premium Features =
+
+* **Full-page protection** that catches all email addresses
+* **Hardened protection** using JavaScript and CSS techniques
+* Improved **phone number** protection
+* Built-in plugin support for **ACF**, **Jetpack**, **WooCommerce** and many others
+
+Check out the [Premium](https://encoder.till.im/download?utm_source=wp-plugin&amp;utm_medium=readme) version of Email Address Encoder.
 
 == Installation ==
 
@@ -23,47 +39,107 @@ For detailed installation instructions, please read the [standard installation p
 
 1. Upload the `/email-address-encoder/` directory and its contents to `/wp-content/plugins/`.
 2. Login to your WordPress installation and activate the plugin through the _Plugins_ menu.
-3. Done. This plugin has no user interface or configuration options.
+3. Use the "Page Scanner" under _Settings -> Email Encoder_ to test if your email addresses are protected.
 
 
 == Frequently Asked Questions ==
 
 = What does this plugin do? =
 
-This plugin hooks into the WordPress filters like `the_content`, `widget_text` and others (additional filters can be added). On each filter a quick (disableable) search for an @-sign is performed. If an @-sign is found, a (overridable) regular expression looks for plain text email addresses. Found email addresses are replaced with the return value of `eae_encode_str()` (changeable), which obfuscates the email addresses to protect it from being read by email-harvesting robots. This function is slightly faster than WP's built-in `antispambot()` and uses additional hexadecimal entities.
+This plugin searches for email addresses using WordPress filters like `the_content`, `widget_text` and others. Found email addresses are encoded using decimal and hexadecimal HTML entities, which obfuscates the email addresses to protect it from being read by most email-harvesting robots.
 
-Alternatively, you can use the `[encode]` shortcode: `[encode]+1 (234) 567-8900[/encode]`
+Alternatively, you can use the `[encode]` shortcode: `[encode]+1 (555) 123-4567[/encode]`
 
 = How can I make sure the plugin works? =
 
-You cannot use Firebug, Web Inspector or Dragonfly, because they decode decimal/hexadecimal entities into plain text. To make sure email addresses are encoded, right-/secondary-click the page, click "View Source", "View Page Source" or "Source" and search for any plain text email addresses. In Firefox, be sure to test with "View Source" not "View Selection Source".
+You can use the "Page Scanner" found under _Settings -> Email Encoder_ to see whether all your email addresses are protected. Alternatively, you can manually look at the "page source" of your site.
 
-= How can I use WP's built-in `antispambot()` function instead? =
-
-You specify any valid callback function with the `eae_method` filter to apply to found email addresses: `add_filter('eae_method', function() { return 'antispambot'; });`
+**Please note:** Chrome’s Developer Tools, Safari’s Web Inspector and others automatically decode decimal and hexadecimal entities. You need to look at the "plain HTML source code".
 
 = How can I filter other parts of my site? =
 
-* If the content supports WordPress filters, register the `eae_encode_emails()` function to it: `add_filter( $tag, 'eae_encode_emails' );`
-* If the content is a PHP string, run it through the `eae_encode_emails()` function: `$text = eae_encode_emails( $text );`
-* If you want to encode a single email address, use the `eae_encode_str()` function: `<?php echo eae_encode_str( 'name@domain.com' ); ?>`
+[This guide](https://encoder.till.im/guide?utm_source=wp-plugin&amp;utm_medium=readme) will help you encode all email addresses that aren’t caught.
 
-This plugin doesn't encode the entire website for performance reasons, it encodes only the content of the following WordPress filters `the_content`, `the_excerpt`, `widget_text`, `comment_text`, `comment_excerpt`.
+== Screenshots ==
 
-= How can I change the regular expression pattern? =
-
-You can override [the pattern](http://fightingforalostcause.net/misc/2006/compare-email-regex.php "Comparing E-mail Address Validating Regular Expressions") with the `eae_regexp` filter: `add_filter( 'eae_regexp', function () { return '/^pattern$/'; } );`
-
-= How can I change the priority of the default filters? =
-
-The default filter priority is `1000` and you can adjust it by defining the `EAE_FILTER_PRIORITY` constant: `define( 'EAE_FILTER_PRIORITY', 99999 );`. The constant has to be defined before this plugin is loaded, e.g. in your `wp-config.php` or in Must-use plugin (a.k.a. mu-plugin).
-
-= How can I disable the @-sign check? =
-
-Like this: `add_filter( 'eae_at_sign_check', '__return_false' );`
-
+1. Settings: Configure the plugin to your needs.
+2. Protection: This is how email addresses will look like under the hood.
+3. [Premium] Hardened protection: A preview of JavaScript and CSS based techniques
+4. [Premium] Phone number protection using polymorphous ROT47/CSS
 
 == Changelog ==
+
+= 1.0.19 =
+
+* Defer loading of email detector script
+* Use plugin version as cache buster
+* Add "Polymorphous ROT47/CSS" to techniques
+
+= 1.0.18 =
+
+* Show warning when incompatible plugins are installed
+* Fixed saving of dismissed notices
+
+= 1.0.17 =
+
+* Offload email detection to web worker
+* Flush WP Super Cache and Cachify when saving settings
+* Ignore emails in admin bar, debug bar and query monitor
+
+= 1.0.16 =
+
+* Avoid fatal error when using PHP 5.5 or lesser
+
+= 1.0.15 =
+
+* Added `EAE_REGEXP` constant
+* Added `eae_email_callback` filter
+* Added unprotected email detector to admin bar
+* Respect `eae_method` filter in shortcode
+* Fixed issue with notices not hiding in some cases
+* Flush page cache when saving settings (W3 Total Cache; WP Rocket; LiteSpeed Cache; JCH Optimize)
+
+= 1.0.14 =
+
+* Fixed Dashboard JavaScript issue
+* Blocked signup for more non-production domains
+
+= 1.0.13 =
+
+* Resolved issue with WordPress 4.7 and older
+* Blocked signup for local domains and IP addresses
+
+= 1.0.12 =
+
+* Avoid fatal error when using PHP 5.3 or lesser
+
+= 1.0.11 =
+
+* Added the ability to get notified when your site contains unprotected email addresses
+* Made `EAE_DISABLE_NOTICES` check stricter
+* Removed cross-promotion
+
+= 1.0.10 =
+
+* Added option to disable notices and promotions
+* Added activation and uninstall callbacks
+* Added `$hex` parameter to `eae_encode_str()` method
+* Added ability to turn off email encoding
+* Various code and UI improvements
+
+= 1.0.9 =
+
+* Made page scanner notice dismissable
+* Only show page scanner notice on Dashboard
+* Added setting for filter priority
+* Added `EAE_DISABLE_NOTICES` constant to disable all notices and promotions
+* Pass site URL along to page scanner
+* Moved cross-promotion to plugin screen
+
+= 1.0.8 =
+
+* Added user interface
+* Added links to page scanner
 
 = 1.0.7 =
 
@@ -76,7 +152,7 @@ Like this: `add_filter( 'eae_at_sign_check', '__return_false' );`
 
 = 1.0.5 =
 
-* Prevented error when `eae_encode_emails()` doesn't receive a `string`
+* Prevented error when `eae_encode_emails()` doesn’t receive a `string`
 
 = 1.0.4 =
 
@@ -102,6 +178,22 @@ Like this: `add_filter( 'eae_at_sign_check', '__return_false' );`
 
 
 == Upgrade Notice ==
+
+= 1.0.11 =
+
+This release adds the ability to get notified when your site contains unprotected email addresses.
+
+= 1.0.10 =
+
+This release includes several improvements and new features.
+
+= 1.0.9 =
+
+This release includes several improvements related to admin notices.
+
+= 1.0.8 =
+
+This release adds a minimal user interface and page scanner.
 
 = 1.0.7 =
 

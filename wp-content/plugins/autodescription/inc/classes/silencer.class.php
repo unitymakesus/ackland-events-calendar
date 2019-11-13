@@ -1,14 +1,16 @@
 <?php
 /**
- * @package The_SEO_Framework
+ * @package The_SEO_Framework\Classes\Silencer
+ * @subpackage The_SEO_Framework\Classes\Facade
  */
+
 namespace The_SEO_Framework;
 
 defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2018 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -44,7 +46,7 @@ final class Silencer {
 	}
 
 	public function __set( $name, $value ) {
-		return;
+		return $value;
 	}
 
 	public function __isset( $name ) {

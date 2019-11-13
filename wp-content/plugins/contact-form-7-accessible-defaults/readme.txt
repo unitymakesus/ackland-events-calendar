@@ -3,10 +3,10 @@ Contributors: joedolson
 Donate link: http://www.joedolson.com/donate/
 Tags: wpcf7, contact form 7, contact forms, accessibility, wcag, a11y, wpcf7
 Requires at least: 4.2
-Tested up to: 4.9
+Tested up to: 5.2
 License: GPLv2 or later
 Text Domain: accessible-contact-form-7
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 
 Replaces the default Contact Form 7 form with an accessible equivalent and provides a suite of selectable base forms. 
 
@@ -30,6 +30,10 @@ For more information about making Contact Form 7 accessible, read [how to set up
 
 
 == Changelog ==
+
+= 1.1.5 =
+
+* Test with WordPress 5.2 &  Contact Form 7 5.1
 
 = 1.1.4 =
 

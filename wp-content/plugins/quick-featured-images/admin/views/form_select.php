@@ -69,12 +69,12 @@ if ( 'replace' == $this->selected_action ) {
 <?php
 			if ( 'assign_randomly' == $this->selected_action ) {
 ?>
-		<p><?php esc_html_e( 'There are two more options in the premium version for random images:', 'quick-featured-images' ); ?></p>
+		<p><?php esc_html_e( 'There are two more options in the Pro version for random images:', 'quick-featured-images' ); ?></p>
 		<ol>
 			<li><?php esc_html_e( 'Use each selected image only once', 'quick-featured-images' ); ?></li>
 			<li><?php esc_html_e( 'Remove excess featured images after all selected images are used', 'quick-featured-images' ); ?></li>
 		</ol>
-		<p class="qfi_ad_for_pro"><?php esc_html_e( 'Get the premium version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</p>
+		<p class="qfi_ad_for_pro"><?php esc_html_e( 'Get the Pro version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</p>
 <?php
 			} // if(assign_randomly)
 ?>
@@ -112,11 +112,11 @@ if ( 'replace' == $this->selected_action ) {
 	} // foreach()
 ?>
 	</fieldset>
-	<p class="qfi_ad_for_pro"><?php esc_html_e( 'Are you looking for more options and more filters?', 'quick-featured-images' );?> <?php esc_html_e( 'Get the premium version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</p>
+	<p class="qfi_ad_for_pro"><?php esc_html_e( 'Are you looking for more options and more filters?', 'quick-featured-images' );?> <?php esc_html_e( 'Get the Pro version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</p>
 	<h3><?php esc_html_e( 'If you encounter a white, blank page, read this', 'quick-featured-images' ); ?></h3>
 	<p><?php esc_html_e( 'Facing a white blank page while trying to treat thousands of posts is the effect of limited memory capacities on the website server. Instead of treating a huge amount of posts in one single go try to treat small amounts of posts multiple times successively. To achieve that do:', 'quick-featured-images' ); ?></p>
 	<ol>
-	<li class="qfi_ad_for_pro"><?php esc_html_e( 'Get the premium version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</li>
+	<li class="qfi_ad_for_pro"><?php esc_html_e( 'Get the Pro version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</li>
 	<li><?php esc_html_e( 'add the time filter,', 'quick-featured-images' ); ?></li>
 	<li><?php esc_html_e( 'set a small time range,', 'quick-featured-images' ); ?></li>
 	<li><?php esc_html_e( 'do the process', 'quick-featured-images' ); ?></li>

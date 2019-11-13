@@ -3,7 +3,7 @@
  * Represents the footer for the admin page
  *
  * @package   Quick_Featured_Images
- * @author    Martin Stehle <m.stehle@gmx.de>
+ * @author    Martin Stehle <shop@stehle-internet.de>
  * @license   GPL-2.0+
  * @link      http://stehle-internet.de
  * @copyright 2013 Martin Stehle
@@ -55,7 +55,7 @@ if ( ! in_array( $paypal_locale, array( 'en_US', 'en_AU', 'es_ES', 'fr_FR', 'de_
 					<dt><?php esc_html_e( 'The plugin is for free. But the plugin author would be delighted to your small contribution.', $text_domain ); ?></dt><dd><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=2KUW27NECWVWJ"><img src="https://www.paypalobjects.com/<?php echo $paypal_locale; ?>/i/btn/btn_donateCC_LG.gif" alt="(<?php esc_html_e( 'Donation Button', $text_domain ); ?>)" id="paypal_button" /><br /><?php esc_html_e( 'Donate with PayPal', $text_domain ); ?></a><img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1" /></dd>
 					<dt><?php esc_html_e( 'Do you need support or have an idea for the plugin?', $text_domain ); ?></dt><dd><a href="http://wordpress.org/support/plugin/quick-featured-images"><?php esc_html_e( 'Post your questions and ideas about Quick Featured Images in the forum at wordpress.org!', $text_domain ); ?></a></dd>
 					<dt><?php esc_html_e( 'Let the thumbnails appear in the widget of the most recent posts with this fast plugin', $text_domain ); ?></dt><dd><a href="http://wordpress.org/plugins/recent-posts-widget-with-thumbnails/"><?php printf( esc_html__( 'Download plugin %s at %s!', $text_domain ), '<strong>Recent Posts Widget With Thumbnails</strong>', 'wordpress.org' ); ?></a></dd>
-					<dt><?php esc_html_e( 'Get the premium version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a></dd>
+					<dt><?php esc_html_e( 'Get the Pro version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a></dd>
 				</dl>
 			</div><!-- .qfi_content -->
 		</div><!-- #qfi_footer -->

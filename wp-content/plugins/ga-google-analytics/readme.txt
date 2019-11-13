@@ -9,10 +9,10 @@ Author URI: https://plugin-planet.com/
 Donate link: https://monzillamedia.com/donate.html
 Contributors: specialk
 Requires at least: 4.1
-Tested up to: 5.0
-Stable tag: 20180828
-Version: 20180828
-Requires PHP: 5.2
+Tested up to: 5.3
+Stable tag: 20191109
+Version: 20191109
+Requires PHP: 5.6.20
 Text Domain: ga-google-analytics
 Domain Path: /languages
 License: GPL v2 or later
@@ -23,8 +23,9 @@ Adds your Google Analytics Tracking Code to your WordPress site.
 
 == Description ==
 
+> Connects Google Analytics to WordPress
+> Supports Universal Analytics / analytics.js
 > Supports Global Site Tag / gtag.js
-> GDPR compliant: does not collect any user data
 
 This plugin enables Google Analytics for your entire WordPress site. Lightweight and fast with plenty of great features.
 
@@ -42,6 +43,7 @@ This plugin enables Google Analytics for your entire WordPress site. Lightweight
 * Option to disable tracking of admin-level users
 * Option to enable page tracking in the Admin Area
 * Easy to customize the tracking code
+* More features available in the [Pro version](https://plugin-planet.com/ga-google-analytics-pro/)
 
 This is a lightweight plugin that inserts the required GA tracking code. To view your site statistics, visit your Google Analytics account.
 
@@ -58,15 +60,39 @@ This is a lightweight plugin that inserts the required GA tracking code. To view
 * Supports [IP Anonymization](https://developers.google.com/analytics/devguides/collection/analyticsjs/ip-anonymization)
 * Supports [Force SSL](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#forceSSL)
 * Supports [Tracker Objects](https://developers.google.com/analytics/devguides/collection/analyticsjs/creating-trackers)
-* Supports [Google Optimize](https://support.google.com/360suite/optimize/)
+* Supports [Google Optimize](https://support.google.com/optimize/answer/6262084)
+* Supports [User Opt-Out](https://developers.google.com/analytics/devguides/collection/analyticsjs/user-opt-out)
 
-Learn more about [Google Analytics](http://www.google.com/analytics/)!
+Also supports tracking links and conversions via the Custom Code setting. Learn more about [Google Analytics](https://www.google.com/analytics/)!
 
-**GDPR**
+**Pro Version**
 
-This plugin does not collect any user data. Even so, the tracking code added by this plugin is used by Google to collect all sorts of user data. So this plugin does _not_ do anything to make your site _less_ compliant with GDPR. I have done my best to ensure that this plugin is 100% GDPR compliant, but I'm not a lawyer so can't guarantee anything. To ensure that your site is compliant with GDPR, please consult an attorney, and also check with Google and/or configure your Google account settings and/or tracking code as required by GDPR.
+[GA Google Analytics Pro](https://plugin-planet.com/ga-google-analytics-pro/) includes the same features as the free version, PLUS the following:
 
-> Works perfectly with or without Gutenberg
+* Visitor Opt-Out Box (frontend UI)
+* Configure multiple tracking codes
+* Live Preview of all tracking codes
+* Choose location of multiple tracking codes
+* Supports Custom Code in header or footer
+* Disable tracking of all logged-in users
+* Disable Tracking for any Post IDs, User Roles, Post Types
+* Disable Tracking for Search Results and Post Archives
+* Display Opt-Out Box automatically or via shortcode
+* Complete Inline Help/Documentation
+* Priority plugin help and support
+
+Learn more and get [GA Pro &raquo;](https://plugin-planet.com/ga-google-analytics-pro/)
+
+**Privacy**
+
+__User Data:__ This plugin does not collect any user data. Even so, the tracking code added by this plugin is used by Google to collect all sorts of user data. You can learn more about Google Privacy [here](https://policies.google.com/privacy?hl=en-US).
+
+__Cookies:__ This plugin uses simple cookies for the visitor Opt-Out Box to remember user preference for opt-in or out of Google Analytics.
+
+__Services:__ This plugin does not connect to any third-party locations or services, but it does enable Google to collect all sorts of data.
+
+
+> Works with or without Gutenberg Block Editor
 
 
 
@@ -81,7 +107,7 @@ After configuring your settings, you can verify that GA tracking code is include
 
 __Note:__ this plugin adds the required GA code to your web pages. In order for the code to do anything, it must correspond to an active, properly configured Google Analytics account. Learn more at the [Google Analytics Help Center](https://support.google.com/analytics/?hl=en#topic=3544906).
 
-[More info on installing WP plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins)
+[More info on installing WP plugins](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins)
 
 
 **Usage**
@@ -123,6 +149,16 @@ To restore default plugin options, either uninstall/reinstall the plugin, or vis
 **Uninstalling**
 
 GA Google Analytics cleans up after itself. All plugin settings will be removed from your database when the plugin is uninstalled via the Plugins screen. Your collected GA data will remain in your Google account.
+
+
+**Pro Version**
+
+Want more control over your GA Tracking codes? With awesome features like Opt-Out Box and Code Previews? Check out [GA Pro &raquo;](https://plugin-planet.com/ga-google-analytics-pro/)
+
+
+**Like the plugin?**
+
+If you like GA Google Analytics, please take a moment to [give a 5-star rating](https://wordpress.org/support/plugin/ga-google-analytics/reviews/?rate=5#new-post). It helps to keep development and support going strong. Thank you!
 
 
 
@@ -178,10 +214,24 @@ Here are the steps:
 
 Done! You can view the source code of your web pages to verify the results.
 
+More info about [Google Optimize](https://support.google.com/optimize/answer/6262084).
+
+
+**How to enable Opt-out of tracking?**
+
+Here are the steps:
+
+1. Add the following code to the plugin setting, "Custom Code": `<script>window['ga-disable-UA-XXXXX-Y'] = true;</script>`
+2. Check the box to enable the setting, "Custom Code Location".
+
+Done! You can view the source code of your web pages to verify the results.
+
+More info about [user opt-out](https://developers.google.com/analytics/devguides/collection/analyticsjs/user-opt-out).
+
 
 **Got a question?**
 
-To ask a question, suggest a feature, or provide feedback, [contact me directly](https://perishablepress.com/contact/). Learn more about [Google Analytics](http://www.google.com/analytics/) and [GA tracking methods](https://perishablepress.com/3-ways-track-google-analytics/).
+To ask a question, suggest a feature, or provide feedback, [contact me directly](https://perishablepress.com/contact/). Learn more about [Google Analytics](https://www.google.com/analytics/) and [GA tracking methods](https://perishablepress.com/3-ways-track-google-analytics/).
 
 
 
@@ -199,6 +249,7 @@ And/or purchase one of my premium WordPress plugins:
 * [BBQ Pro](https://plugin-planet.com/bbq-pro/) - Super fast WordPress firewall
 * [Blackhole Pro](https://plugin-planet.com/blackhole-pro/) - Automatically block bad bots
 * [Banhammer Pro](https://plugin-planet.com/banhammer-pro/) - Monitor traffic and ban the bad guys
+* [GA Google Analytics Pro](https://plugin-planet.com/ga-google-analytics-pro/) - Connect your WordPress to Google Analytics
 * [USP Pro](https://plugin-planet.com/usp-pro/) - Unlimited front-end forms
 
 Links, tweets and likes also appreciated. Thanks! :)
@@ -208,6 +259,53 @@ Links, tweets and likes also appreciated. Thanks! :)
 == Changelog ==
 
 *Thank you to everyone who shares feedback for GA Google Analytics!*
+
+If you like GA Google Analytics, please take a moment to [give a 5-star rating](https://wordpress.org/support/plugin/ga-google-analytics/reviews/?rate=5#new-post). It helps to keep development and support going strong. Thank you!
+
+> New Pro version available! Check out [GA Pro &raquo;](https://plugin-planet.com/ga-google-analytics-pro/)
+
+
+**20191109**
+
+* Tightens output/display of tracking code
+* Improves sanitization for plugin options
+* Updates styles for plugin settings page
+* Improves clarity of settings page infos
+* Generates new default translation template
+* Tests on WordPress 5.3
+
+**20190902**
+
+* Changes order of custom code output
+* Improves output of GA tracking markup
+* Improves clarity of settings information
+* Updates some links to https
+* Generates new default translation template
+* Tests on WordPress 5.3 (alpha)
+
+**20190501**
+
+* Bumps [minimum PHP version](https://codex.wordpress.org/Template:Server_requirements) to 5.6.20
+* Updates Link Attribution tracking code
+* Tweaks plugin settings screen content
+* Updates default translation template
+* Tests on WordPress 5.2
+
+**20190311**
+
+* Adds support for GA User Opt-Out
+* Adds GA Pro link to `action_links()`
+* Adds Homepage link to `plugin_links()`
+* Adds check for admin user for settings shortcut link
+* Custom GA Code now outputs before any calls to `ga()`/`gtag()`
+* Refines plugin settings screen UI and information
+* Generates new default translation template
+* Tests on WordPress 5.1 and 5.2 (alpha)
+
+**20190220**
+
+* Just a version bump for compat with WP 5.1
+* Full update coming soon :)
 
 **20180828**
 
@@ -321,9 +419,9 @@ Links, tweets and likes also appreciated. Thanks! :)
 * Tested on WordPress 4.4 (beta)
 * Updated minimum version requirement
 * Updated heading hierarchy on settings page
-* Added option to disable GA for admin users (Thanks to [Daniele Raimondi](http://w3b.it/))
-* Added support for IP anonymization (Thanks to [Daniele Raimondi](http://w3b.it/))
-* Added support for Force SSL (Thanks to [Česlav Przywara](http://www.bluechip.at/))
+* Added option to disable GA for admin users (Thanks to [Daniele Raimondi](https://w3b.it/))
+* Added support for IP anonymization (Thanks to [Daniele Raimondi](https://w3b.it/))
+* Added support for Force SSL (Thanks to [Česlav Przywara](https://www.bluechip.at/))
 * Cleaned up some "Undefined index" Notices
 * Removed 404 link from Important Notice panel
 * Updated Google links in the Overview panel

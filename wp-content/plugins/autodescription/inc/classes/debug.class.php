@@ -1,14 +1,18 @@
 <?php
 /**
- * @package The_SEO_Framework\Classes
+ * @package The_SEO_Framework\Classes\Debug
+ * @subpackage The_SEO_Framework\Debug
  */
+
 namespace The_SEO_Framework;
 
 defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
+// phpcs:disable, WordPress.PHP.DevelopmentFunctions -- This whole class is meant for development.
+
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -29,48 +33,35 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * Holds plugin debug functions.
  *
  * @since 2.8.0
+ * @since 4.0.0 No longer implements an interface. It's implied.
  */
-final class Debug implements Debug_Interface {
+final class Debug {
+	use Traits\Enclose_Stray_Private;
 
 	/**
-	 * The object instance.
-	 *
 	 * @since 2.8.0
-	 *
-	 * @var object|null This object instance.
+	 * @var object|null $instance This object instance.
 	 */
 	private static $instance = null;
 
 	/**
-	 * Cached debug/profile properties.
-	 *
 	 * @since 2.8.0
-	 *
-	 * @var bool Whether debug is enabled.
-	 * @var bool Whether debug is hidden in HTMl.
+	 * @var bool $the_seo_framework_debug Whether debug is enabled.
 	 */
 	public $the_seo_framework_debug = false;
 
 	/**
-	 * Unserializing instances of this object is forbidden.
-	 */
-	final protected function __wakeup() { }
-
-	/**
-	 * Cloning of this object is forbidden.
-	 */
-	final protected function __clone() { }
-
-	/**
 	 * Constructor.
 	 */
-	final protected function __construct() {}
+	protected function __construct() {}
 
 	/**
 	 * Sets the class instance.
 	 *
 	 * @since 3.1.0
 	 * @access private
+	 *
+	 * @param bool|null $debug Whether TSF debugging is enabled.
 	 */
 	public static function _set_instance( $debug = null ) {
 
@@ -110,7 +101,7 @@ final class Debug implements Debug_Interface {
 	 * @param string $replacement Optional. The function that should have been called. Default null.
 	 */
 	public function _deprecated_filter( $filter, $version, $replacement = null ) {
-		$this->_deprecated_function( 'Filter ' . $filter, $version, $replacement ); // ignore invalid xss warnings.
+		$this->_deprecated_function( 'Filter ' . $filter, $version, $replacement ); // phpcs:ignore -- Wrong asserts, copied method name.
 	}
 
 	/**
@@ -129,7 +120,7 @@ final class Debug implements Debug_Interface {
 	 * @param string $replacement  Optional. The function that should have been called. Default null.
 	 *                             Expected to be escaped.
 	 */
-	public function _deprecated_function( $function, $version, $replacement = null ) { // phpcs:ignore -- xss ok.
+	public function _deprecated_function( $function, $version, $replacement = null ) { // phpcs:ignore -- Wrong asserts, copied method name.
 		/**
 		 * Fires when a deprecated function is called.
 		 *
@@ -160,9 +151,9 @@ final class Debug implements Debug_Interface {
 						\esc_html( $function ),
 						'<strong>' . \esc_html__( 'deprecated', 'autodescription' ) . '</strong>',
 						\esc_html( $version ),
-						$replacement
+						$replacement // phpcs:ignore, WordPress.Security.EscapeOutput -- See doc comment.
 					)
-				); // xss ok: $replacement is expected to be escaped.
+				);
 			} else {
 				trigger_error(
 					sprintf(
@@ -191,10 +182,10 @@ final class Debug implements Debug_Interface {
 	 * @access private
 	 *
 	 * @param string $function The function that was called.
-	 * @param string $message  A message explaining what has been done incorrectly.
+	 * @param string $message  A message explaining what has been done incorrectly. Must be escaped.
 	 * @param string $version  The version of WordPress where the message was added.
 	 */
-	public function _doing_it_wrong( $function, $message, $version = null ) { // phpcs:ignore -- xss ok.
+	public function _doing_it_wrong( $function, $message, $version = null ) { // phpcs:ignore -- Wrong asserts, copied method name.
 		/**
 		 * Fires when the given function is being used incorrectly.
 		 *
@@ -225,10 +216,10 @@ final class Debug implements Debug_Interface {
 					\esc_html__( '%1$s was called %2$s. %3$s %4$s', 'autodescription' ),
 					\esc_html( $function ),
 					'<strong>' . \esc_html__( 'incorrectly', 'autodescription' ) . '</strong>',
-					$message,
+					$message, // phpcs:ignore, WordPress.Security.EscapeOutput -- See doc comment.
 					\esc_html( $version )
 				)
-			); // xss ok: $message is expected to be escaped.
+			);
 
 			restore_error_handler();
 		}
@@ -285,86 +276,99 @@ final class Debug implements Debug_Interface {
 	}
 
 	/**
+	 * Retrieves the erroneous caller data.
+	 *
+	 * Assesses the depth of the caller based on "consistent" tracing.
+	 * This is inaccurate when an error is invoked internally; but, you can trust that
+	 * the plugin doesn't trigger this behavior.
+	 *
+	 * @since 3.2.2
+	 * @see PHP debug_backtrace()
+	 *
+	 * @return array The erroneous caller data
+	 */
+	protected function get_error() {
+
+		// phpcs:ignore, WordPress.PHP.NoSilencedErrors -- Feature may be disabled.
+		$backtrace = @debug_backtrace();
+		/**
+		 * 0 = This function.
+		 * 1 = Error handler.
+		 * 2 = Error forwarder.
+		 * 3 = Debug handler.
+		 */
+		if ( isset( $backtrace[7]['object'] ) && is_a( $backtrace[7]['object'], \the_seo_framework_class(), false ) ) {
+			/**
+			 * 4 = TSF Factory magic method.
+			 * 5 = Error invoking thing.
+			 * 6 = TSF Factory. (the_seo_framework(), or a variable that stored this)
+			 * 7 = Erroneous caller.
+			 */
+			$error = $backtrace[7];
+		} else {
+			/**
+			 * 4 = Error invoking thing.
+			 * 5 = Erroneous caller.
+			 */
+			$error = $backtrace[5];
+		}
+
+		return $error;
+	}
+
+	/**
 	 * The SEO Framework error handler.
 	 *
-	 * Only handles notices.
-	 * @see E_USER_NOTICE
+	 * Only handles user notices: E_USER_NOTICE
 	 *
 	 * @since 2.6.0
+	 * @since 3.2.2 Fixed unaccounted-for backtrace depth logic since this class decoupling in 3.1
 	 *
-	 * @param int Error handling code.
-	 * @param string The error message.
+	 * @param int    $code    The error handler code.
+	 * @param string $message The error message. Expected to be escaped.
 	 */
 	protected function error_handler_deprecated( $code, $message ) {
 
-		//* Only do so if E_USER_NOTICE is pased.
-		if ( 1024 === $code && isset( $message ) ) {
-
-			$backtrace = debug_backtrace();
-			/**
-			 * 0 = This function. 1 = Debug function. 2 = Error trigger. 3 = Deprecated Class, 4 = Deprecated Method, 5 = Magic Method, 6 = Deprecated call.
-			 * 0 = This function. 1 = Debug function. 2 = Error trigger. 3 = Deprecated Class, 4 = Deprecated Filter, 5 = Deprecated call.
-			 */
-			if ( 'Filter ' === substr( $message, 0, 7 ) ) {
-				$error = $backtrace[5];
-			} else {
-				$error = $backtrace[6];
-			}
-
-			$this->error_handler( $error, $message );
+		//* Only do so if E_USER_NOTICE is passed.
+		if ( E_USER_NOTICE & $code && isset( $message ) ) {
+			$this->error_handler( $this->get_error(), $message );
 		}
 	}
 
 	/**
 	 * The SEO Framework error handler.
 	 *
-	 * Only handles notices.
-	 * @see E_USER_NOTICE
+	 * Only handles user notices.
 	 *
 	 * @since 2.6.0
 	 *
-	 * @param int Error handling code.
-	 * @param string The error message.
+	 * @param int    $code    The error handler code.
+	 * @param string $message The error message. Expected to be escaped.
 	 */
 	protected function error_handler_doing_it_wrong( $code, $message ) {
 
 		//* Only do so if E_USER_NOTICE is pased.
-		if ( 1024 === $code && isset( $message ) ) {
-
-			$backtrace = debug_backtrace();
-			/**
-			 * 0 = This function. 1 = Debug function. 2 = magic methods, 3 = Error trigger.
-			 */
-			$error = $backtrace[3];
-
-			$this->error_handler( $error, $message );
+		if ( E_USER_NOTICE === $code && isset( $message ) ) {
+			$this->error_handler( $this->get_error(), $message );
 		}
 	}
 
 	/**
 	 * The SEO Framework error handler.
 	 *
-	 * Only handles notices.
-	 * @see E_USER_ERROR
+	 * Only handles user errors.
 	 *
 	 * @since 2.6.0
+	 * @since 3.2.2 Fixed unaccounted-for backtrace depth logic since this class decoupling in 3.1
 	 *
-	 * @param int Error handling code.
-	 * @param string The error message.
+	 * @param int    $code    The error handler code.
+	 * @param string $message The error message. Expected to be escaped.
 	 */
 	protected function error_handler_inaccessible_call( $code, $message ) {
 
 		//* Only do so if E_USER_ERROR is pased.
-		if ( 256 === $code && isset( $message ) ) {
-
-			$backtrace = debug_backtrace();
-
-			/**
-			 * 0 = This function. 1-3 = Debug functions. 4-5 = magic methods, 6 = user call.
-			 */
-			$error = $backtrace[6];
-
-			$this->error_handler( $error, $message, $code );
+		if ( E_USER_ERROR === $code && isset( $message ) ) {
+			$this->error_handler( $this->get_error(), $message, $code );
 		}
 	}
 
@@ -374,9 +378,9 @@ final class Debug implements Debug_Interface {
 	 * @since 2.6.0
 	 * @since 2.8.0 added $code parameter
 	 *
-	 * @param array $error The Error location and file.
+	 * @param array  $error   The Error location and file data extruded from debug_backtrace().
 	 * @param string $message The error message. Expected to be escaped.
-	 * @param int $code The error handler code.
+	 * @param int    $code    The error handler code.
 	 */
 	protected function error_handler( $error, $message, $code = E_USER_NOTICE ) {
 
@@ -399,7 +403,8 @@ final class Debug implements Debug_Interface {
 					break;
 			endswitch;
 
-			echo sprintf( '<span><strong>%s:</strong> ', $type ) . $message; // xss ok
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- output is escaped.
+			echo sprintf( '<span><strong>%s:</strong> ', $type ) . $message;
 			echo $file ? ' In ' . \esc_html( $file ) : '';
 			echo $line ? ' on line ' . \esc_html( $line ) : '';
 			echo '.</span><br>' . PHP_EOL;
@@ -439,7 +444,6 @@ final class Debug implements Debug_Interface {
 	 *              2. Now is protected.
 	 *
 	 * @param string $value The debug value.
-	 * @param bool $ignore Ignore the hidden output.
 	 * @return string
 	 */
 	protected function debug_value_wrapper( $value ) {
@@ -456,8 +460,8 @@ final class Debug implements Debug_Interface {
 	 * @since 2.6.0
 	 * @since 3.1.0 Now is protected.
 	 *
-	 * @param bool $set Whether to reset the timer.
-	 * @return float PHP Microtime for code execution.
+	 * @param bool $reset Whether to reset the timer.
+	 * @return float The time it took for code execution.
 	 */
 	protected function timer( $reset = false ) {
 
@@ -480,7 +484,8 @@ final class Debug implements Debug_Interface {
 	 * @access private
 	 */
 	public static function _output_debug_header() {
-		echo static::get_instance()->get_debug_header_output(); // xss ok.
+		// phpcs:ignore, WordPress.Security.EscapeOutput -- callee escapes.
+		echo static::get_instance()->get_debug_header_output();
 	}
 
 	/**
@@ -495,7 +500,7 @@ final class Debug implements Debug_Interface {
 
 		$tsf = \the_seo_framework();
 
-		if ( $tsf->is_admin() && ! $tsf->is_term_edit() && ! $tsf->is_post_edit() && ! $tsf->is_seo_settings_page( true ) )
+		if ( \is_admin() && ! $tsf->is_term_edit() && ! $tsf->is_post_edit() && ! $tsf->is_seo_settings_page( true ) )
 			return;
 
 		if ( $tsf->is_seo_settings_page( true ) )
@@ -535,12 +540,12 @@ final class Debug implements Debug_Interface {
 
 		$timer = '<div style="display:inline-block;width:100%;padding:20px;border-bottom:1px solid #ccc;">Generated in: ' . number_format( $this->timer(), 5 ) . ' seconds</div>';
 
-		$title = $tsf->is_admin() ? 'Expected SEO Output' : 'Determined SEO Output';
+		$title = \is_admin() ? 'Expected SEO Output' : 'Determined SEO Output';
 		$title = '<div style="display:inline-block;width:100%;padding:20px;margin:0 auto;border-bottom:1px solid #ccc;"><h2 style="color:#ddd;font-size:22px;padding:0;margin:0">' . $title . '</h2></div>';
 
 		//* Escape it, replace EOL with breaks, and style everything between quotes (which are ending with space).
-		$output = str_replace( PHP_EOL, '<br>' . PHP_EOL, esc_html( $output ) );
-		$output = preg_replace( '/(&quot;.*?&quot;)(\s)/', '<font color="arnoldschwarzenegger">$1</font> ', $output );
+		$output = str_replace( PHP_EOL, '<br>' . PHP_EOL, \esc_html( str_replace( str_repeat( ' ', 4 ), str_repeat( '&nbsp;', 4 ), $output ) ) );
+		$output = preg_replace( '/(&quot;.*?&quot;)(\s|&nbps;)/', '<font color="arnoldschwarzenegger">$1</font> ', $output );
 
 		$output = '<div style="display:inline-block;width:100%;padding:20px;font-family:Consolas,Monaco,monospace;font-size:14px;">' . $output . '</div>';
 		$output = '<div style="display:block;width:100%;background:#23282D;color:#ddd;border-bottom:1px solid #ccc">' . $title . $timer . $output . '</div>';
@@ -555,7 +560,8 @@ final class Debug implements Debug_Interface {
 	 * @access private
 	 */
 	public static function _output_debug_query() {
-		echo static::$instance->get_debug_query_output(); // xss ok
+		// phpcs:ignore, WordPress.Security.EscapeOutput -- This escapes.
+		echo static::$instance->get_debug_query_output();
 	}
 
 	/**
@@ -565,7 +571,8 @@ final class Debug implements Debug_Interface {
 	 * @access private
 	 */
 	public static function _output_debug_query_from_cache() {
-		echo static::$instance->get_debug_query_output_from_cache();  // xss ok
+		// phpcs:ignore, WordPress.Security.EscapeOutput -- This escapes.
+		echo static::$instance->get_debug_query_output_from_cache();
 	}
 
 	/**
@@ -601,8 +608,7 @@ final class Debug implements Debug_Interface {
 	 * Wraps query status booleans in human-readable code.
 	 *
 	 * @since 2.6.6
-	 * @global bool $multipage
-	 * @global int $numpages
+	 * @since 4.0.0 Cleaned up global callers; only use TSF methods.
 	 *
 	 * @param string $cache_version 'yup' or 'nope'
 	 * @return string Wrapped Query State debug output.
@@ -612,54 +618,56 @@ final class Debug implements Debug_Interface {
 		//* Start timer.
 		$this->timer( true );
 
-		global $multipage, $numpages;
-
 		$tsf = \the_seo_framework();
 
 		//* Only get true/false values.
-		$page_id = $tsf->get_the_real_ID();
-		$is_404 = $tsf->is_404();
-		$is_admin = $tsf->is_admin();
-		$is_attachment = $tsf->is_attachment();
-		$is_archive = $tsf->is_archive();
-		$is_term_edit = $tsf->is_term_edit();
-		$is_post_edit = $tsf->is_post_edit();
-		$is_wp_lists_edit = $tsf->is_wp_lists_edit();
-		$is_author = $tsf->is_author();
-		$is_blog_page = $tsf->is_blog_page();
-		$is_category = $tsf->is_category();
-		$is_date = $tsf->is_date();
-		$is_year = $tsf->is_year();
-		$is_month = $tsf->is_month();
-		$is_day = $tsf->is_day();
-		$is_feed = $tsf->is_feed();
-		$is_real_front_page = $tsf->is_real_front_page();
-		$is_front_page_by_id = $tsf->is_front_page_by_id( $tsf->get_the_real_ID() );
-		$is_home = $tsf->is_home();
-		$is_page = $tsf->is_page();
-		$page = $tsf->page();
-		$paged = $tsf->paged();
-		$is_preview = $tsf->is_preview();
-		$is_search = $tsf->is_search();
-		$is_single = $tsf->is_single();
-		$is_singular = $tsf->is_singular();
-		$is_static_frontpage = $tsf->is_static_frontpage();
-		$is_tag = $tsf->is_tag();
-		$is_tax = $tsf->is_tax();
-		$is_wc_shop = $tsf->is_wc_shop();
-		$is_wc_product = $tsf->is_wc_product();
+		$page_id              = $tsf->get_the_real_ID();
+		$is_404               = $tsf->is_404();
+		$is_admin             = $tsf->is_admin();
+		$is_attachment        = $tsf->is_attachment();
+		$is_archive           = $tsf->is_archive();
+		$is_term_edit         = $tsf->is_term_edit();
+		$is_post_edit         = $tsf->is_post_edit();
+		$is_wp_lists_edit     = $tsf->is_wp_lists_edit();
+		$is_author            = $tsf->is_author();
+		$is_blog_page         = $tsf->is_blog_page();
+		$is_category          = $tsf->is_category();
+		$is_date              = $tsf->is_date();
+		$is_year              = $tsf->is_year();
+		$is_month             = $tsf->is_month();
+		$is_day               = $tsf->is_day();
+		$is_feed              = $tsf->is_feed();
+		$is_real_front_page   = $tsf->is_real_front_page();
+		$is_front_page_by_id  = $tsf->is_front_page_by_id( $tsf->get_the_real_ID() );
+		$is_home              = $tsf->is_home();
+		$is_page              = $tsf->is_page();
+		$page                 = $tsf->page();
+		$paged                = $tsf->paged();
+		$is_preview           = $tsf->is_preview();
+		$is_customize_preview = $tsf->is_customize_preview();
+		$is_search            = $tsf->is_search();
+		$is_single            = $tsf->is_single();
+		$is_singular          = $tsf->is_singular();
+		$is_static_frontpage  = $tsf->is_static_frontpage();
+		$is_tag               = $tsf->is_tag();
+		$is_tax               = $tsf->is_tax();
+		$is_wc_shop           = $tsf->is_wc_shop();
+		$is_wc_product        = $tsf->is_wc_product();
 		$is_seo_settings_page = $tsf->is_seo_settings_page( true );
-		$numpages = $tsf->numpages();
-		$is_multipage = $tsf->is_multipage();
-		$is_singular_archive = $tsf->is_singular_archive();
+		$numpages             = $tsf->numpages();
+		$is_multipage         = $tsf->is_multipage();
+		$is_singular_archive  = $tsf->is_singular_archive();
+		$is_term_meta_capable = $tsf->is_term_meta_capable();
+		$is_post_type_archive = \is_post_type_archive();
 
 		//* Don't debug the class object.
 		unset( $tsf );
 
 		//* Get all above vars, split them in two (true and false) and sort them by key names.
-		$vars = get_defined_vars();
-		$current = array_filter( $vars );
+		$vars        = get_defined_vars();
+		$current     = array_filter( $vars );
 		$not_current = array_diff_key( $vars, $current );
+
 		ksort( $current );
 		ksort( $not_current );
 
@@ -675,8 +683,8 @@ final class Debug implements Debug_Interface {
 				$value = \esc_attr( var_export( $value, true ) );
 			}
 
-			$value = '<font color="harrisonford">' . $type . ' ' . $value . '</font>';
-			$out   = \esc_html( $name ) . ' => ' . $value;
+			$value   = '<font color="harrisonford">' . $type . ' ' . $value . '</font>';
+			$out     = \esc_html( $name ) . ' => ' . $value;
 			$output .= '<span style="background:#dadada">' . $out . '</span>' . PHP_EOL;
 		}
 
@@ -690,7 +698,8 @@ final class Debug implements Debug_Interface {
 			}
 
 			$value = '<font color="harrisonford">' . $type . ' ' . $value . '</font>';
-			$out = \esc_html( $name ) . ' => ' . $value;
+			$out   = \esc_html( $name ) . ' => ' . $value;
+
 			$output .= $out . PHP_EOL;
 		}
 

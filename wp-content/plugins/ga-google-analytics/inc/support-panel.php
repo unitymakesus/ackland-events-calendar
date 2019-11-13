@@ -36,6 +36,9 @@ $array = array(
 	8  => '<a target="_blank" rel="noopener noreferrer" href="https://htaccessbook.com/" title="Optimize and Secure with .htaccess">
 				<img width="125" height="125" src="'. $plugin_url .'img/250x250-htaccess-made-easy.jpg" alt=".htaccess made easy" />
 			</a>',
+	9  => '<a target="_blank" rel="noopener noreferrer" href="https://plugin-planet.com/ga-google-analytics-pro/" title="Connect Google Analytics to WordPress">
+				<img width="125" height="125" src="'. $plugin_url .'img/250x250-ga-pro.jpg" alt="GA Google Analytics Pro" />
+			</a>',
 	
 );
 		

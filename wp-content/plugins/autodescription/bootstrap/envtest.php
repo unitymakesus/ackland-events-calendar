@@ -1,13 +1,18 @@
 <?php
 /**
- * @package The_SEO_Framework/Bootstrap
+ * @package The_SEO_Framework\Bootstrap\Install
+ *
+ * @NOTE This file MUST be written according to WordPress' minimum PHP requirements.
+ *       Which is PHP 5.2.
+ * When we only support WordPress 5.2+, it'll be PHP 5.6.
+ * When we only support WordPress 5.4?+, it'll be PHP 7.1.
  */
 
 defined( 'THE_SEO_FRAMEWORK_DB_VERSION' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2018 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -26,9 +31,6 @@ defined( 'THE_SEO_FRAMEWORK_DB_VERSION' ) or die;
  * This file holds functions for testing the plugin after upgrade.
  * This file will only be called ONCE if the required version option is lower
  * compared to The SEO Framework version constant.
- *
- * @NOTE This file MUST be written according to WordPress' minimum PHP requirements.
- *       Which is PHP 5.2.
  *
  * @since 3.1.0
  * @access private
@@ -68,13 +70,15 @@ function the_seo_framework_pre_boot_test() {
 	}
 
 	$requirements = array(
-		'php' => '50400',
-		'wp'  => '37965',
+		'php' => 50600,
+		'wp'  => '4.9-dev',
 	);
 
+	// phpcs:disable, Generic.Formatting.MultipleStatementAlignment, WordPress.WhiteSpace.PrecisionAlignment
 	   ! defined( 'PHP_VERSION_ID' ) || PHP_VERSION_ID < $requirements['php'] and $test = 1
-	or $GLOBALS['wp_db_version'] < $requirements['wp'] and $test = 2
+	or version_compare( $GLOBALS['wp_version'], $requirements['wp'], '<' ) and $test = 2
 	or $test = true;
+	// phpcs:enable, Generic.Formatting.MultipleStatementAlignment, WordPress.WhiteSpace.PrecisionAlignment
 
 	//* All good.
 	if ( true === $test ) {
@@ -83,7 +87,7 @@ function the_seo_framework_pre_boot_test() {
 	}
 
 	if ( $ms ) {
-		$_plugins = get_site_option( 'active_sitewide_plugins' );
+		$_plugins     = get_site_option( 'active_sitewide_plugins' );
 		$network_mode = isset( $_plugins[ plugin_basename( THE_SEO_FRAMEWORK_PLUGIN_BASE_FILE ) ] );
 	} else {
 		$network_mode = false;
@@ -105,7 +109,7 @@ function the_seo_framework_pre_boot_test() {
 	switch ( $test ) :
 		case 1:
 			//* PHP requirements not met, always count up to encourage best standards.
-			$requirement = 'PHP 5.4.0 or later';
+			$requirement = 'PHP 5.5.0 or later';
 			$issue       = 'PHP version';
 			$version     = PHP_VERSION;
 			$subtitle    = 'Server Requirements';
@@ -113,7 +117,7 @@ function the_seo_framework_pre_boot_test() {
 
 		case 2:
 			//* WordPress requirements not met.
-			$requirement = 'WordPress 4.6 or later';
+			$requirement = 'WordPress 4.9 or later';
 			$issue       = 'WordPress version';
 			$version     = $GLOBALS['wp_version'];
 			$subtitle    = 'WordPress Requirements';
@@ -134,9 +138,12 @@ function the_seo_framework_pre_boot_test() {
 		sprintf(
 			'<p><strong>The SEO Framework</strong> requires <em>%s</em>. Sorry about that!<br>Your %s is: <code>%s</code></p>
 			<p>Do you want to <strong><a onclick="window.history.back()" href="%s">go back</a></strong>?</p>',
-			esc_html( $requirement ), esc_html( $issue ), esc_html( $version ), esc_url( $pluginspage )
+			esc_html( $requirement ),
+			esc_html( $issue ),
+			esc_html( $version ),
+			esc_url( $pluginspage )
 		),
-		sprintf( 'The SEO Framework &laquo; %s', esc_attr( $subtitle ) ),
+		esc_attr( sprintf( 'The SEO Framework &laquo; %s', $subtitle ) ),
 		array( 'response' => intval( $response ) )
 	);
 }

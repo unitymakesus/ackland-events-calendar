@@ -3,13 +3,13 @@
 Plugin Name: Contact Form 7: Accessible Defaults
 Plugin URI: http://www.joedolson.com/
 Description: Sets up an accessible default form when using Contact Form 7. 
-Version: 1.1.4
+Version: 1.1.5
 Author: Joseph Dolson
 Author URI: http://www.joedolson.com/
 Text Domain: contact-form-7-accessible-defaults
 Domain Path: /lang/
 */
-/*  Copyright 2015-2017  Joseph C Dolson  (email : plugins@joedolson.com)
+/*  Copyright 2015-2019  Joseph C Dolson  (email : plugins@joedolson.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

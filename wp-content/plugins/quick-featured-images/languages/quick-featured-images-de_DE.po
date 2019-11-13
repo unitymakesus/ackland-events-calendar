@@ -4,22 +4,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Quick Featured Images\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/plugins/quick-featured-images\n"
-"POT-Creation-Date: 2018-07-23 23:36+0200\n"
-"PO-Revision-Date: 2018-07-23 23:36+0200\n"
+"POT-Creation-Date: 2019-11-06 13:29+0100\n"
+"PO-Revision-Date: 2019-11-06 13:35+0100\n"
 "Last-Translator: Martin Stehle <m.stehle@gmx.de>\n"
 "Language-Team: Martin Stehle <m.stehle@gmx.de>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-KeywordsList: __;_e;_n;_x;esc_html_e;esc_html__;esc_attr_e;"
 "esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/class-quick-featured-images-admin.php:213
+#: admin/class-quick-featured-images-admin.php:215
 msgid ""
 "Your time-saving Swiss Army Knife for featured images: Set, replace and "
 "delete them in bulk, in posts lists and set default images for future posts."
@@ -28,7 +28,7 @@ msgstr ""
 "sie massenhaft, in Beitragslisten und definiere Standardbilder für "
 "zukünftige Beiträge."
 
-#: admin/class-quick-featured-images-admin.php:276
+#: admin/class-quick-featured-images-admin.php:278
 #, php-format
 msgid ""
 "The plugin requires WordPress version %s or higher. Therefore, WordPress did "
@@ -39,65 +39,65 @@ msgstr ""
 "es nicht aktiviert. Falls du dieses Plugin nutzen willst, aktualisiere die "
 "WordPress-Dateien auf die neueste Version."
 
-#: admin/class-quick-featured-images-admin.php:482
+#: admin/class-quick-featured-images-admin.php:484
 #, php-format
 msgid "Welcome to %s! You can find the plugin at %s."
 msgstr "Willkommen zu %s! Du kannst das Plugin finden unter %s."
 
-#: admin/class-quick-featured-images-columns.php:295
-#: admin/class-quick-featured-images-columns.php:456
+#: admin/class-quick-featured-images-columns.php:263
+msgid "(external image)"
+msgstr "(externes Bild)"
+
+#: admin/class-quick-featured-images-columns.php:264
 #, php-format
 msgid "Change &#8220;%s&#8221;"
 msgstr "Ändere &#8220;%s&#8221;"
 
-#: admin/class-quick-featured-images-columns.php:320
-#: admin/class-quick-featured-images-columns.php:457
+#: admin/class-quick-featured-images-columns.php:265
 #, php-format
 msgid "Remove &#8220;%s&#8221;"
 msgstr "Lösche &#8220;%s&#8221;"
 
-#: admin/class-quick-featured-images-columns.php:364
-#: admin/class-quick-featured-images-columns.php:377
-#: admin/class-quick-featured-images-columns.php:529
+#: admin/class-quick-featured-images-columns.php:266
 #, php-format
 msgid "Set image for &#8220;%s&#8221;"
 msgstr "Stelle Bild für &#8220;%s&#8221; ein"
 
-#: admin/class-quick-featured-images-defaults.php:275
+#: admin/class-quick-featured-images-defaults.php:277
 msgid "Preset Featured Images"
 msgstr "Voreingestellte Beitragsbilder"
 
-#: admin/class-quick-featured-images-defaults.php:286
+#: admin/class-quick-featured-images-defaults.php:288
 msgid "Set default featured images for future posts"
 msgstr "Stelle vorgegebene Beitragsbilder für zukünftige Inhalte ein"
 
-#: admin/class-quick-featured-images-settings.php:230
+#: admin/class-quick-featured-images-settings.php:232
 msgid "Set the visibility of columns of featured images in posts lists"
 msgstr ""
 "Stelle die Sichtbarkeit der Spalten für Beitragsbilder in "
 "Beitragsübersichten ein"
 
-#: admin/class-quick-featured-images-settings.php:380
+#: admin/class-quick-featured-images-settings.php:382
 msgid "Columns for featured images in posts lists"
 msgstr "Spalten für Beitragsbilder in Beitragsübersichten"
 
-#: admin/class-quick-featured-images-settings.php:388
+#: admin/class-quick-featured-images-settings.php:390
 msgid "Show additional column for featured images in lists of"
 msgstr "Zeige eine zusätzliche Spalte für Beitragsbilder in Übersichten"
 
-#: admin/class-quick-featured-images-settings.php:393
+#: admin/class-quick-featured-images-settings.php:395
 msgid "Posts list with image column"
 msgstr "Inhaltsliste mit Bildspalte"
 
-#: admin/class-quick-featured-images-settings.php:416
+#: admin/class-quick-featured-images-settings.php:418
 msgid "Visibility of the plugin"
 msgstr "Sichtbarkeit des Plugins"
 
-#: admin/class-quick-featured-images-settings.php:424
+#: admin/class-quick-featured-images-settings.php:426
 msgid "Which user role may see the plugin?"
 msgstr "Welche Nutzerrolle darf das Plugin sehen?"
 
-#: admin/class-quick-featured-images-settings.php:556
+#: admin/class-quick-featured-images-settings.php:558
 msgid ""
 "Activate the checkboxes at each post type to show the extra columns in the "
 "post lists."
@@ -105,17 +105,17 @@ msgstr ""
 "Aktiviere die Checkboxen bei jedem Inhaltstyp, um die zusätzliche Spalte in "
 "den Beitragsübersichten anzuzeigen."
 
-#: admin/class-quick-featured-images-settings.php:568
+#: admin/class-quick-featured-images-settings.php:570
 msgid "Minimum user role to see the plugin in the backend"
 msgstr "Mindestrolle, um das Plugin im Backend zu sehen"
 
-#: admin/class-quick-featured-images-settings.php:604
+#: admin/class-quick-featured-images-settings.php:606
 msgid "Select the minimum user role a user must have to see the plugin."
 msgstr ""
 "Stelle die Mindestrolle ein, die ein Nutzer haben muss, um das Plugin zu "
 "sehen."
 
-#: admin/class-quick-featured-images-settings.php:609
+#: admin/class-quick-featured-images-settings.php:611
 #, php-format
 msgid ""
 "The rules as set in &#8220;%s&#8221; work on posts independently of this "
@@ -124,7 +124,7 @@ msgstr ""
 "Die Regeln, wie in &#8220;%s&#8221; eingestellt, funktionieren unabhängig "
 "von dieser Einstellung."
 
-#: admin/class-quick-featured-images-settings.php:614
+#: admin/class-quick-featured-images-settings.php:616
 msgid ""
 "This setting controls as well whether a user will see in an image column the "
 "thumbnails with action links or the thumbnails only. To switch image columns "
@@ -134,11 +134,11 @@ msgstr ""
 "Vorschaubilder mit zusätzlichen Optionen oder nur die Vorschaubilder sehen "
 "wird. Um die Bilderspalten an- und auszuschalten, nutze den oberen Abschnitt."
 
-#: admin/class-quick-featured-images-settings.php:615
+#: admin/class-quick-featured-images-settings.php:617
 msgid "This page is accessible for administrators only."
 msgstr "Diese Seite ist nur Administratoren zugänglich."
 
-#: admin/class-quick-featured-images-settings.php:625
+#: admin/class-quick-featured-images-settings.php:627
 msgid ""
 "The additional columns give you a quick overview about all used featured "
 "images for every post. The Featured Image column is sortable."
@@ -147,147 +147,147 @@ msgstr ""
 "verwendeten Beitragsbilder eines jeden Beitrags. Die Spalte der "
 "Beitragsbilder ist sortierbar."
 
-#: admin/class-quick-featured-images-settings.php:634
+#: admin/class-quick-featured-images-settings.php:636
 msgid "Controls which minimum user role can see the plugin."
 msgstr "Regelt, welche Mindestrolle das Plugin sehen kann."
 
-#: admin/class-quick-featured-images-tools.php:471
+#: admin/class-quick-featured-images-tools.php:473
 #, php-format
 msgid "Wrong image ID %d"
 msgstr "Falsche Bild-ID %d"
 
-#: admin/class-quick-featured-images-tools.php:573
+#: admin/class-quick-featured-images-tools.php:575
 msgid "Select"
 msgstr "Auswählen"
 
-#: admin/class-quick-featured-images-tools.php:574
+#: admin/class-quick-featured-images-tools.php:576
 msgid "Add filter"
 msgstr "Filter hinzufügen"
 
-#: admin/class-quick-featured-images-tools.php:575
+#: admin/class-quick-featured-images-tools.php:577
 msgid "Refine"
 msgstr "Verfeinern"
 
-#: admin/class-quick-featured-images-tools.php:576
+#: admin/class-quick-featured-images-tools.php:578
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: admin/class-quick-featured-images-tools.php:577
+#: admin/class-quick-featured-images-tools.php:579
 msgid "Perform"
 msgstr "Umsetzen"
 
-#: admin/class-quick-featured-images-tools.php:581
+#: admin/class-quick-featured-images-tools.php:583
 msgid "Set the selected image as new featured image"
 msgstr "Füge das ausgewählte Bild als neues Beitragsbild hinzu"
 
-#: admin/class-quick-featured-images-tools.php:582
+#: admin/class-quick-featured-images-tools.php:584
 msgid "Replace featured images by the selected image"
 msgstr "Ersetze mindestens ein Beitragsbild durch das ausgewählte Bild"
 
-#: admin/class-quick-featured-images-tools.php:583
+#: admin/class-quick-featured-images-tools.php:585
 msgid "Remove the selected image as featured image"
 msgstr "Entferne das ausgewählte Bild als Beitragsbild"
 
-#: admin/class-quick-featured-images-tools.php:586
+#: admin/class-quick-featured-images-tools.php:588
 msgid "Remove any image as featured image"
 msgstr "Entferne jedes Bild als Beitragsbild"
 
-#: admin/class-quick-featured-images-tools.php:587
+#: admin/class-quick-featured-images-tools.php:589
 msgid "Remove all featured images without existing image files"
 msgstr "Entferne alle Beitragsbilder ohne vorhandene Bilddateien"
 
-#: admin/class-quick-featured-images-tools.php:590
+#: admin/class-quick-featured-images-tools.php:592
 msgid "Set multiple images randomly as featured images"
 msgstr ""
 "Füge mehrere Bilder in zufälliger Ordnung als neue Beitragsbilder hinzu"
 
-#: admin/class-quick-featured-images-tools.php:594
+#: admin/class-quick-featured-images-tools.php:596
 msgid "Overwrite featured images"
 msgstr "Überschreibe Beitragsbilder"
 
-#: admin/class-quick-featured-images-tools.php:595
+#: admin/class-quick-featured-images-tools.php:597
 msgid "Consider only posts without any featured image"
 msgstr "Berücksichtige nur Beiträge ohne Beitragsbild"
 
-#: admin/class-quick-featured-images-tools.php:599
+#: admin/class-quick-featured-images-tools.php:601
 msgid "Post Type Filter"
 msgstr "Inhaltstypfilter"
 
-#: admin/class-quick-featured-images-tools.php:600
+#: admin/class-quick-featured-images-tools.php:602
 msgid "Category Filter"
 msgstr "Kategorienfilter"
 
-#: admin/class-quick-featured-images-tools.php:601
+#: admin/class-quick-featured-images-tools.php:603
 msgid "Tag Filter"
 msgstr "Schlagwortfilter"
 
-#: admin/class-quick-featured-images-tools.php:630
+#: admin/class-quick-featured-images-tools.php:632
 msgid "Image width in pixels lower than"
 msgstr "Bildbreite in Pixeln kleiner als"
 
-#: admin/class-quick-featured-images-tools.php:631
+#: admin/class-quick-featured-images-tools.php:633
 msgid "Image height in pixels lower than"
 msgstr "Bildhöhe in Pixeln kleiner als"
 
-#: admin/class-quick-featured-images-tools.php:740
+#: admin/class-quick-featured-images-tools.php:742
 #, php-format
 msgid "The input field %s is empty."
 msgstr "Das Eingabefeld %s ist leer."
 
-#: admin/class-quick-featured-images-tools.php:741
+#: admin/class-quick-featured-images-tools.php:743
 msgid "Type in a value into the input field."
 msgstr "Gebe in das Eingabefeld einen Wert ein."
 
-#: admin/class-quick-featured-images-tools.php:744
+#: admin/class-quick-featured-images-tools.php:746
 #, php-format
 msgid "%s is not defined."
 msgstr "%s ist nicht definiert."
 
-#: admin/class-quick-featured-images-tools.php:745
+#: admin/class-quick-featured-images-tools.php:747
 msgid "Check how to define the value."
 msgstr "Prüfe nach, wie der Wert gesetzt wird."
 
-#: admin/class-quick-featured-images-tools.php:748
+#: admin/class-quick-featured-images-tools.php:750
 msgid "There is no selected image."
 msgstr "Es gibt kein ausgewähltes Bild."
 
-#: admin/class-quick-featured-images-tools.php:749
+#: admin/class-quick-featured-images-tools.php:751
 msgid "Select an image from the media library."
 msgstr "Wähle ein Bild aus der Mediathek aus."
 
-#: admin/class-quick-featured-images-tools.php:752
+#: admin/class-quick-featured-images-tools.php:754
 #: admin/views/section_image.php:51
 msgid "You have not selected an action."
 msgstr "Du hast keine Aktion ausgewählt."
 
-#: admin/class-quick-featured-images-tools.php:753
+#: admin/class-quick-featured-images-tools.php:755
 msgid "Start again and select which action you want to apply."
 msgstr "Fange neu an und wähle aus, welche Aktion du anwenden willst."
 
-#: admin/class-quick-featured-images-tools.php:756
+#: admin/class-quick-featured-images-tools.php:758
 #, php-format
 msgid "The input field %s has an invalid value."
 msgstr "Das Eingabefeld %s hat einen ungültigen Wert."
 
-#: admin/class-quick-featured-images-tools.php:757
+#: admin/class-quick-featured-images-tools.php:759
 msgid "Type in valid values in the input field."
 msgstr "Gebe einen gültigen Wert in das Eingabefeld ein."
 
-#: admin/class-quick-featured-images-tools.php:761
+#: admin/class-quick-featured-images-tools.php:763
 msgid "Type in values stored by WordPress."
 msgstr "Gebe von WordPress gespeicherte Werte ein."
 
-#: admin/class-quick-featured-images-tools.php:1930
+#: admin/class-quick-featured-images-tools.php:1932
 msgid "Set, replace, remove"
 msgstr "Setzen, tauschen, löschen"
 
-#: admin/class-quick-featured-images-tools.php:1941
+#: admin/class-quick-featured-images-tools.php:1943
 msgid "Bulk set, replace and remove featured images for existing posts"
 msgstr ""
 "Massenweises Hinzufügen, Ersetzen und Entfernen von Beitragsbildern für "
 "bestehende Inhalte"
 
-#: admin/class-quick-featured-images-tools.php:2050
+#: admin/class-quick-featured-images-tools.php:2052
 msgid "Bulk set as featured image"
 msgstr "Als Beitragsbild setzen"
 
@@ -500,7 +500,7 @@ msgstr ""
 msgid "Choose Images"
 msgstr "Bilder auswählen"
 
-#: admin/views/form_select.php:31 admin/views/form_start.php:120
+#: admin/views/form_select.php:31 admin/views/form_start.php:121
 msgid "Use CTRL for multiple choice"
 msgstr "Drücke STRG für Mehrfachauswahl"
 
@@ -533,9 +533,8 @@ msgstr ""
 "Option aktiviiert ist"
 
 #: admin/views/form_select.php:72
-msgid "There are two more options in the premium version for random images:"
-msgstr ""
-"In der Premium-Version gibt es zwei weitere Optionen for Zufallsbilder:"
+msgid "There are two more options in the Pro version for random images:"
+msgstr "In der Pro-Version gibt es zwei weitere Optionen für Zufallsbilder:"
 
 #: admin/views/form_select.php:74
 msgid "Use each selected image only once"
@@ -549,16 +548,17 @@ msgstr ""
 
 #: admin/views/form_select.php:77 admin/views/form_select.php:115
 #: admin/views/form_select.php:119 admin/views/form_start.php:113
-#: admin/views/section_defaults.php:520 admin/views/section_footer.php:58
-#: admin/views/section_overview.php:91
-msgid "Get the premium version"
-msgstr "Hole dir die Premium-Version"
+#: admin/views/form_start.php:114 admin/views/section_defaults.php:220
+#: admin/views/section_footer.php:58 admin/views/section_overview.php:91
+msgid "Get the Pro version"
+msgstr "Hole dir die Pro-Version"
 
 # Path to language site
 #: admin/views/form_select.php:77 admin/views/form_select.php:115
 #: admin/views/form_select.php:119 admin/views/form_start.php:113
-#: admin/views/section_defaults.php:520 admin/views/section_footer.php:58
-#: admin/views/section_overview.php:90 admin/views/section_overview.php:91
+#: admin/views/form_start.php:114 admin/views/section_defaults.php:220
+#: admin/views/section_footer.php:58 admin/views/section_overview.php:90
+#: admin/views/section_overview.php:91
 msgid "/"
 msgstr "/de"
 
@@ -770,6 +770,11 @@ msgstr "Diese Aktionen erfordern kein ausgewähltes Bild."
 msgid "Do you want to assign the first image of each post?"
 msgstr "Willst du das erste Bild jeden Beitrags als Beitragsbild setzen?"
 
+#: admin/views/form_start.php:114 admin/views/section_defaults.php:220
+msgid "Do you want to use external featured images, e.g. from a CDN?"
+msgstr ""
+"Willst du externe Bilder als Beitragsbilder setzen, z.B. von einem CDN?"
+
 #: admin/views/section_defaults.php:16
 msgid "matches"
 msgstr "ist"
@@ -798,11 +803,11 @@ msgstr ""
 "Definiere eine Regel, indem du sowohl ein Bild auswählst als auch eine "
 "Taxonomie und einen Wert. Eine unvollständig angegebene Regel wird ignoriert."
 
-#: admin/views/section_defaults.php:235
+#: admin/views/section_defaults.php:236
 msgid "An image overwrites an existing image"
 msgstr "Ein Bild überschreibt ein bestehendes Bild"
 
-#: admin/views/section_defaults.php:239
+#: admin/views/section_defaults.php:240
 msgid ""
 "Activate to automatically overwrite an existing featured image while saving "
 "a post"
@@ -810,7 +815,7 @@ msgstr ""
 "Überschreibe ein bestehendes Beitragsbild automatisch beim Speichern eines "
 "Beitrags"
 
-#: admin/views/section_defaults.php:241
+#: admin/views/section_defaults.php:242
 msgid ""
 "If activated the rule is used automatically while saving a post to overwrite "
 "an existing featured image with the new one based on the following rules. Do "
@@ -821,11 +826,11 @@ msgstr ""
 "folgenden Regeln zu überschreiben. Verwende diese Option nicht, wenn du "
 "manuell gesetzte Beitragsbilder beibehalten willst."
 
-#: admin/views/section_defaults.php:248
+#: admin/views/section_defaults.php:249
 msgid "Text with images in WordPress editor"
 msgstr "Text mit Bildern im WordPress-Editor"
 
-#: admin/views/section_defaults.php:252
+#: admin/views/section_defaults.php:253
 msgid ""
 "Activate to automatically use the first content image if available in the "
 "media library as featured image while saving a post"
@@ -833,7 +838,7 @@ msgstr ""
 "Verwende erstes Inhaltsbild - sofern in der Mediathek vorhanden - als "
 "Beitragsbild automatisch beim Speichern eines Beitrags"
 
-#: admin/views/section_defaults.php:254
+#: admin/views/section_defaults.php:255
 msgid ""
 "If activated the rule is used automatically while saving a post to set the "
 "first content image - if available in the media library - as the featured "
@@ -845,30 +850,30 @@ msgstr ""
 "als Beitragsbild des Beitrags zu setzen. Sollte der Inhalt kein Bild "
 "enthalten, werden die nächsten Regeln angewandt."
 
-#: admin/views/section_defaults.php:255
+#: admin/views/section_defaults.php:256
 msgid "For which post types should this rule be applied?"
 msgstr "Für welche Inhaltstypen sollte diese Regel angewendet werden?"
 
-#: admin/views/section_defaults.php:282
+#: admin/views/section_defaults.php:283
 msgid ""
 "Select at least one post type, otherwise all post types will be considered."
 msgstr ""
 "Wähle mindestens einen Inhaltstyp, sonst werden alle Inhaltstypen "
 "berücksichtigt."
 
-#: admin/views/section_defaults.php:488
+#: admin/views/section_defaults.php:489
 msgid "Add rule"
 msgstr "Regel hinzufügen"
 
-#: admin/views/section_defaults.php:493
+#: admin/views/section_defaults.php:494
 msgid "Are you sure to remove this rule?"
 msgstr "Willst du diese Regel wirklich löschen?"
 
-#: admin/views/section_defaults.php:496
+#: admin/views/section_defaults.php:497
 msgid "How the rules work"
 msgstr "Wie die Regeln funktionieren"
 
-#: admin/views/section_defaults.php:497
+#: admin/views/section_defaults.php:498
 msgid ""
 "Every time you save a post the post get the featured image if one of the "
 "following rules match a property of the post. You can also set rules for "
@@ -879,7 +884,7 @@ msgstr ""
 "zutrifft. Du kannst die Regeln auch für Seiten und alle anderen "
 "Inhaltstypen, die Beitragsbilder unterstützen, setzen."
 
-#: admin/views/section_defaults.php:498
+#: admin/views/section_defaults.php:499
 msgid ""
 "Regardless of the order in the list the rules are applied in the following "
 "order until a rule and a property of the post fit together:"
@@ -888,35 +893,35 @@ msgstr ""
 "Reihenfolge angewandt, bis eine Regel und eine Eigenschaft des Beitrags "
 "übereinstimmen:"
 
-#: admin/views/section_defaults.php:500
+#: admin/views/section_defaults.php:501
 msgid "found first content image. If not then..."
 msgstr "erstes gefundenes Bild im Beitrag. Wenn nicht, dann..."
 
-#: admin/views/section_defaults.php:501
+#: admin/views/section_defaults.php:502
 msgid "matched custom taxonomy. If not then..."
 msgstr "passende eigene Taxonomie. Wenn nicht, dann..."
 
-#: admin/views/section_defaults.php:502
+#: admin/views/section_defaults.php:503
 msgid "matched tag. If not then..."
 msgstr "passendes Schlagwort. Wenn nicht, dann..."
 
-#: admin/views/section_defaults.php:503
+#: admin/views/section_defaults.php:504
 msgid "matched category. If not then..."
 msgstr "passende Kategorie. Wenn nicht, dann..."
 
-#: admin/views/section_defaults.php:504
+#: admin/views/section_defaults.php:505
 msgid "matched author. If not then..."
 msgstr "passender Autor. Wenn nicht, dann..."
 
-#: admin/views/section_defaults.php:505
+#: admin/views/section_defaults.php:506
 msgid "matched post type. If not then..."
 msgstr "passender Inhaltstyp. Wenn nicht, dann..."
 
-#: admin/views/section_defaults.php:506
+#: admin/views/section_defaults.php:507
 msgid "no featured image."
 msgstr "kein Beitragsbild."
 
-#: admin/views/section_defaults.php:508
+#: admin/views/section_defaults.php:509
 msgid ""
 "Bear in mind that if two or more rules with the same taxonomy would fit to "
 "the post it is unforeseeable which image will become the featured image."
@@ -925,19 +930,19 @@ msgstr ""
 "zu einen Beitrag passen sollten, es nicht voraussagbar ist, welches Bild zum "
 "Beitragsbild wird."
 
-#: admin/views/section_defaults.php:509
-msgid "Additional rules in the premium version"
-msgstr "Zusätzliche Regeln in der Premium-Version"
+#: admin/views/section_defaults.php:510
+msgid "Additional rules in the Pro version"
+msgstr "Zusätzliche Regeln in der Pro-Version"
 
-#: admin/views/section_defaults.php:511
+#: admin/views/section_defaults.php:512
 msgid "Multiple images to set them randomly as featured image"
 msgstr "Mehrere Bilder als zufällige neue Beitragsbilder einstellen"
 
-#: admin/views/section_defaults.php:512
+#: admin/views/section_defaults.php:513
 msgid "Random featured images at each page load"
 msgstr "Zufällige Beitragsbilder bei jedem Seitenaufruf"
 
-#: admin/views/section_defaults.php:513
+#: admin/views/section_defaults.php:514
 msgid ""
 "The first content image can be also an image from an external server to set "
 "it as automated featured image"
@@ -945,7 +950,7 @@ msgstr ""
 "Das erste Bild im Beitrag kann auch von einem externen Server sein, um es "
 "als Beitragsbild zu setzen"
 
-#: admin/views/section_defaults.php:514
+#: admin/views/section_defaults.php:515
 msgid ""
 "Remove the first content image automatically after the featured image was "
 "set successfully"
@@ -953,21 +958,21 @@ msgstr ""
 "Entferne das erste Bild im Inhalt automatisch, nachdem es erfolgreich als "
 "Beitragsbild gesetzt wurde"
 
-#: admin/views/section_defaults.php:515
+#: admin/views/section_defaults.php:516
 msgid "Match with a search string in post title"
 msgstr "Passend zum Suchbegriff im Beitragstitel"
 
-#: admin/views/section_defaults.php:516
+#: admin/views/section_defaults.php:517
 msgid "Match with a selected post format"
 msgstr "Passend zum ausgewählten Beitragsformat"
 
-#: admin/views/section_defaults.php:517
+#: admin/views/section_defaults.php:518
 msgid "User defined order of rules"
 msgstr "Benutzerdefinierte Reihenfolge der Regeln"
 
-#: admin/views/section_defaults.php:518
-msgid "Import your rules from this plugin into the premium plugin"
-msgstr "Importiere deine Regeln von diesem Plugin in das Premium-Plugin"
+#: admin/views/section_defaults.php:519
+msgid "Import your rules from this plugin into the Pro plugin"
+msgstr "Importiere deine Regeln von diesem Plugin in das Pro-Plugin"
 
 #: admin/views/section_errormsg.php:1
 msgid "Error"
@@ -1091,8 +1096,8 @@ msgid "Manage featured images in a quick way"
 msgstr "Verwalte Beitragsbilder auf schnelle Art"
 
 #: admin/views/section_overview.php:89
-msgid "The premium version"
-msgstr "Die Premium-Version"
+msgid "The Pro version"
+msgstr "Die Pro-Version"
 
 #: admin/views/section_results.php:1
 msgid "Results of the action"

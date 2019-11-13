@@ -16,6 +16,9 @@ class Advanced_Excerpt {
 		'ellipsis' => '&hellip;',
 		'read_more' => 'Read the rest',
 		'add_link' => 0,
+		'link_new_tab' => 0,
+		'link_screen_reader' => 0,
+		'link_exclude_length' => 0,
 		'allowed_tags' => array(),
 		'the_excerpt' => 1,
 		'the_content' => 1,
@@ -83,11 +86,29 @@ class Advanced_Excerpt {
 		 * and instead use the_content(). As such, we also need to hook into the_content().
 		 * To ensure we're not changing the content of single posts / pages we automatically exclude 'singular' page types.
 		 */
+
+        add_filter( 'wppsac_excerpt', array( $this, 'filter_content' ) );
+
 		$page_types = $this->get_current_page_types();
 		$skip_page_types = array_unique( array_merge( array( 'singular' ), $this->options['exclude_pages'] ) );
 		$skip_page_types = apply_filters( 'advanced_excerpt_skip_page_types', $skip_page_types ); 
 		$page_type_matches = array_intersect( $page_types, $skip_page_types );
 		if ( !empty( $page_types ) && !empty( $page_type_matches ) ) return;
+
+		// skip woocommerce products
+		if ( in_array( 'woocommerce', $skip_page_types ) && get_post_type( get_the_ID() ) == 'product' ) {
+			return;
+		}
+
+        // conflict with WPTouch
+        if ( function_exists( 'wptouch_is_mobile_theme_showing' ) && wptouch_is_mobile_theme_showing() ) {
+            return;
+        }
+
+        // skip bbpress
+        if ( function_exists( 'is_bbpress' ) && is_bbpress() ) {
+            return;
+        }
 
 		if ( 1 == $this->options['the_excerpt'] ) {
 			remove_all_filters( 'get_the_excerpt' );
@@ -216,11 +237,16 @@ class Advanced_Excerpt {
 	}
 
 	function filter( $content ) {
+
 		extract( wp_parse_args( $this->options, $this->default_options ), EXTR_SKIP );
 
 		if ( true === apply_filters( 'advanced_excerpt_skip_excerpt_filtering', false ) ) {
 			return $content;
-		}
+        }
+        
+        if ( is_post_type_archive( 'tribe_events' ) ) {
+            return $content;
+        }
 
 		global $post;
 		if ( $the_content_no_break && false !== strpos( $post->post_content, '<!--more-->' ) && 'content' == $this->filter_type ) {
@@ -250,7 +276,7 @@ class Advanced_Excerpt {
 
 		// add our filter back in
 		if ( $content_has_filter ) { 
-			add_filter( 'the_content', array( $this, 'filter_content' ) );
+            add_filter( 'the_content', array( $this, 'filter_content' ) );
 		}
 
 		// From the default wp_trim_excerpt():
@@ -282,12 +308,19 @@ class Advanced_Excerpt {
 		// Create the excerpt
 		$text = $this->text_excerpt( $text, $length, $length_type, $finish );
 
+		// lengths
+		$text_length_before = strlen( trim( $text_before_trimming ) );
+		$text_length_after = strlen( trim( $text ) );
+
 		// Add the ellipsis or link
-		if ( !apply_filters( 'advanced_excerpt_disable_add_more', false, $text_before_trimming, $this->options ) ) {
-			$text = $this->text_add_more( $text, $ellipsis, ( $add_link ) ? $read_more : false );
+		if ( ! apply_filters( 'advanced_excerpt_disable_add_more', false, $text_before_trimming, $this->options ) ) {
+			if ( ! $link_exclude_length || $text_length_after < $text_length_before ) {
+				$text = $this->text_add_more( $text, $ellipsis, ( $add_link ) ? $read_more : false, ( $link_new_tab ) ? true : false, ( $link_screen_reader ) ? true : false );
+			}
 		}
 
 		return apply_filters( 'advanced_excerpt_content', $text );
+
 	}
 
 	function text_excerpt( $text, $length, $length_type, $finish ) {
@@ -310,8 +343,12 @@ class Advanced_Excerpt {
 				if ( 'words' == $length_type ) { // Count words
 					$w++;
 				} else { // Count/trim characters
-					$chars = trim( $t ); // Remove surrounding space
-					$c = strlen( $chars );
+					if ( $finish == 'exact_w_spaces' ) {
+						$chars = $t;
+					} else {
+						$chars = trim( $t );
+					}
+					$c = mb_strlen( $chars );
 					if ( $c + $w > $length && 'sentence' != $finish ) { // Token is too long
 						$c = ( 'word' == $finish ) ? $c : $length - $w; // Keep token to finish word
 						$t = substr( $t, 0, $c );
@@ -326,10 +363,27 @@ class Advanced_Excerpt {
 		return trim( force_balance_tags( $out ) );
 	}
 
-	public function text_add_more( $text, $ellipsis, $read_more ) {
+	public function text_add_more( $text, $ellipsis, $read_more, $link_new_tab, $link_screen_reader ) {
+
 		if ( $read_more ) {
-			$link_template = apply_filters( 'advanced_excerpt_read_more_link_template', ' <a href="%1$s" class="read-more">%2$s</a>', get_permalink(), $read_more );
-			$ellipsis .= sprintf( $link_template, get_permalink(), $read_more );
+
+			$screen_reader_html = '';
+			if ( $link_screen_reader ) {
+				$screen_reader_html = '<span class="screen-reader-text"> &#8220;' . get_the_title() . '&#8221;</span>';
+			}
+
+			if ( $link_new_tab ) {
+				$link_template = apply_filters( 'advanced_excerpt_read_more_link_template', ' <a href="%1$s" class="read-more" target="_blank">%2$s %3$s</a>', get_permalink(), $read_more );
+			} else {
+				$link_template = apply_filters( 'advanced_excerpt_read_more_link_template', ' <a href="%1$s" class="read-more">%2$s %3$s</a>', get_permalink(), $read_more );
+			}
+			
+			$read_more = str_replace( '{title}', get_the_title(), $read_more );
+			$read_more = do_shortcode( $read_more );
+			$read_more = apply_filters( 'advanced_excerpt_read_more_text', $read_more );
+
+			$ellipsis .= sprintf( $link_template, get_permalink(), $read_more, $screen_reader_html );
+
 		}
 
 		$pos = strrpos( $text, '</' );	
@@ -342,7 +396,7 @@ class Advanced_Excerpt {
 			 * There was previously a problem where our 'read-more' links were being appending incorrectly into unsuitable HTML tags.
 			 * As such we're now maintaining a whitelist of HTML tags that are suitable for being appended into.
 			 */
-			$allow_tags_to_append_into = apply_filters( 'advanced_excerpt_allow_tags_to_append_into', array( 'p', 'div', 'article', 'section' ) );
+			$allow_tags_to_append_into = apply_filters( 'advanced_excerpt_allow_tags_to_append_into', array( 'p', 'article', 'section' ) );
 
 			if( !in_array( $last_tag, $allow_tags_to_append_into ) ) {
 				// After the content
@@ -363,7 +417,7 @@ class Advanced_Excerpt {
 		$_POST = stripslashes_deep( $_POST );
 		$this->options['length'] = (int) $_POST['length'];
 
-		$checkbox_options = array( 'no_custom', 'no_shortcode', 'add_link', 'the_excerpt', 'the_content', 'the_content_no_break' );
+		$checkbox_options = array( 'no_custom', 'no_shortcode', 'add_link', 'link_new_tab', 'link_screen_reader', 'link_exclude_length', 'the_excerpt', 'the_content', 'the_content_no_break' );
 
 		foreach ( $checkbox_options as $checkbox_option ) {
 			$this->options[$checkbox_option] = ( isset( $_POST[$checkbox_option] ) ) ? 1 : 0;
@@ -401,6 +455,7 @@ class Advanced_Excerpt {
 			'author'		=> __( 'Author Archive', 'advanced-excerpt' ),
 			'category'		=> __( 'Category Archive', 'advanced-excerpt' ),
 			'tag'			=> __( 'Tag Archive', 'advanced-excerpt' ),
+			'woocommerce'   => __( 'WooCommerce Products', 'advanced-excerpt' ),
 		);
 		$exclude_pages_list = apply_filters( 'advanced_excerpt_exclude_pages_list', $exclude_pages_list );
 

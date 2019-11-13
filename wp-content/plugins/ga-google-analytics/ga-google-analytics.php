@@ -9,10 +9,10 @@
 	Donate link: https://monzillamedia.com/donate.html
 	Contributors: specialk
 	Requires at least: 4.1
-	Tested up to: 5.0
-	Stable tag: 20180828
-	Version: 20180828
-	Requires PHP: 5.2
+	Tested up to: 5.3
+	Stable tag: 20191109
+	Version: 20191109
+	Requires PHP: 5.6.20
 	Text Domain: ga-google-analytics
 	Domain Path: /languages
 	License: GPL v2 or later
@@ -32,7 +32,7 @@
 	You should have received a copy of the GNU General Public License
 	with this program. If not, visit: https://www.gnu.org/licenses/
 	
-	Copyright 2018 Monzilla Media. All rights reserved.
+	Copyright 2019 Monzilla Media. All rights reserved.
 */
 
 if (!defined('ABSPATH')) die();
@@ -60,7 +60,7 @@ if (!class_exists('GA_Google_Analytics')) {
 		
 		function constants() {
 			
-			if (!defined('GAP_VERSION')) define('GAP_VERSION', '20180828');
+			if (!defined('GAP_VERSION')) define('GAP_VERSION', '20191109');
 			if (!defined('GAP_REQUIRE')) define('GAP_REQUIRE', '4.1');
 			if (!defined('GAP_AUTHOR'))  define('GAP_AUTHOR',  'Jeff Starr');
 			if (!defined('GAP_NAME'))    define('GAP_NAME',    __('GA Google Analytics', 'ga-google-analytics'));
@@ -120,11 +120,24 @@ if (!class_exists('GA_Google_Analytics')) {
 		
 		function action_links($links, $file) {
 			
+			if ($file === GAP_FILE && current_user_can('manage_options')) {
+				
+				$settings = '<a href="'. admin_url(GAP_PATH) .'">'. esc_html__('Settings', 'ga-google-analytics') .'</a>';
+				
+				array_unshift($links, $settings);
+				
+			}
+			
 			if ($file === GAP_FILE) {
 				
-				$gap_links = '<a href="'. admin_url(GAP_PATH) .'">'. esc_html__('Settings', 'ga-google-analytics') .'</a>';
+				$pro_href   = 'https://plugin-planet.com/ga-google-analytics-pro/?plugin';
+				$pro_title  = esc_attr__('Get GA Pro!', 'ga-google-analytics');
+				$pro_text   = esc_html__('Go&nbsp;Pro', 'ga-google-analytics');
+				$pro_style  = 'font-weight:bold;';
 				
-				array_unshift($links, $gap_links);
+				$pro = '<a target="_blank" rel="noopener noreferrer" href="'. $pro_href .'" title="'. $pro_title .'" style="'. $pro_style .'">'. $pro_text .'</a>';
+				
+				array_unshift($links, $pro);
 				
 			}
 			
@@ -135,6 +148,12 @@ if (!class_exists('GA_Google_Analytics')) {
 		function plugin_links($links, $file) {
 			
 			if ($file === GAP_FILE) {
+				
+				$home_href  = 'https://perishablepress.com/google-analytics-plugin/';
+				$home_title = esc_attr__('Plugin Homepage', 'ga-google-analytics');
+				$home_text  = esc_html__('Homepage', 'ga-google-analytics');
+				
+				$links[]    = '<a target="_blank" rel="noopener noreferrer" href="'. $home_href .'" title="'. $home_title .'">'. $home_text .'</a>';
 				
 				$rate_href  = 'https://wordpress.org/support/plugin/'. GAP_SLUG .'/reviews/?rate=5#new-post';
 				$rate_title = esc_attr__('Click here to rate and review this plugin on WordPress.org', 'ga-google-analytics');
@@ -328,11 +347,11 @@ if (!class_exists('GA_Google_Analytics')) {
 			if (!isset($input['gap_custom_loc'])) $input['gap_custom_loc'] = null;
 			$input['gap_custom_loc'] = ($input['gap_custom_loc'] == 1 ? 1 : 0);
 			
-			if (isset($input['tracker_object'])) $input['tracker_object'] = stripslashes(trim($input['tracker_object']));
+			if (isset($input['tracker_object'])) $input['tracker_object'] = wp_strip_all_tags(trim($input['tracker_object']));
 			
-			if (isset($input['gap_custom_code'])) $input['gap_custom_code'] = stripslashes(trim($input['gap_custom_code']));
+			if (isset($input['gap_custom_code'])) $input['gap_custom_code'] = wp_strip_all_tags(trim($input['gap_custom_code']));
 			
-			if (isset($input['gap_custom'])) $input['gap_custom'] = stripslashes(trim($input['gap_custom']));
+			if (isset($input['gap_custom'])) $input['gap_custom'] = stripslashes($input['gap_custom']);
 			
 			return $input;
 			

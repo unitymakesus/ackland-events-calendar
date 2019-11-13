@@ -8,7 +8,7 @@
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -40,11 +40,11 @@ window.tsfPT = function( $ ) {
 	/**
 	 * Data property injected by WordPress l10n handler.
 	 *
-	 * @since 3.1.0
-	 * @access private
+	 * @since 4.0.0
+	 * @access public
 	 * @type {(Object<string, *>)|boolean|null} l10n Localized strings
 	 */
-	var l10n = 'undefined' !== typeof tsfPTL10n && tsfPTL10n;
+	const l10n = 'undefined' !== typeof tsfPTL10n && tsfPTL10n;
 
 	/**
 	 * Initializes primary term selection.
@@ -58,16 +58,15 @@ window.tsfPT = function( $ ) {
 	 */
 	const _initPrimaryTerm = () => {
 
-		if ( ! tsf.hasInput || ! Object.keys( l10n.taxonomies ).length )
-			return;
+		if ( ! Object.keys( l10n.taxonomies ).length ) return;
 
-		let taxonomies = l10n.taxonomies,
+		let taxonomies    = l10n.taxonomies,
 			inputTemplate = wp.template( 'tsf-primary-term-selector' ),
-			helpTemplate = wp.template( 'tsf-primary-term-selector-help' );
+			helpTemplate  = wp.template( 'tsf-primary-term-selector-help' );
 
 		let termSelector = document.createElement( 'span' );
-		termSelector.classList.add( 'tsf-primary-term-selector' );
-		termSelector.classList.add( 'tsf-set-primary-term' ); // newline for IE11 compat.
+
+		termSelector.classList.add( 'tsf-primary-term-selector', 'tsf-set-primary-term' );
 
 		(() => {
 			let radio = document.createElement( 'input' );
@@ -75,21 +74,29 @@ window.tsfPT = function( $ ) {
 			termSelector.appendChild( radio );
 		})();
 
-		let input$ = {},
-			checked$ = {},
+		let input$         = {},
+			checked$       = {},
 			uniqueChecked$ = {},
-			box$ = {},
-			primaries = {};
+			box$           = {},
+			primaries      = {};
+
+		const nsAction = ( action, taxonomy ) => action + '.tsfShowPrimary' + taxonomy;
 
 		const addInput = ( taxonomy ) => {
-			let $wrap = $( '#' + taxonomy + 'div' ),
+			let $wrap    = $( '#' + taxonomy + 'div' ),
 				template = inputTemplate( { 'taxonomy' : taxonomies[ taxonomy ] } );
 			$wrap.append( template );
 		}
 		const addHelp = ( taxonomy ) => {
-			let $wrap = $( '#taxonomy-' + taxonomy ),
-				template = helpTemplate( { 'taxonomy' : taxonomies[ taxonomy ] } );
-			$wrap.append( template );
+			let $wrap    = $( '#taxonomy-' + taxonomy ),
+				template = helpTemplate( { 'taxonomy' : taxonomies[ taxonomy ] } ),
+				$ulChild  = $wrap.children( 'ul:first' );
+
+			if ( $ulChild.length ) {
+				$( template ).insertAfter( $ulChild ); // Maintain tab order.
+			} else {
+				$wrap.prepend( template );
+			}
 			tsfTT.triggerReset();
 			fixHelpPos( taxonomy );
 		}
@@ -100,17 +107,17 @@ window.tsfPT = function( $ ) {
 			let $postbox = $( wrap ).closest( '.postbox' );
 			if ( $postbox.length && $postbox.hasClass( 'closed' ) ) return;
 
-			let tab = Array.prototype.slice.call( tabs ).filter( ( el ) => {
+			let tab = [].slice.call( tabs ).filter( ( el ) => {
 				return el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0;
 			} )[0];
 
 			if ( ! tab ) return;
 
 			let offset = tab.scrollHeight > tab.clientHeight
-			           ? tab.offsetWidth - tab.clientWidth + 25 - 2 // 2px is padding or something?
-			           : 25;
+					   ? tab.offsetWidth - tab.clientWidth + 25 - 2 // 2px is padding or something?
+					   : 25;
 
-			if ( tsf.states.isRTL ) {
+			if ( tsf.l10n.states.isRTL ) {
 				wrap.querySelector( '.tsf-primary-term-selector-help-wrap' ).style.left = offset + 'px';
 			} else {
 				wrap.querySelector( '.tsf-primary-term-selector-help-wrap' ).style.right = offset + 'px';
@@ -179,13 +186,21 @@ window.tsfPT = function( $ ) {
 		}
 
 		const setPrimary = ( event ) => {
-			let taxonomy = event.data.taxonomy,
-				value = $( event.target ).closest( 'label' ).find( 'input[type=checkbox]' ).val();
+			let taxonomy = event.data.taxonomy;
+
+			if ( event.target instanceof HTMLInputElement ) {
+				// Stop the loop.
+				event.stopPropagation();
+
+				$( event.target ).closest( '.tsf-set-primary-term' ).trigger( nsAction( 'click', taxonomy ) );
+				// Forward default: Check the button.
+				return true;
+			}
 
 			unsetPrimaries( taxonomy );
-			makePrimary( taxonomy, value );
+			makePrimary( taxonomy, $( event.target ).closest( 'label' ).find( 'input[type=checkbox]' ).val() );
 
-			//= Stop propagation
+			//= Stop default, don't deselect the term.
 			return false;
 		}
 		const toggleShowSwitch = ( event ) => {
@@ -200,40 +215,44 @@ window.tsfPT = function( $ ) {
 			}
 
 			switch ( uniqueChecked$[ taxonomy ].length ) {
-				case 0 :
+				case 0:
 					unsetPrimaries( taxonomy );
 					break;
 
-				case 1 :
+				case 1:
 					makeFirstPrimary( taxonomy );
 					break;
 			}
 		}
 		const appendButton = ( taxonomy, element ) => {
-			let $label;
+			let $label, selector;
 			getInputWithVal( taxonomy, element.value ).each( ( index, e ) => {
 				$label = $( e ).closest( 'label' );
 				if ( ! $label.find( '.tsf-primary-term-selector' ).length ) {
-					$label.find( 'input' ).after( createSelector( taxonomy ) );
+					selector = createSelector( taxonomy );
+					$label.find( 'input' ).after( selector );
 				}
 			} );
 		}
 		const removeButton = ( taxonomy, element ) => {
 			let $label, wasPrimary;
 			getInputWithVal( taxonomy, element.value ).each( ( index, e ) => {
-				$label = $( e ).closest( 'label' );
+				$label     = $( e ).closest( 'label' );
 				wasPrimary = $label.hasClass( 'tsf-is-primary-term' );
+
 				$label.removeClass( 'tsf-is-primary-term' );
+				// This should also remove all attached events.
 				$label.find( '.tsf-primary-term-selector' ).remove();
+
 				if ( wasPrimary ) makeFirstPrimary( taxonomy );
 			} );
 		}
 		const addCheckedNode = ( taxonomy, element ) => {
-			checked$[ taxonomy ] = checked$[ taxonomy ].add( '[value="' + element.value + '"]' );
+			checked$[ taxonomy ]       = checked$[ taxonomy ].add( '[value="' + element.value + '"]' );
 			uniqueChecked$[ taxonomy ] = uniqueChecked$[ taxonomy ].add( element );
 		}
 		const removeCheckedNode = ( taxonomy, element ) => {
-			checked$[ taxonomy ] = checked$[ taxonomy ].not( '[value="' + element.value + '"]' );
+			checked$[ taxonomy ]       = checked$[ taxonomy ].not( '[value="' + element.value + '"]' );
 			uniqueChecked$[ taxonomy ] = uniqueChecked$[ taxonomy ].not( '[value="' + element.value + '"]' );
 		}
 		const togglePostbox = ( event, postbox ) => {
@@ -243,7 +262,7 @@ window.tsfPT = function( $ ) {
 		const initVars = function( taxonomy ) {
 			let $box = getBox( taxonomy, 1 );
 
-			input$[ taxonomy ] = $box.find( 'input[type=checkbox]' );
+			input$[ taxonomy ]   = $box.find( 'input[type=checkbox]' );
 			checked$[ taxonomy ] = $box.find( 'input[type=checkbox]:checked' );
 
 			let found = {}, val;
@@ -266,25 +285,26 @@ window.tsfPT = function( $ ) {
 			}
 		}
 		const initActions = ( taxonomy ) => {
-			let ns = 'tsfShowPrimary' + taxonomy,
-				data = { 'taxonomy': taxonomy },
-				$box = getBox( taxonomy ),
-				$div = $( '#' + taxonomy + 'div' ),
-				$tabs = $( '#' + taxonomy + '-tabs' ),
+			let data      = { 'taxonomy': taxonomy },
+				$box     = getBox( taxonomy ),
+				$div     = $( '#' + taxonomy + 'div' ),
+				$tabs    = $( '#' + taxonomy + '-tabs' ),
 				$postbox = $box.closest( '.postbox' );
 
-			$box.off( 'click.' + ns );
-			$box.on( 'click.' + ns, 'input[type="checkbox"]', data, toggleShowSwitch );
-			$box.on( 'click.' + ns, '.tsf-primary-term-selector', data, setPrimary );
+			let defaultClickAction = nsAction( 'click', taxonomy );
 
-			$div.off( 'wpListAddEnd.' + ns );
-			$div.on( 'wpListAddEnd.' + ns, '#' + taxonomy + 'checklist', updateList );
+			$box.off( defaultClickAction )
+				.on( defaultClickAction, 'input[type="checkbox"]', data, toggleShowSwitch )
+				.on( defaultClickAction, '.tsf-primary-term-selector', data, setPrimary );
 
-			$tabs.off( 'click.' + ns );
-			$tabs.on( 'click.' + ns, 'a', data, fixHelpPosOnTabToggle );
+			$div.off( nsAction( 'wpListAddEnd', taxonomy ) )
+				.on( nsAction( 'wpListAddEnd', taxonomy ), '#' + taxonomy + 'checklist', updateList );
 
-			$postbox.off( 'click.postboxes.' + ns );
-			$postbox.on( 'click.postboxes.' + ns, data, togglePostbox );
+			$tabs.off( defaultClickAction )
+				.on( defaultClickAction, 'a', data, fixHelpPosOnTabToggle );
+
+			$postbox.off( nsAction( 'click.postboxes', taxonomy ) )
+				.on( nsAction( 'click.postboxes', taxonomy ), data, togglePostbox );
 		}
 		const reload = ( taxonomy ) => {
 			getBox( taxonomy ).find( 'input[type="checkbox"]:checked' )
@@ -315,6 +335,7 @@ window.tsfPT = function( $ ) {
 			}
 		}
 
+		// Hook data handles, don't overwrite vars.
 		const init = () => {
 			for ( let taxonomy in taxonomies ) {
 				if ( getBox( taxonomy ).length ) {
@@ -329,8 +350,7 @@ window.tsfPT = function( $ ) {
 		init();
 	}
 
-	//? IE11 Object.assign() alternative.
-	return $.extend( {
+	return Object.assign( {
 		/**
 		 * Initialises all aspects of the scripts.
 		 * You shouldn't call this.
@@ -341,9 +361,13 @@ window.tsfPT = function( $ ) {
 		 * @function
 		 * @return {undefined}
 		 */
-		load: function() {
+		load: () => {
 			$( document.body ).on( 'tsf-onload', _initPrimaryTerm );
 		}
-	}, {} );
+	}, {
+
+	}, {
+		l10n
+	} );
 }( jQuery );
 jQuery( window.tsfPT.load );

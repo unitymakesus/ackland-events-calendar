@@ -5,7 +5,7 @@
  */
 
 import { createTree } from 'jquery.fancytree';
-import Scanner from './directory-scanner';
+import Scanner from '../smush/directory-scanner';
 
 ( function( $ ) {
 	'use strict';
@@ -18,10 +18,18 @@ import Scanner from './directory-scanner';
 		init: function () {
 			const self = this;
 
-			let progress_dialog = $( '#wp-smush-progress-dialog');
+			let progress_dialog = $('#wp-smush-progress-dialog'),
+				totalSteps = 0,
+				currentScanStep = 0;
+
+			// Make sure directory smush vars are set.
+			if ( typeof wp_smushit_data.dir_smush !== 'undefined' ) {
+				totalSteps = wp_smushit_data.dir_smush.totalSteps;
+				currentScanStep = wp_smushit_data.dir_smush.currentScanStep;
+			}
 
 			// Init image scanner.
-			this.scanner = new Scanner( wp_smushit_data.dir_smush.totalSteps, wp_smushit_data.dir_smush.currentScanStep );
+			this.scanner = new Scanner( totalSteps, currentScanStep );
 
 			/**
 			 * Smush translation strings.
@@ -64,7 +72,7 @@ import Scanner from './directory-scanner';
 			$( 'body' ).on( 'click', 'a.wp-smush-dir-link', function ( e ) {
 				if ( $( 'div.sui-wrap button.wp-smush-browse' ).length > 0 ) {
 					e.preventDefault();
-					SUI.dialogs["wp-smush-list-dialog"].show();
+					self.showSmushDialog();
 					//Display File tree for Directory Smush
 					self.initFileTree();
 				}
@@ -109,8 +117,7 @@ import Scanner from './directory-scanner';
 				};
 
 				$.get( ajaxurl, param, function ( response ) {
-					// Close the dialog.
-					SUI.dialogs['wp-smush-list-dialog'].hide();
+					self.hideSmushDialog();
 
 					// TODO: check for errors.
 					self.scanner = new Scanner( response.data, 0 );
@@ -126,7 +133,7 @@ import Scanner from './directory-scanner';
 				$( '.wp-smush-browse' ).removeAttr( 'disabled' );
 
 				// Close the dialog.
-				SUI.dialogs['wp-smush-list-dialog'].hide();
+				self.hideSmushDialog();
 
 				$( '.wp-smush-select-dir, button.wp-smush-browse, a.wp-smush-dir-link' ).removeAttr( 'disabled' );
 
@@ -137,7 +144,7 @@ import Scanner from './directory-scanner';
 			/**
 			 * Cancel scan.
 			 */
-			progress_dialog.on( 'click', '.sui-icon-close, .sui-dialog-close, .wp-smush-cancel-dir', function ( e ) {
+			progress_dialog.on( 'click', '#cancel-directory-smush, .sui-dialog-close, .wp-smush-cancel-dir', function ( e ) {
 				e.preventDefault();
 				// Display the spinner
 				$( this ).parent().find( '.add-dir-loader' ).addClass( 'sui-icon-loader sui-loading' );
@@ -154,42 +161,22 @@ import Scanner from './directory-scanner';
 		},
 
 		/**
-		 * Get directory list using Ajax.
-		 *
-		 * @param {string} node  Node for which to get the directory list.
-		 *
-		 * @returns {string}
-		 */
-		getDirectoryList: function ( node = '' ) {
-			let res = '';
-
-			$.ajax( {
-				type: "GET",
-				url: ajaxurl,
-				data: {
-					action: 'smush_get_directory_list',
-					list_nonce: jQuery( 'input[name="list_nonce"]' ).val(),
-					dir: node
-				},
-				success: function ( response ) {
-					res = response.data;
-				},
-				async: false
-			} );
-
-			// Update the button text.
-			$( 'button.wp-smush-select-dir' ).html( self.wp_smush_msgs.add_dir );
-
-			return res;
-		},
-
-		/**
 		 * Init fileTree.
 		 */
 		initFileTree: function () {
 			const self = this;
 
 			let smushButton = $( 'button.wp-smush-select-dir' );
+
+			let ajaxSettings = {
+				type: "GET",
+				url: ajaxurl,
+				data: {
+					action: 'smush_get_directory_list',
+					list_nonce: $( 'input[name="list_nonce"]' ).val()
+				},
+				cache: false
+			};
 
 			self.tree = createTree('.wp-smush-list-dialog .content', {
 				autoCollapse: true, // Automatically collapse all siblings, when a node is expanded
@@ -198,8 +185,20 @@ import Scanner from './directory-scanner';
 				debugLevel: 0,      // 0:quiet, 1:errors, 2:warnings, 3:infos, 4:debug
 				selectMode: 3,      // 1:single, 2:multi, 3:multi-hier
 				tabindex: '0',      // Whole tree behaves as one single control
-				source: self.getDirectoryList,
-				lazyLoad: ( event, data ) => data.result = self.getDirectoryList( data.node.key ),
+				keyboard: true,     // Support keyboard navigation
+				quicksearch: true,  // Navigate to next node by typing the first letters
+				source: ajaxSettings,
+				lazyLoad: ( event, data ) => {
+					data.result = new Promise(function( resolve, reject ) {
+						ajaxSettings.data.dir = data.node.key;
+						$.ajax( ajaxSettings )
+							.done( response => resolve( response ) )
+							.fail( reject );
+					});
+
+					// Update the button text.
+					data.result.then( smushButton.html( self.wp_smush_msgs.add_dir ) );
+				},
 				loadChildren: ( event, data ) => data.node.fixSelection3AfterClick(), // Apply parent's state to new child nodes:
 				select: () => smushButton.attr( 'disabled', !+self.tree.getSelectedNodes().length ),
 				init: () => smushButton.attr( 'disabled', true ),
@@ -211,8 +210,24 @@ import Scanner from './directory-scanner';
 		 */
 		showSmushDialog: function () {
 			// Shows the available directories.
-			SUI.dialogs['wp-smush-list-dialog'].show();
+			const el = document.getElementById('wp-smush-list-dialog');
+			const dialog = new A11yDialog(el);
+			dialog.show();
+
 			$( '.wp-smush-list-dialog div.close' ).focus();
+		},
+
+		/**
+		 * Hide directory list popup.
+		 * @since 3.2.2
+		 */
+		hideSmushDialog: function() {
+			const el = document.getElementById('wp-smush-list-dialog');
+			const dialog = new A11yDialog(el);
+			dialog.hide();
+
+			const progressDialog = new A11yDialog(document.getElementById('wp-smush-progress-dialog'));
+			progressDialog.hide();
 		},
 
 		/**
@@ -223,7 +238,11 @@ import Scanner from './directory-scanner';
 		showProgressDialog: function ( items ) {
 			// Update items status and show the progress dialog..
 			$( '.wp-smush-progress-dialog .sui-progress-state-text' ).html( '0/' + items + ' ' + self.wp_smush_msgs.progress_smushed );
-			SUI.dialogs['wp-smush-progress-dialog'].show();
+
+			const el = document.getElementById('wp-smush-progress-dialog');
+			const dialog = new A11yDialog(el);
+			dialog.show();
+
 			$( '.wp-smush-progress-dialog div.close' ).focus();
 		},
 

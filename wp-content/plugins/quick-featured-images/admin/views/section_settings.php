@@ -3,7 +3,7 @@
  * Options Page
  *
  * @package   Quick_Featured_Images_Settings
- * @author    Martin Stehle <m.stehle@gmx.de>
+ * @author    Martin Stehle <shop@stehle-internet.de>
  * @license   GPL-2.0+
  * @link      http://wordpress.org/plugins/quick-featured-images/
  * @copyright 2014 

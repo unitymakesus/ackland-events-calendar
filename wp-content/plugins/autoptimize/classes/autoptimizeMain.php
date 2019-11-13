@@ -50,7 +50,12 @@ class autoptimizeMain
 
     protected function add_hooks()
     {
-        add_action( 'plugins_loaded', array( $this, 'setup' ) );
+        if ( ! defined( 'AUTOPTIMIZE_SETUP_INITHOOK' ) ) {
+            define( 'AUTOPTIMIZE_SETUP_INITHOOK', 'plugins_loaded' );
+        }
+
+        add_action( AUTOPTIMIZE_SETUP_INITHOOK, array( $this, 'setup' ) );
+        add_action( AUTOPTIMIZE_SETUP_INITHOOK, array( $this, 'hook_page_cache_purge' ) );
 
         add_action( 'autoptimize_setup_done', array( $this, 'version_upgrades_check' ) );
         add_action( 'autoptimize_setup_done', array( $this, 'check_cache_and_run' ) );
@@ -58,7 +63,6 @@ class autoptimizeMain
         add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_partners_tab' ) );
 
         add_action( 'init', array( $this, 'load_textdomain' ) );
-        add_action( 'plugins_loaded', array( $this, 'hook_page_cache_purge' ) );
         add_action( 'admin_init', array( 'PAnD', 'init' ) );
 
         register_activation_hook( $this->filepath, array( $this, 'on_activate' ) );
@@ -104,7 +108,7 @@ class autoptimizeMain
             }
         }
         if ( ! defined( 'AUTOPTIMIZE_WP_CONTENT_URL' ) ) {
-            if ( function_exists( 'domain_mapping_siteurl' ) ) {
+            if ( function_exists( 'get_original_url' ) ) {
                 define( 'AUTOPTIMIZE_WP_CONTENT_URL', str_replace( get_original_url( AUTOPTIMIZE_WP_SITE_URL ), AUTOPTIMIZE_WP_SITE_URL, content_url() ) );
             } else {
                 define( 'AUTOPTIMIZE_WP_CONTENT_URL', content_url() );
@@ -127,6 +131,16 @@ class autoptimizeMain
         if ( ! defined( 'AUTOPTIMIZE_SITE_DOMAIN' ) ) {
             define( 'AUTOPTIMIZE_SITE_DOMAIN', parse_url( AUTOPTIMIZE_WP_SITE_URL, PHP_URL_HOST ) );
         }
+
+        // Multibyte-capable string replacements are available with a filter.
+        // Also requires 'mbstring' extension.
+        $with_mbstring = apply_filters( 'autoptimize_filter_main_use_mbstring', false );
+        if ( $with_mbstring ) {
+            autoptimizeUtils::mbstring_available( \extension_loaded( 'mbstring' ) );
+        } else {
+            autoptimizeUtils::mbstring_available( false );
+        }
+
         do_action( 'autoptimize_setup_done' );
     }
 
@@ -144,7 +158,7 @@ class autoptimizeMain
     {
         if ( autoptimizeCache::cacheavail() ) {
             $conf = autoptimizeConfig::instance();
-            if ( $conf->get( 'autoptimize_html' ) || $conf->get( 'autoptimize_js' ) || $conf->get( 'autoptimize_css' ) ) {
+            if ( $conf->get( 'autoptimize_html' ) || $conf->get( 'autoptimize_js' ) || $conf->get( 'autoptimize_css' ) || autoptimizeImages::imgopt_active() || autoptimizeImages::should_lazyload_wrapper() ) {
                 // Hook into WordPress frontend.
                 if ( defined( 'AUTOPTIMIZE_INIT_EARLIER' ) ) {
                     add_action(
@@ -162,6 +176,11 @@ class autoptimizeMain
                         self::DEFAULT_HOOK_PRIORITY
                     );
                 }
+
+                // And disable Jetpack's site accelerator if JS or CSS opt. are active.
+                if ( class_exists( 'Jetpack' ) && apply_filters( 'autoptimize_filter_main_disable_jetpack_cdn', true ) && ( $conf->get( 'autoptimize_js' ) || $conf->get( 'autoptimize_css' ) ) ) {
+                    add_filter( 'jetpack_force_disable_site_accelerator', '__return_true' );
+                }
             }
         } else {
             add_action( 'admin_notices', 'autoptimizeMain::notice_cache_unavailable' );
@@ -171,8 +190,13 @@ class autoptimizeMain
     public function maybe_run_ao_extra()
     {
         if ( apply_filters( 'autoptimize_filter_extra_activate', true ) ) {
+            $ao_imgopt = new autoptimizeImages();
+            $ao_imgopt->run();
             $ao_extra = new autoptimizeExtra();
             $ao_extra->run();
+
+            // And show the imgopt notice.
+            add_action( 'admin_notices', 'autoptimizeMain::notice_plug_imgopt' );
         }
     }
 
@@ -338,7 +362,7 @@ class autoptimizeMain
 
         $has_no_html_tag    = ( false === stripos( $content, '<html' ) );
         $has_xsl_stylesheet = ( false !== stripos( $content, '<xsl:stylesheet' ) );
-        $has_html5_doctype  = ( preg_match( '/^<!DOCTYPE.+html>/i', $content ) > 0 );
+        $has_html5_doctype  = ( preg_match( '/^<!DOCTYPE.+html>/i', ltrim( $content ) ) > 0 );
 
         if ( $has_no_html_tag ) {
             // Can't be valid amp markup without an html tag preceding it.
@@ -365,6 +389,11 @@ class autoptimizeMain
      */
     public static function is_amp_markup( $content )
     {
+        // Short-circuit when a function is available to determine whether the response is (or will be) an AMP page.
+        if ( function_exists( 'is_amp_endpoint' ) ) {
+            return is_amp_endpoint();
+        }
+
         $is_amp_markup = preg_match( '/<html[^>]*(?:amp|⚡)/i', $content );
 
         return (bool) $is_amp_markup;
@@ -401,25 +430,27 @@ class autoptimizeMain
 
         $classoptions = array(
             'autoptimizeScripts' => array(
-                'aggregate'      => $conf->get( 'autoptimize_js_aggregate' ),
-                'justhead'       => $conf->get( 'autoptimize_js_justhead' ),
-                'forcehead'      => $conf->get( 'autoptimize_js_forcehead' ),
-                'trycatch'       => $conf->get( 'autoptimize_js_trycatch' ),
-                'js_exclude'     => $conf->get( 'autoptimize_js_exclude' ),
-                'cdn_url'        => $conf->get( 'autoptimize_cdn_url' ),
-                'include_inline' => $conf->get( 'autoptimize_js_include_inline' ),
+                'aggregate'       => $conf->get( 'autoptimize_js_aggregate' ),
+                'justhead'        => $conf->get( 'autoptimize_js_justhead' ),
+                'forcehead'       => $conf->get( 'autoptimize_js_forcehead' ),
+                'trycatch'        => $conf->get( 'autoptimize_js_trycatch' ),
+                'js_exclude'      => $conf->get( 'autoptimize_js_exclude' ),
+                'cdn_url'         => $conf->get( 'autoptimize_cdn_url' ),
+                'include_inline'  => $conf->get( 'autoptimize_js_include_inline' ),
+                'minify_excluded' => $conf->get( 'autoptimize_minify_excluded' ),
             ),
             'autoptimizeStyles'  => array(
-                'aggregate'      => $conf->get( 'autoptimize_css_aggregate' ),
-                'justhead'       => $conf->get( 'autoptimize_css_justhead' ),
-                'datauris'       => $conf->get( 'autoptimize_css_datauris' ),
-                'defer'          => $conf->get( 'autoptimize_css_defer' ),
-                'defer_inline'   => $conf->get( 'autoptimize_css_defer_inline' ),
-                'inline'         => $conf->get( 'autoptimize_css_inline' ),
-                'css_exclude'    => $conf->get( 'autoptimize_css_exclude' ),
-                'cdn_url'        => $conf->get( 'autoptimize_cdn_url' ),
-                'include_inline' => $conf->get( 'autoptimize_css_include_inline' ),
-                'nogooglefont'   => $conf->get( 'autoptimize_css_nogooglefont' ),
+                'aggregate'       => $conf->get( 'autoptimize_css_aggregate' ),
+                'justhead'        => $conf->get( 'autoptimize_css_justhead' ),
+                'datauris'        => $conf->get( 'autoptimize_css_datauris' ),
+                'defer'           => $conf->get( 'autoptimize_css_defer' ),
+                'defer_inline'    => $conf->get( 'autoptimize_css_defer_inline' ),
+                'inline'          => $conf->get( 'autoptimize_css_inline' ),
+                'css_exclude'     => $conf->get( 'autoptimize_css_exclude' ),
+                'cdn_url'         => $conf->get( 'autoptimize_cdn_url' ),
+                'include_inline'  => $conf->get( 'autoptimize_css_include_inline' ),
+                'nogooglefont'    => $conf->get( 'autoptimize_css_nogooglefont' ),
+                'minify_excluded' => $conf->get( 'autoptimize_minify_excluded' ),
             ),
             'autoptimizeHTML'    => array(
                 'keepcomments' => $conf->get( 'autoptimize_html_keepcomments' ),
@@ -479,6 +510,8 @@ class autoptimizeMain
             'autoptimize_service_availablity',
             'autoptimize_imgopt_provider_stat',
             'autoptimize_imgopt_launched',
+            'autoptimize_imgopt_settings',
+            'autoptimize_minify_excluded',
         );
 
         if ( ! is_multisite() ) {
@@ -525,4 +558,19 @@ class autoptimizeMain
         echo '</p></div>';
     }
 
+    public static function notice_plug_imgopt()
+    {
+        // Translators: the URL added points to the Autopmize Extra settings.
+        $_ao_imgopt_plug_notice      = sprintf( __( 'Did you know Autoptimize includes on-the-fly image optimization (with support for WebP) and CDN via ShortPixel? Check out the %1$sAutoptimize Image settings%2$s to activate this option.', 'autoptimize' ), '<a href="options-general.php?page=autoptimize_imgopt">', '</a>' );
+        $_ao_imgopt_plug_notice      = apply_filters( 'autoptimize_filter_main_imgopt_plug_notice', $_ao_imgopt_plug_notice );
+        $_ao_imgopt_launch_ok        = autoptimizeImages::launch_ok_wrapper();
+        $_ao_imgopt_plug_dismissible = 'ao-img-opt-plug-123';
+        $_ao_imgopt_active           = autoptimizeImages::imgopt_active();
+
+        if ( current_user_can( 'manage_options' ) && '' !== $_ao_imgopt_plug_notice && ! $_ao_imgopt_active && $_ao_imgopt_launch_ok && PAnD::is_admin_notice_active( $_ao_imgopt_plug_dismissible ) ) {
+            echo '<div class="notice notice-info is-dismissible" data-dismissible="' . $_ao_imgopt_plug_dismissible . '"><p>';
+            echo $_ao_imgopt_plug_notice;
+            echo '</p></div>';
+        }
+    }
 }

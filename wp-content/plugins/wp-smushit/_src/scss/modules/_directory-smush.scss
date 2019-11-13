@@ -4,8 +4,29 @@
 
 @include body-class {
 
-    ul.fancytree-container {
+    .wp-smush-progress-dialog,
+    .wp-smush-list-dialog {
+        text-align: left;
+    }
 
+    .sui-directory.sui-message {
+        text-align: left;
+
+        .wp-smush-no-image,
+        .sui-message-content {
+            text-align: center;
+        }
+    }
+
+    .sui-directory .smush-final-log {
+        margin-top: 30px;
+
+        .sui-description {
+            margin-top: 10px;
+        }
+    }
+
+    ul.fancytree-container {
         color: #666;
         font-family: "Roboto", sans-serif;
         font-size: 13px;
@@ -38,7 +59,7 @@
         span.fancytree-expander {
             cursor: pointer;
             font-size: 12px;
-            margin-left: 10px;
+            margin-left: 13px;
             width: 15px;
 
             &:before {
@@ -126,10 +147,9 @@
             position: relative;
             transition: .2s;
 
+            @include icon( before, check );
             &:before {
                 opacity: 0;
-                font-family: wpmudev-plugin-icons!important;
-                content: "(";
                 color: #fff;
                 font-size: 10px;
                 line-height: 14px;
@@ -155,12 +175,40 @@
 
         // Unselectable is dimmed, without hover effects
         .fancytree-unselectable {
+            background-color: transparent !important;
+
+            // Fix for bug in library.
+            &.fancytree-selected {
+                margin-left: -9px;
+
+                span.fancytree-expander {
+                    margin-left: 10px;
+                }
+
+                span.fancytree-checkbox {
+                    border: 1px solid #ddd;
+                    background-color: #e6e6e6;
+
+                    &:before {
+                        color: #e6e6e6 !important;
+                    }
+                }
+
+                span.fancytree-title {
+                    color: #666;
+                }
+            }
+
             span.fancytree-expander,
             span.fancytree-icon,
             span.fancytree-checkbox,
             span.fancytree-title {
                 opacity: 0.4;
                 filter: alpha(opacity=40);
+
+                &:before {
+                    color: #666 !important;
+                }
             }
         }
 
@@ -210,6 +258,7 @@
         .fancytree-loading span.fancytree-expander:before,
         .fancytree-statusnode-loading span.fancytree-icon:before {
             content: 'N';
+            display: inline-block;
             animation: spin 1.3s linear infinite;
         }
 
@@ -262,6 +311,10 @@
             span.fancytree-title {
                 color: #17A8E3;
             }
+        }
+
+        span.fancytree-focused {
+            background-color: #e1e1e1 !important;
         }
     }
 

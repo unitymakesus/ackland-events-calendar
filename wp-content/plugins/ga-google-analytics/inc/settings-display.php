@@ -24,20 +24,33 @@ if (!function_exists('add_action')) die(); ?>
 						
 						<div class="gap-panel-overview">
 							
-							<p><?php esc_html_e('This plugin adds the GA Tracking Code to your site. Log in to your Google account to view your stats.', 'ga-google-analytics'); ?></p>
+							<div class="gap-col-1">
+								
+								<p><?php esc_html_e('This plugin adds the GA Tracking Code to your site. Log in to your Google account to view your stats.', 'ga-google-analytics'); ?></p>
+								
+								<ul>
+									<li><a class="gap-toggle" data-target="usage" href="#gap-panel-usage"><?php esc_html_e('How to Use', 'ga-google-analytics'); ?></a></li>
+									<li><a class="gap-toggle" data-target="settings" href="#gap-panel-settings"><?php esc_html_e('Plugin Settings', 'ga-google-analytics'); ?></a></li>
+									<li><a target="_blank" rel="noopener noreferrer" href="https://wordpress.org/plugins/ga-google-analytics/"><?php esc_html_e('Plugin Homepage', 'ga-google-analytics'); ?></a></li>
+								</ul>
+								
+								<p>
+									<?php esc_html_e('If you like this plugin, please', 'ga-google-analytics'); ?> 
+									<a target="_blank" rel="noopener noreferrer" href="https://wordpress.org/support/plugin/ga-google-analytics/reviews/?rate=5#new-post" title="<?php esc_attr_e('THANK YOU for your support!', 'ga-google-analytics'); ?>">
+										<?php esc_html_e('give it a 5-star rating', 'ga-google-analytics'); ?>&nbsp;&raquo;
+									</a>
+								</p>
+								
+							</div>
 							
-							<ul>
-								<li><a class="gap-toggle" data-target="usage" href="#gap-panel-usage"><?php esc_html_e('How to Use', 'ga-google-analytics'); ?></a></li>
-								<li><a class="gap-toggle" data-target="settings" href="#gap-panel-settings"><?php esc_html_e('Plugin Settings', 'ga-google-analytics'); ?></a></li>
-								<li><a target="_blank" rel="noopener noreferrer" href="https://wordpress.org/support/plugin/ga-google-analytics"><?php esc_html_e('Plugin Homepage', 'ga-google-analytics'); ?></a></li>
-							</ul>
-							
-							<p>
-								<?php esc_html_e('If you like this plugin, please', 'ga-google-analytics'); ?> 
-								<a target="_blank" rel="noopener noreferrer" href="https://wordpress.org/support/plugin/ga-google-analytics/reviews/?rate=5#new-post" title="<?php esc_attr_e('THANK YOU for your support!', 'ga-google-analytics'); ?>">
-									<?php esc_html_e('give it a 5-star rating', 'ga-google-analytics'); ?>&nbsp;&raquo;
-								</a>
-							</p>
+							<div class="gap-col-2">
+								
+								<p>
+									&#10095; <?php esc_html_e('Check out the', 'ga-google-analytics'); ?> 
+									<a target="_blank" rel="noopener noreferrer" href="https://plugin-planet.com/ga-google-analytics-pro/" title="<?php esc_html_e('GA Google Analytics Pro', 'ga-google-analytics'); ?>"><?php esc_html_e('PRO Version', 'ga-google-analytics'); ?>&nbsp;&raquo;</a>
+								</p>
+								
+							</div>
 							
 						</div>
 						
@@ -158,8 +171,10 @@ if (!function_exists('add_action')) die(); ?>
 										<div class="gap-caption"> 
 											<?php esc_html_e('Any code entered here will be added to', 'ga-google-analytics'); ?> <code>ga('create')</code> 
 											<?php esc_html_e('for Universal Analytics, or added to', 'ga-google-analytics'); ?> <code>gtag('config')</code> 
-											<?php esc_html_e('for Global Site Tag.', 'ga-google-analytics'); ?> 
-											<a target="_blank" rel="noopener noreferrer" href="https://developers.google.com/analytics/devguides/collection/analyticsjs/creating-trackers"><?php esc_html_e('Learn more about creating trackers', 'ga-google-analytics'); ?></a>.
+											<?php esc_html_e('for Global Site Tag. This is useful for things like', 'ga-google-analytics'); ?> 
+											<a target="_blank" rel="noopener noreferrer" href="https://developers.google.com/analytics/devguides/collection/analyticsjs/creating-trackers"><?php esc_html_e('tracker objects', 'ga-google-analytics'); ?></a> 
+											<?php esc_html_e('and', 'ga-google-analytics'); ?> 
+											<a target="_blank" rel="noopener noreferrer" href="https://support.google.com/optimize/answer/6262084"><?php esc_html_e('optimize', 'ga-google-analytics'); ?></a>.
 										</div>
 									</td>
 								</tr>
@@ -168,10 +183,11 @@ if (!function_exists('add_action')) die(); ?>
 									<td>
 										<textarea id="gap_options[gap_custom_code]" name="gap_options[gap_custom_code]" type="textarea" rows="4" cols="70"><?php if (isset($gap_options['gap_custom_code'])) echo esc_textarea($gap_options['gap_custom_code']); ?></textarea>
 										<div class="gap-caption"> 
-											<?php esc_html_e('Any code entered here will be added to the GA code snippet. This is useful for things like', 'ga-google-analytics'); ?> 
-											<a target="_blank" rel="noopener noreferrer" href="https://developers.google.com/analytics/devguides/collection/analyticsjs/creating-trackers#working_with_multiple_trackers"><?php esc_html_e('creating multiple trackers', 'ga-google-analytics'); ?></a> 
-											<?php esc_html_e('and', 'ga-google-analytics'); ?> <a target="_blank" rel="noopener noreferrer" href="https://support.google.com/360suite/optimize/"><?php esc_html_e('Google Optimize', 'ga-google-analytics'); ?></a>. 
-											<?php esc_html_e('Can use', 'ga-google-analytics'); ?> <code>%%userid%%</code> <?php esc_html_e('to display the current user ID.', 'ga-google-analytics'); ?>
+											<?php esc_html_e('Any code entered here will be added to the GA code snippet. This is useful for things like creating', 'ga-google-analytics'); ?> 
+											<a target="_blank" rel="noopener noreferrer" href="https://developers.google.com/analytics/devguides/collection/analyticsjs/creating-trackers#working_with_multiple_trackers"><?php esc_html_e('multiple trackers', 'ga-google-analytics'); ?></a> 
+											<?php esc_html_e('and', 'ga-google-analytics'); ?> 
+											<a target="_blank" rel="noopener noreferrer" href="https://developers.google.com/analytics/devguides/collection/analyticsjs/user-opt-out"><?php esc_html_e('user opt-out', 'ga-google-analytics'); ?></a>. 
+											<?php esc_html_e('Note: you can use', 'ga-google-analytics'); ?> <code>%%userid%%</code> <?php esc_html_e('to output the current user ID.', 'ga-google-analytics'); ?>
 										</div>
 									</td>
 								</tr>
@@ -181,7 +197,7 @@ if (!function_exists('add_action')) die(); ?>
 										<textarea id="gap_options[gap_custom]" name="gap_options[gap_custom]" type="textarea" rows="4" cols="70"><?php if (isset($gap_options['gap_custom'])) echo esc_textarea($gap_options['gap_custom']); ?></textarea>
 										<div class="gap-caption">
 											<?php esc_html_e('Here you may specify any markup to be displayed in the', 'ga-google-analytics'); ?> <code>&lt;head&gt;</code> 
-											<?php esc_html_e('section (or in the footer, depending on the "Code Location" setting, above).', 'ga-google-analytics'); ?>
+											<?php esc_html_e('section (or in the footer, depending on the "Tracking Code Location" setting, above).', 'ga-google-analytics'); ?>
 										</div>
 									</td>
 								</tr>
@@ -190,14 +206,14 @@ if (!function_exists('add_action')) die(); ?>
 									<td>
 										<input id="gap_options[gap_custom_loc]" name="gap_options[gap_custom_loc]" type="checkbox" value="1" <?php if (isset($gap_options['gap_custom_loc'])) checked('1', $gap_options['gap_custom_loc']); ?>> 
 										<?php esc_html_e('Display Custom Code', 'ga-google-analytics'); ?> <em><?php esc_html_e('before', 'ga-google-analytics'); ?></em> 
-										<?php esc_html_e('the GA tracking code. Leave unchecked to display', 'ga-google-analytics'); ?> <em><?php esc_html_e('after', 'ga-google-analytics'); ?></em> <?php esc_html_e('the tracking code.', 'ga-google-analytics'); ?>
+										<?php esc_html_e('the GA tracking code (leave unchecked to display', 'ga-google-analytics'); ?> <em><?php esc_html_e('after', 'ga-google-analytics'); ?></em> <?php esc_html_e('the tracking code)', 'ga-google-analytics'); ?>
 									</td>
 								</tr>
 								<tr>
 									<th><label for="gap_options[admin_area]"><?php esc_html_e('Admin Area', 'ga-google-analytics') ?></label></th>
 									<td>
 										<input id="gap_options[admin_area]" name="gap_options[admin_area]" type="checkbox" value="1" <?php if (isset($gap_options['admin_area'])) checked('1', $gap_options['admin_area']); ?>> 
-										<?php esc_html_e('Enable GA in the WordPress Admin Area', 'ga-google-analytics'); ?>
+										<?php esc_html_e('Enable tracking in WP Admin Area (adds tracking code only; to view stats log into your Google account)', 'ga-google-analytics'); ?>
 									</td>
 								</tr>
 								<tr>
@@ -205,6 +221,13 @@ if (!function_exists('add_action')) die(); ?>
 									<td>
 										<input id="gap_options[disable_admin]" name="gap_options[disable_admin]" type="checkbox" value="1" <?php if (isset($gap_options['disable_admin'])) checked('1', $gap_options['disable_admin']); ?>> 
 										<?php esc_html_e('Disable tracking of Admin-level users', 'ga-google-analytics') ?>
+									</td>
+								</tr>
+								<tr>
+									<th><label><?php esc_html_e('More Options', 'ga-google-analytics') ?></label></th>
+									<td class="ga-pro-info">
+										<?php esc_html_e('For advanced features, check out', 'ga-google-analytics') ?> 
+										<a target="_blank" rel="noopener noreferrer" href="https://plugin-planet.com/ga-google-analytics-pro/"><?php esc_html_e('GA Google Analytics Pro', 'ga-google-analytics'); ?>&nbsp;&raquo;</a>
 									</td>
 								</tr>
 							</table>

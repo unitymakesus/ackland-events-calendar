@@ -3,11 +3,13 @@
  * Quick Featured Images
  *
  * @package   Quick_Featured_Images
- * @author    Martin Stehle <m.stehle@gmx.de>
+ * @author    Martin Stehle <shop@stehle-internet.de>
  * @license   GPL-2.0+
  * @link      http://stehle-internet.de
  * @copyright 2014 Martin Stehle
  */
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
  class Quick_Featured_Images_Admin {
 
@@ -19,7 +21,7 @@
 	 *
 	 * @var     string
 	 */
-	protected $plugin_version = '13.3.2';
+	protected $plugin_version = '13.3.5';
 
 	/**
 	 * Instance of this class.

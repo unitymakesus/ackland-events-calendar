@@ -56,6 +56,19 @@ https://vimeo.com/220647227
 
 == Changelog ==
 
+= 4.9.1 =
+
+- Fix: Handle updates on WP Engine hosted websites properly.
+
+= 4.9.0 =
+
+- New: Support for a future release of file management.
+- We will stop supporting PHP 5.2 in the next version.
+
+= 4.8.1 =
+
+- Fix: Edge case where a backup might fail due to API call payload.
+
 = 4.8.0 =
 
 - New: Support for automatic detection of post content changes for Link Monitoring.

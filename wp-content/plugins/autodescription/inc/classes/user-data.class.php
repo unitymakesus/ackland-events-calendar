@@ -1,14 +1,16 @@
 <?php
 /**
- * @package The_SEO_Framework\Classes
+ * @package The_SEO_Framework\Classes\Facade\User_Data
+ * @subpackage The_SEO_Framework\Data
  */
+
 namespace The_SEO_Framework;
 
 defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -51,9 +53,11 @@ class User_Data extends Term_Data {
 	 * Returns the current post author ID.
 	 *
 	 * @since 3.0.0
+	 * @since 3.2.2: 1. Now no longer returns the latest post author ID on home-as-blog pages.
+	 *               2. Now always returns an integer.
 	 * @staticvar $cache
 	 *
-	 * @return int|bool Post author on success, false on failure.
+	 * @return int Post author ID on success, 0 on failure.
 	 */
 	public function get_current_post_author_id() {
 
@@ -62,9 +66,12 @@ class User_Data extends Term_Data {
 		if ( isset( $cache ) )
 			return $cache;
 
-		$post = \get_post( $this->get_the_real_ID() );
+		if ( $this->is_singular() ) {
+			$post  = \get_post( $this->get_the_real_ID() );
+			$cache = isset( $post->post_author ) ? (int) $post->post_author : 0;
+		}
 
-		return $cache = isset( $post->post_author ) ? (int) $post->post_author : false;
+		return $cache ?: $cache = 0;
 	}
 
 	/**
@@ -73,7 +80,7 @@ class User_Data extends Term_Data {
 	 *
 	 * @since 2.7.0
 	 *
-	 * @return int $user_id : 0 if user is not found.
+	 * @return int The user ID. 0 if user is not found.
 	 */
 	public function get_user_id() {
 
@@ -94,9 +101,9 @@ class User_Data extends Term_Data {
 	 * @since 2.8.0 Always returns array, even if no value is assigned.
 	 * @staticvar array $usermeta_cache
 	 *
-	 * @param int $user_id The user ID.
-	 * @param string $key The user metadata key. Leave empty to fetch all data.
-	 * @param bool $use_cache Whether to store and use options from cache.
+	 * @param int    $user_id   The user ID.
+	 * @param string $key       The user metadata key. Leave empty to fetch all data.
+	 * @param bool   $use_cache Whether to store and use options from cache.
 	 * @return array The user SEO meta data.
 	 */
 	public function get_user_meta( $user_id, $key = THE_SEO_FRAMEWORK_USER_OPTIONS, $use_cache = true ) {
@@ -117,9 +124,9 @@ class User_Data extends Term_Data {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param int $author_id The author ID. When empty, it will return $default.
-	 * @param string $option The option name. When empty, it will return $default.
-	 * @param mixed $default The default value to return when the data doesn't exist.
+	 * @param int    $author_id The author ID. When empty, it will return $default.
+	 * @param string $option    The option name. When empty, it will return $default.
+	 * @param mixed  $default   The default value to return when the data doesn't exist.
 	 * @return mixed The metadata value
 	 */
 	public function get_author_option( $author_id, $option, $default = null ) {
@@ -135,8 +142,8 @@ class User_Data extends Term_Data {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param string $option The option name.
-	 * @param mixed $default The default value to return when the data doesn't exist.
+	 * @param string $option  The option name.
+	 * @param mixed  $default The default value to return when the data doesn't exist.
 	 * @return mixed The metadata value
 	 */
 	public function get_current_author_option( $option, $default = null ) {
@@ -156,9 +163,9 @@ class User_Data extends Term_Data {
 	 * @staticvar array $options_cache
 	 * @staticvar array $notfound_cache
 	 *
-	 * @param int $user_id The user ID. When empty, it will try to fetch the current user.
-	 * @param string $option The option name.
-	 * @param mixed $default The default value to return when the data doesn't exist.
+	 * @param int    $user_id The user ID. When empty, it will try to fetch the current user.
+	 * @param string $option  The option name.
+	 * @param mixed  $default The default value to return when the data doesn't exist.
 	 * @return mixed The metadata value.
 	 */
 	public function get_user_option( $user_id = 0, $option, $default = null ) {
@@ -197,9 +204,9 @@ class User_Data extends Term_Data {
 	 * @since 2.7.0
 	 * @since 2.8.0 New users now get a new array assigned.
 	 *
-	 * @param int $user_id The user ID.
-	 * @param string $option The user's SEO metadata option.
-	 * @param mixed $value The escaped option value.
+	 * @param int    $user_id The user ID.
+	 * @param string $option  The user's SEO metadata option.
+	 * @param mixed  $value   The escaped option value.
 	 * @return bool True on success. False on failure.
 	 */
 	public function update_user_option( $user_id = 0, $option, $value ) {

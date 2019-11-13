@@ -58,9 +58,9 @@ class MWP_Worker_Configuration
         $this->context->optionSet('_worker_nossl_key', '');
     }
 
-    public function getLivePublicKey($keyName)
+    public function getLivePublicKey($keyName, $prefix = false)
     {
-        $keyData = $this->findKeyData($keyName);
+        $keyData = $this->findKeyData($keyName, $prefix);
         return $keyData !== null ? $keyData['publicKey'] : null;
     }
 
@@ -84,9 +84,9 @@ class MWP_Worker_Configuration
         mwp_add_as_site_communication_key($communicationKey);
     }
 
-    protected function findKeyData($keyName)
+    protected function findKeyData($keyName, $prefix = false)
     {
-        $key = $this->findKey($keyName);
+        $key = $this->findKey($keyName, $prefix);
 
         if (!empty($key)) {
             return $key;
@@ -103,10 +103,10 @@ class MWP_Worker_Configuration
 
         mwp_refresh_live_public_keys(array());
 
-        return $this->findKey($keyName);
+        return $this->findKey($keyName, $prefix);
     }
 
-    private function findKey($keyName)
+    private function findKey($keyName, $prefix = false)
     {
         $keys = $this->context->optionGet('mwp_public_keys', null);
 
@@ -115,7 +115,7 @@ class MWP_Worker_Configuration
         }
 
         foreach ($keys as $key) {
-            if (empty($key['id']) || $key['id'] !== $keyName) {
+            if (empty($key['id']) || ($key['id'] !== $keyName && !$prefix) || ($key['service'] !== $keyName && $prefix)) {
                 continue;
             }
 

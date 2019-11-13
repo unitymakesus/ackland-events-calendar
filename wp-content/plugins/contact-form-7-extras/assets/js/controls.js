@@ -1,16 +1,42 @@
+/* eslint camelcase: warn */
+
 ( function( $ ) {
 	if ( ! window.cf7_extras ) {
 		return;
 	}
 
 	function trackAnalyticsEvent( eventCategory, eventAction, eventTitle ) {
-		if ( 'function' === typeof ga ) { // Universal Google Analytics is available
+
+		// Universal Google Analytics is available.
+		if ( 'function' === typeof ga ) {
 			ga( 'send', 'event', eventCategory, eventAction, eventTitle );
-		} else if ( 'undefined' !== typeof _gaq ) { // Classic Google Analytics is available
+		}
+
+		// Classic Google Analytics is available.
+		if ( 'object' === typeof _gaq && 'function' === typeof _gaq.push ) {
 			_gaq.push( [ '_trackEvent', eventCategory, eventAction, eventTitle ] );
 		}
-		if ( 'undefined' !== typeof _paq ) { // Matomo (formerly Piwik) is available
+
+		// GA via Google Tag Manager.
+		if ( 'object' === typeof dataLayer && 'function' === typeof dataLayer.push ) {
+			dataLayer.push( {
+				eventCategory: eventCategory,
+				eventAction: eventAction,
+				eventLabel: eventTitle
+			} );
+		}
+
+		// Matomo (formerly Piwik) is available.
+		if ( 'undefined' !== typeof _paq && 'function' === typeof _paq.push ) {
 			_paq.push( [ 'trackEvent', eventCategory, eventAction, eventTitle ] );
+		}
+
+		// Facebook Pixel contact event.
+		if ( 'function' === typeof fbq ) {
+			fbq( 'track', 'Contact', {
+				content_category: eventAction,
+				content_name: eventTitle
+			} );
 		}
 	};
 

@@ -43,7 +43,7 @@ $img_style = '';
 // if an image id was given
 if ( $this->selected_image_id ) {
 	$arr_image = wp_get_attachment_image_src( $this->selected_image_id );
-	// and if there is an valid image
+	// and if there is a valid image
 	if ( $arr_image ) {
 		// show the image and set the id as param value
 		$img_url = $arr_image[0];
@@ -110,7 +110,8 @@ foreach ( $this->valid_actions_without_image as $name => $label ) {
 <?php
 }
 ?>
-		<p class="qfi_ad_for_pro"><?php esc_html_e( 'Do you want to assign the first image of each post?', 'quick-featured-images' ); ?> <?php esc_html_e( 'Get the premium version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</p>
+		<p class="qfi_ad_for_pro"><?php esc_html_e( 'Do you want to assign the first image of each post?', 'quick-featured-images' ); ?> <?php esc_html_e( 'Get the Pro version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</p>
+		<p class="qfi_ad_for_pro"><?php esc_html_e( 'Do you want to use external featured images, e.g. from a CDN?', 'quick-featured-images' ); ?> <?php esc_html_e( 'Get the Pro version', 'quick-featured-images' ); ?> <a href="https://www.quickfeaturedimages.com<?php esc_html_e( '/', 'quick-featured-images' ); ?>">Quick Featured Images Pro</a>.</p>
 	</fieldset>
 <?php 
 wp_nonce_field( 'quickfi_start', $this->plugin_slug . '_nonce' );
