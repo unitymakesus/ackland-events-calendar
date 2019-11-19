@@ -1,0 +1,21 @@
+.header-float {
+  background-color: $brand-primary;
+  color: white;
+  margin: 0;
+  padding: 3rem 0;
+}
+
+.page-header {
+  padding: 2.5rem 0;
+  background-color: $brand-secondary;
+  font-size: 1.25rem;
+  text-align: left;
+
+  &__title {
+    margin: 0 0 1rem 0;
+  }
+}
+
+.header-float .logo {
+  max-width: 275px;
+}

@@ -1,0 +1,114 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: $brand-secondary;
+  margin-bottom: 1rem;
+
+  &__image {
+    position: relative;
+    width: 100%;
+    flex: 0 0 225px;
+
+    img {
+      position: absolute;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__text {
+    flex-direction: column;
+    padding: 1.5rem 1.25rem 2rem;
+  }
+
+  a::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+  }
+
+  @media (min-width: #{$xsmall-screen-up}) {
+    flex-direction: row;
+
+    &__image {
+      max-width: 225px;
+    }
+
+    &__text {
+      min-height: 140px;
+    }
+  }
+}
+
+// Single Featured Card
+.card--featured {
+  .card__text {
+    padding: 1rem 0;
+  }
+
+  .card__image {
+    flex: 0 0 350px;
+    max-width: 100%;
+  }
+
+  @media (min-width: #{$xsmall-screen-up}) {
+    flex-direction: column;
+
+    .card__text {
+      min-height: 0;
+    }
+  }
+}
+
+// Group Featured Cards
+@media (min-width: #{$small-screen-up}) {
+  .cards-featured {
+    display: grid;
+    grid-gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// Pagination
+.cards-pagination {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "prev-heading"
+    "prev-card"
+    "next-heading"
+    "next-card";
+
+  @media (min-width: #{$large-screen-up}) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "prev-heading next-heading"
+      "prev-card next-card";
+
+    .card {
+      margin-bottom: 0;
+    }
+  }
+
+  &__next {
+    grid-area: next-heading;
+
+    + .card {
+      grid-area: next-card;
+    }
+  }
+
+  &__prev {
+    grid-area: prev-heading;
+
+    + .card {
+      grid-area: prev-card;
+    }
+  }
+}

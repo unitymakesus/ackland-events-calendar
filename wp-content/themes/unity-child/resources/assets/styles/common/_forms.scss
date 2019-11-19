@@ -1,0 +1,80 @@
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+legend {
+  display: table;
+  padding: 0;
+}
+
+.fieldset {
+  margin-bottom: 3rem;
+
+  legend {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.input-search {
+  position: relative;
+  max-width: 480px;
+  margin-top: 2rem;
+
+  &::after {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    background-image: url('../images/icons/search_button_white.svg');
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    content: '';
+    z-index: 5;
+  }
+}
+
+#js-filter-search {
+  border: 0;
+  width: 100%;
+  height: calc(2em + 0.75rem + 2px);
+  padding: 0.375rem 3rem 0.375rem 1rem;
+  font-size: 1rem;
+  background-color: $brand-primary;
+  color: white;
+  appearance: none;
+
+  &::placeholder {
+    color: inherit;
+  }
+}
+
+// Fix custom checkboxes and radios.
+input[type="radio"]:not(:checked),
+input[type="radio"]:checked,
+input[type="checkbox"]:not(:checked),
+input[type="checkbox"]:checked {
+  clip: rect(0, 0, 0, 0);
+  opacity: 1;
+}
+
+.checklabel {
+  display: inline-block;
+  padding: 0.5rem;
+  margin-right: 0.25rem;
+  margin-bottom: 0.5rem;
+  border: 2px solid $brand-primary;
+  color: $brand-primary;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type="radio"]:checked + .checklabel,
+input[type="checkbox"]:checked + .checklabel {
+  background-color: $brand-primary;
+  color: white;
+}

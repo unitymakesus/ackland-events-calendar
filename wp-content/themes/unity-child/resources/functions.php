@@ -3,6 +3,19 @@
 namespace App;
 
 /**
+ * Helper function for prettying up errors
+ * @param string $message
+ * @param string $subtitle
+ * @param string $title
+ */
+$sage_error = function ($message, $subtitle = '', $title = '') {
+  $title = $title ?: __('Sage &rsaquo; Error', 'sage');
+  $footer = '<a href="https://roots.io/sage/docs/">roots.io/sage/docs/</a>';
+  $message = "<h1>{$title}<br><small>{$subtitle}</small></h1><p>{$message}</p><p>{$footer}</p>";
+  wp_die($message, $title);
+};
+
+/**
  * Theme assets
  */
 add_action('wp_enqueue_scripts', function () {
@@ -134,3 +147,10 @@ add_action('widgets_init', function () {
     'id'            => 'footer-utility-right'
   ] + $config);
 });
+
+array_map(function ($file) use ($sage_error) {
+  $file = "../app/{$file}.php";
+  if (!locate_template($file, true, true)) {
+    $sage_error(sprintf(__('Error locating <code>%s</code> for inclusion.', 'sage'), $file), 'File not found');
+  }
+}, ['tribe-events', 'taxonomies', 'wp-api']);
