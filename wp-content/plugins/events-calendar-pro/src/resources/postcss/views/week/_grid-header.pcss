@@ -1,0 +1,42 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Week Grid Header
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__header-row {
+		border-right: 1px solid var(--color-border-secondary);
+		display: flex;
+		margin-top: var(--spacer-7);
+	}
+
+	.tribe-events-pro-week-grid__header-column {
+		border-color: var(--color-border-secondary);
+		border-style: solid;
+		border-width: 0 0 1px 1px;
+		flex: none;
+		width: calc(var(--grid-width-1-of-7) - (var(--spacer-11) / 7));
+	}
+
+	.tribe-events-pro-week-grid__header-column--empty {
+		border: none;
+		flex: none;
+		width: var(--spacer-11);
+	}
+
+	.tribe-events-pro-week-grid__header-column-datetime {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		margin-top: calc(var(--spacer-7) * -1);
+		padding-bottom: var(--spacer-3);
+	}
+
+	.tribe-events-pro-week-grid__header-column-weekday {
+		text-transform: uppercase;
+	}
+
+	.tribe-events-pro-week-grid__header-column-daynum--current {
+		color: var(--color-accent-primary-hover);
+	}
+}

@@ -1,0 +1,74 @@
+a {
+  color: $brand-primary;
+}
+
+p {
+  margin-top: 0;
+}
+
+figure {
+  margin: 0;
+}
+
+.list-reset {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.heading-reset {
+  padding: 0;
+  margin: 0;
+}
+
+.mt0 {
+  margin-top: 0;
+}
+
+.py0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.color-primary {
+  color: $brand-primary !important;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.text-underline {
+  text-decoration: underline !important;
+}
+
+// Offset the row inside a container?
+.row {
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+}
+
+[data-finished="true"] {
+  display: none;
+}
+
+.alert {
+  padding: 1rem;
+  text-align: center;
+  background-color: $brand-secondary;
+}
+
+// Lazysizes
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
+
+.lazyloaded {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.no-js .lazyload {
+  opacity: 1;
+}

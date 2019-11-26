@@ -1,0 +1,100 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Event Cards
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-map__event-column {
+		display: flex;
+		flex-direction: column;
+		height: 290px;
+		position: relative;
+
+		@media (--viewport-medium) {
+			height: 720px;
+			width: 40%;
+		}
+
+		&:before,
+		&:after {
+			background-color: var(--color-border-default);
+			content: '';
+			height: 100%;
+			top: 0;
+			position: absolute;
+			width: 1px;
+		}
+
+		&:before {
+			left: 0;
+		}
+
+		&:after {
+			right: 0;
+		}
+	}
+
+	.tribe-events-pro-map__event-cards-wrapper {
+		flex: auto;
+		overflow: hidden;
+		position: relative;
+
+		&:hover .tribe-events-pro-map__event-cards-scroll-pane {
+			opacity: var(--opacity-default);
+		}
+
+		&:before,
+		&:after {
+			background-color: var(--color-border-default);
+			content: '';
+			height: 1px;
+			position: absolute;
+			left: 0;
+			width: 100%;
+		}
+
+		&:before {
+			top: 0;
+		}
+
+		&:after {
+			bottom: 0;
+		}
+	}
+
+	.tribe-events-pro-map__event-cards {
+		height: 100%;
+		overflow-y: hidden;
+
+		&:focus + .tribe-events-pro-map__event-cards-scroll-pane {
+			opacity: var(--opacity-default);
+		}
+	}
+
+	.tribe-events-pro-map__event-cards--active {
+		overflow-y: scroll;
+	}
+
+	.tribe-events-pro-map__event-cards-scroll-pane {
+		background-color: var(--color-scroll-track);
+		border-radius: 3px;
+		bottom: 0;
+		opacity: 0;
+		position: absolute;
+		right: 0;
+		transition: var(--transition-opacity);
+		top: 0;
+		width: 6px;
+		z-index: var(--z-index-scroller);
+
+		&.active {
+			opacity: var(--opacity-default);
+		}
+	}
+
+	.tribe-events-pro-map__event-cards-scroll-slider {
+		background: var(--color-scroll-bar);
+		border-radius: 3px;
+		position: relative;
+	}
+}

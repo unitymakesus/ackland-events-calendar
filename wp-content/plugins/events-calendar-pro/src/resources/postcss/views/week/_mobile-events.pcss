@@ -1,0 +1,94 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Mobile Events
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-mobile-events {
+
+		@media (--viewport-medium) {
+			@mixin hidden;
+		}
+	}
+
+	.tribe-events-pro-week-mobile-events__day {
+		display: none;
+	}
+
+	.tribe-events-pro-week-mobile-events__day--active {
+		display: block;
+	}
+
+	.tribe-events-pro-week-mobile-events__event {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: var(--spacer-5);
+		margin-top: var(--spacer-7);
+		padding-left: var(--grid-gutter-small);
+
+		&:last-child {
+			margin-bottom: var(--spacer-8);
+		}
+	}
+
+	.tribe-events-pro-week-mobile-events__event-time-separator + .tribe-events-pro-week-mobile-events__event {
+		margin-top: var(--spacer-4);
+	}
+
+	.tribe-events-pro-week-mobile-events__event-featured-image-wrapper {
+		flex: none;
+		margin-bottom: var(--spacer-3);
+	}
+
+	.tribe-events-pro-week-mobile-events__event-featured-image-link {
+		display: block;
+		transition: var(--transition-opacity);
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
+	}
+
+	.tribe-events-pro-week-mobile-events__event-featured-image {
+		padding-bottom: 56.25%;
+	}
+
+	.tribe-events-pro-week-mobile-events__event-details {
+		flex: none;
+
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.tribe-events-pro-week-mobile-events__event-datetime-wrapper,
+	.tribe-events-pro-week-mobile-events__event-title {
+		margin-bottom: var(--spacer-1);
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.tribe-events-pro-week-mobile-events__event-datetime-featured-icon {
+		display: inline-block;
+		margin-right: var(--spacer-0);
+	}
+
+	.tribe-events-pro-week-mobile-events__event-datetime-recurring-icon {
+		display: inline-block;
+		margin-left: var(--spacer-0);
+	}
+
+	/* .tribe-events-pro-week-mobile-events__event-title-link {} */
+
+	.tribe-events-pro-week-mobile-events__event-venue {
+		margin-bottom: var(--spacer-1);
+	}
+
+}

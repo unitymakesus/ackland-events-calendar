@@ -1,0 +1,129 @@
+.tribe-events-pro {
+
+	/* -----------------------------------------------------------------------------
+	 * Tooltip
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-map__event-tooltip {
+		padding-bottom: var(--spacer-5);
+	}
+
+	.tribe-events-pro-map__event-tooltip--has-slider {
+		padding-bottom: var(--spacer-3);
+	}
+
+	.tribe-events-pro-map__event-tooltip-slider-wrapper {
+		flex-wrap: nowrap;
+	}
+
+	.tribe-events-pro-map__event-tooltip-slide {
+		flex: none;
+	}
+
+	.tribe-events-pro-map__event-tooltip-datetime-wrapper {
+		margin-bottom: var(--spacer-0);
+	}
+
+	.tribe-events-pro-map__event-tooltip-datetime-featured-icon {
+		margin-right: var(--spacer-1);
+	}
+
+	.tribe-events-pro-map__event-tooltip-venue {
+		font-style: normal;
+		margin-top: var(--spacer-1);
+	}
+
+	.tribe-events-pro-map__event-tooltip-navigation {
+		padding-top: var(--spacer-4);
+	}
+
+	.tribe-events-pro-map__event-tooltip-navigation-list {
+		flex-wrap: nowrap;
+		justify-content: space-between;
+	}
+
+	.tribe-events-pro-map__event-tooltip-navigation-list-item {
+		flex: none;
+		width: auto;
+	}
+
+	.tribe-events-pro-map__event-tooltip-navigation-button {
+		display: flex;
+		align-items: center;
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
+	}
+
+	.tribe-events-pro-map__event-tooltip-navigation-button--prev:before,
+	.tribe-events-pro-map__event-tooltip-navigation-button--next:after {
+		background: center / contain no-repeat;
+		background-image: svg-inline(arrow-right-active);
+		content: '';
+		flex: none;
+		height: 10px;
+		width: 13px;
+	}
+
+	.tribe-events-pro-map__event-tooltip-navigation-button--prev {
+
+		&:before {
+			margin-right: var(--spacer-1);
+			transform: rotateZ(180deg);
+		}
+	}
+
+	.tribe-events-pro-map__event-tooltip-navigation-button--next {
+
+		&:after {
+			margin-left: var(--spacer-1);
+		}
+	}
+
+	.tribe-events-pro-map__event-tooltip-navigation-button--disabled {
+		color: var(--color-icon-secondary);
+
+		&:hover,
+		&:focus,
+		&:active {
+			opacity: var(--opacity-default);
+		}
+
+		&:before,
+		&:after {
+			background-image: svg-inline(arrow-right-secondary);
+		}
+	}
+
+	/* -----------------------------------------------------------------------------
+	 * Google Maps InfoWindow
+	 * ----------------------------------------------------------------------------- */
+
+	.gm-style .gm-style-iw-c {
+		border-radius: var(--border-radius-default);
+		padding: var(--spacer-5) var(--spacer-5) 0 !important;
+		max-height: none !important;
+
+		& > button {
+			top: -2px !important;
+			right: 0 !important;
+
+			img {
+				height: 16px !important;
+				width: 16px !important;
+			}
+		}
+	}
+
+	.gm-style .gm-style-iw-d {
+		overflow: hidden !important;
+		max-height: none !important;
+		width: 206px;
+	}
+}

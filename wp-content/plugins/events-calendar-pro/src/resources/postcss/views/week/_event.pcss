@@ -1,0 +1,601 @@
+.tribe-events-pro {
+
+	.tribe-events-pro-week-grid__event {
+		position: absolute;
+		height: var(--spacer-5);
+		top: 0;
+		right: 0;
+		width: 100%;
+
+		/* If event is less than 1 hour */
+		&:not([class*="tribe-events-pro-week-grid__event--h-"]) {
+
+			.tribe-events-pro-week-grid__event-link-inner {
+				padding: 2px var(--spacer-1);
+			}
+
+			.tribe-events-pro-week-grid__event-datetime {
+				@mixin visually-hide;
+			}
+
+			.tribe-events-pro-week-grid__event-title-featured-icon {
+				display: inline-block;
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event--featured {
+
+		.tribe-events-pro-week-grid__event-link-inner {
+			background-color: var(--color-accent-primary-week-event-featured);
+
+			&:before {
+				background: var(--color-accent-primary);
+				content: '';
+				height: 100%;
+				left: 0;
+				top: 0;
+				position: absolute;
+				width: 2px;
+			}
+		}
+
+		.tribe-events-pro-week-grid__event-link {
+			&:hover,
+			&:focus {
+				.tribe-events-pro-week-grid__event-link-inner {
+					background-color: var(--color-accent-primary-week-event-featured-hover);
+				}
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event--past {
+
+		.tribe-events-pro-week-grid__event-link {
+			background-color: var(--color-background-secondary);
+
+			&:hover,
+			&:focus {
+				background-color: var(--color-background-secondary);
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-link {
+		background-color: var(--color-background);
+		border: 2px solid var(--color-background);
+		border-radius: var(--border-radius-default);
+		height: 100%;
+		overflow: hidden;
+		position: absolute;
+		width: 100%;
+
+		&:hover,
+		&:focus {
+			z-index: var(--z-index-week-event-hover);
+
+			.tribe-events-pro-week-grid__event-link-inner {
+				background-color: var(--color-accent-primary-week-event-hover);
+			}
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-link-inner {
+		background-color: var(--color-accent-primary-week-event);
+		display: block;
+		height: 100%;
+		padding: var(--spacer-0) var(--spacer-1);
+		width: 100%;
+	}
+
+	/* -----------------------------------------------------------------------------
+	 * Event Sequence
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__event--seq-2 {
+		width: 90%;
+	}
+
+	.tribe-events-pro-week-grid__event--seq-3 {
+		width: 80%;
+	}
+
+	.tribe-events-pro-week-grid__event--seq-4 {
+		width: 70%;
+	}
+
+	.tribe-events-pro-week-grid__event--seq-5 {
+		width: 60%;
+	}
+
+	.tribe-events-pro-week-grid__event--seq-6 {
+		width: 50%;
+	}
+
+	.tribe-events-pro-week-grid__event--seq-7 {
+		width: 40%;
+	}
+
+	.tribe-events-pro-week-grid__event--seq-8 {
+		width: 30%;
+	}
+
+	/* -----------------------------------------------------------------------------
+	 * Event Height / Duration
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__event--h-1 {
+		height: calc(var(--spacer-5) * 2);
+	}
+
+	.tribe-events-pro-week-grid__event--h-1-5 {
+		height: calc(var(--spacer-5) * 3);
+	}
+
+	.tribe-events-pro-week-grid__event--h-2 {
+		height: calc(var(--spacer-5) * 4);
+	}
+
+	.tribe-events-pro-week-grid__event--h-2-5 {
+		height: calc(var(--spacer-5) * 5);
+	}
+
+	.tribe-events-pro-week-grid__event--h-3 {
+		height: calc(var(--spacer-5) * 6);
+	}
+
+	.tribe-events-pro-week-grid__event--h-3-5 {
+		height: calc(var(--spacer-5) * 7);
+	}
+
+	.tribe-events-pro-week-grid__event--h-4 {
+		height: calc(var(--spacer-5) * 8);
+	}
+
+	.tribe-events-pro-week-grid__event--h-4-5 {
+		height: calc(var(--spacer-5) * 9);
+	}
+
+	.tribe-events-pro-week-grid__event--h-5 {
+		height: calc(var(--spacer-5) * 10);
+	}
+
+	.tribe-events-pro-week-grid__event--h-5-5 {
+		height: calc(var(--spacer-5) * 11);
+	}
+
+	.tribe-events-pro-week-grid__event--h-6 {
+		height: calc(var(--spacer-5) * 12);
+	}
+
+	.tribe-events-pro-week-grid__event--h-6-5 {
+		height: calc(var(--spacer-5) * 13);
+	}
+
+	.tribe-events-pro-week-grid__event--h-7 {
+		height: calc(var(--spacer-5) * 14);
+	}
+
+	.tribe-events-pro-week-grid__event--h-7-5 {
+		height: calc(var(--spacer-5) * 15);
+	}
+
+	.tribe-events-pro-week-grid__event--h-8 {
+		height: calc(var(--spacer-5) * 16);
+	}
+
+	.tribe-events-pro-week-grid__event--h-8-5 {
+		height: calc(var(--spacer-5) * 17);
+	}
+
+	.tribe-events-pro-week-grid__event--h-9 {
+		height: calc(var(--spacer-5) * 18);
+	}
+
+	.tribe-events-pro-week-grid__event--h-9-5 {
+		height: calc(var(--spacer-5) * 19);
+	}
+
+	.tribe-events-pro-week-grid__event--h-10 {
+		height: calc(var(--spacer-5) * 20);
+	}
+
+	.tribe-events-pro-week-grid__event--h-10-5 {
+		height: calc(var(--spacer-5) * 21);
+	}
+
+	.tribe-events-pro-week-grid__event--h-11 {
+		height: calc(var(--spacer-5) * 22);
+	}
+
+	.tribe-events-pro-week-grid__event--h-11-5 {
+		height: calc(var(--spacer-5) * 23);
+	}
+
+	.tribe-events-pro-week-grid__event--h-12 {
+		height: calc(var(--spacer-5) * 24);
+	}
+
+	.tribe-events-pro-week-grid__event--h-12-5 {
+		height: calc(var(--spacer-5) * 25);
+	}
+
+	.tribe-events-pro-week-grid__event--h-13 {
+		height: calc(var(--spacer-5) * 26);
+	}
+
+	.tribe-events-pro-week-grid__event--h-13-5 {
+		height: calc(var(--spacer-5) * 27);
+	}
+
+	.tribe-events-pro-week-grid__event--h-14 {
+		height: calc(var(--spacer-5) * 28);
+	}
+
+	.tribe-events-pro-week-grid__event--h-14-5 {
+		height: calc(var(--spacer-5) * 29);
+	}
+
+	.tribe-events-pro-week-grid__event--h-15 {
+		height: calc(var(--spacer-5) * 30);
+	}
+
+	.tribe-events-pro-week-grid__event--h-15-5 {
+		height: calc(var(--spacer-5) * 31);
+	}
+
+	.tribe-events-pro-week-grid__event--h-16 {
+		height: calc(var(--spacer-5) * 32);
+	}
+
+	.tribe-events-pro-week-grid__event--h-16-5 {
+		height: calc(var(--spacer-5) * 33);
+	}
+
+	.tribe-events-pro-week-grid__event--h-17 {
+		height: calc(var(--spacer-5) * 34);
+	}
+
+	.tribe-events-pro-week-grid__event--h-17-5 {
+		height: calc(var(--spacer-5) * 35);
+	}
+
+	.tribe-events-pro-week-grid__event--h-18 {
+		height: calc(var(--spacer-5) * 36);
+	}
+
+	.tribe-events-pro-week-grid__event--h-18-5 {
+		height: calc(var(--spacer-5) * 37);
+	}
+
+	.tribe-events-pro-week-grid__event--h-19 {
+		height: calc(var(--spacer-5) * 38);
+	}
+
+	.tribe-events-pro-week-grid__event--h-19-5 {
+		height: calc(var(--spacer-5) * 39);
+	}
+
+	.tribe-events-pro-week-grid__event--h-20 {
+		height: calc(var(--spacer-5) * 40);
+	}
+
+	.tribe-events-pro-week-grid__event--h-20-5 {
+		height: calc(var(--spacer-5) * 41);
+	}
+
+	.tribe-events-pro-week-grid__event--h-21 {
+		height: calc(var(--spacer-5) * 42);
+	}
+
+	.tribe-events-pro-week-grid__event--h-21-5 {
+		height: calc(var(--spacer-5) * 43);
+	}
+
+	.tribe-events-pro-week-grid__event--h-22 {
+		height: calc(var(--spacer-5) * 44);
+	}
+
+	.tribe-events-pro-week-grid__event--h-22-5 {
+		height: calc(var(--spacer-5) * 45);
+	}
+
+	.tribe-events-pro-week-grid__event--h-23 {
+		height: calc(var(--spacer-5) * 46);
+	}
+
+	.tribe-events-pro-week-grid__event--h-23-5 {
+		height: calc(var(--spacer-5) * 47);
+	}
+
+	.tribe-events-pro-week-grid__event--h-24 {
+		height: calc(var(--spacer-5) * 48);
+	}
+
+	/* -----------------------------------------------------------------------------
+	 * Event time positioning (top)
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__event--t-0-5 {
+		top: var(--spacer-5);
+	}
+
+	.tribe-events-pro-week-grid__event--t-1 {
+		top: calc(var(--spacer-5) * 2);
+	}
+
+	.tribe-events-pro-week-grid__event--t-1-5 {
+		top: calc(var(--spacer-5) * 3);
+	}
+
+	.tribe-events-pro-week-grid__event--t-2 {
+		top: calc(var(--spacer-5) * 4);
+	}
+
+	.tribe-events-pro-week-grid__event--t-2-5 {
+		top: calc(var(--spacer-5) * 5);
+	}
+
+	.tribe-events-pro-week-grid__event--t-3 {
+		top: calc(var(--spacer-5) * 6);
+	}
+
+	.tribe-events-pro-week-grid__event--t-3-5 {
+		top: calc(var(--spacer-5) * 7);
+	}
+
+	.tribe-events-pro-week-grid__event--t-4 {
+		top: calc(var(--spacer-5) * 8);
+	}
+
+	.tribe-events-pro-week-grid__event--t-4-5 {
+		top: calc(var(--spacer-5) * 9);
+	}
+
+	.tribe-events-pro-week-grid__event--t-5 {
+		top: calc(var(--spacer-5) * 10);
+	}
+
+	.tribe-events-pro-week-grid__event--t-5-5 {
+		top: calc(var(--spacer-5) * 11);
+	}
+
+	.tribe-events-pro-week-grid__event--t-6 {
+		top: calc(var(--spacer-5) * 12);
+	}
+
+	.tribe-events-pro-week-grid__event--t-6-5 {
+		top: calc(var(--spacer-5) * 13);
+	}
+
+	.tribe-events-pro-week-grid__event--t-7 {
+		top: calc(var(--spacer-5) * 14);
+	}
+
+	.tribe-events-pro-week-grid__event--t-7-5 {
+		top: calc(var(--spacer-5) * 15);
+	}
+
+	.tribe-events-pro-week-grid__event--t-8 {
+		top: calc(var(--spacer-5) * 16);
+	}
+
+	.tribe-events-pro-week-grid__event--t-8-5 {
+		top: calc(var(--spacer-5) * 17);
+	}
+
+	.tribe-events-pro-week-grid__event--t-9 {
+		top: calc(var(--spacer-5) * 18);
+	}
+
+	.tribe-events-pro-week-grid__event--t-9-5 {
+		top: calc(var(--spacer-5) * 19);
+	}
+
+	.tribe-events-pro-week-grid__event--t-10 {
+		top: calc(var(--spacer-5) * 20);
+	}
+
+	.tribe-events-pro-week-grid__event--t-10-5 {
+		top: calc(var(--spacer-5) * 21);
+	}
+
+	.tribe-events-pro-week-grid__event--t-11 {
+		top: calc(var(--spacer-5) * 22);
+	}
+
+	.tribe-events-pro-week-grid__event--t-11-5 {
+		top: calc(var(--spacer-5) * 23);
+	}
+
+	.tribe-events-pro-week-grid__event--t-12 {
+		top: calc(var(--spacer-5) * 24);
+	}
+
+	.tribe-events-pro-week-grid__event--t-12-5 {
+		top: calc(var(--spacer-5) * 25);
+	}
+
+	.tribe-events-pro-week-grid__event--t-13 {
+		top: calc(var(--spacer-5) * 26);
+	}
+
+	.tribe-events-pro-week-grid__event--t-13-5 {
+		top: calc(var(--spacer-5) * 27);
+	}
+
+	.tribe-events-pro-week-grid__event--t-14 {
+		top: calc(var(--spacer-5) * 28);
+	}
+
+	.tribe-events-pro-week-grid__event--t-14-5 {
+		top: calc(var(--spacer-5) * 29);
+	}
+
+	.tribe-events-pro-week-grid__event--t-15 {
+		top: calc(var(--spacer-5) * 30);
+	}
+
+	.tribe-events-pro-week-grid__event--t-15-5 {
+		top: calc(var(--spacer-5) * 31);
+	}
+
+	.tribe-events-pro-week-grid__event--t-16 {
+		top: calc(var(--spacer-5) * 32);
+	}
+
+	.tribe-events-pro-week-grid__event--t-16-5 {
+		top: calc(var(--spacer-5) * 33);
+	}
+
+	.tribe-events-pro-week-grid__event--t-17 {
+		top: calc(var(--spacer-5) * 34);
+	}
+
+	.tribe-events-pro-week-grid__event--t-17-5 {
+		top: calc(var(--spacer-5) * 35);
+	}
+
+	.tribe-events-pro-week-grid__event--t-18 {
+		top: calc(var(--spacer-5) * 36);
+	}
+
+	.tribe-events-pro-week-grid__event--t-18-5 {
+		top: calc(var(--spacer-5) * 37);
+	}
+
+	.tribe-events-pro-week-grid__event--t-19 {
+		top: calc(var(--spacer-5) * 38);
+	}
+
+	.tribe-events-pro-week-grid__event--t-19-5 {
+		top: calc(var(--spacer-5) * 39);
+	}
+
+	.tribe-events-pro-week-grid__event--t-20 {
+		top: calc(var(--spacer-5) * 40);
+	}
+
+	.tribe-events-pro-week-grid__event--t-20-5 {
+		top: calc(var(--spacer-5) * 41);
+	}
+
+	.tribe-events-pro-week-grid__event--t-21 {
+		top: calc(var(--spacer-5) * 42);
+	}
+
+	.tribe-events-pro-week-grid__event--t-21-5 {
+		top: calc(var(--spacer-5) * 43);
+	}
+
+	.tribe-events-pro-week-grid__event--t-22 {
+		top: calc(var(--spacer-5) * 44);
+	}
+
+	.tribe-events-pro-week-grid__event--t-22-5 {
+		top: calc(var(--spacer-5) * 45);
+	}
+
+	.tribe-events-pro-week-grid__event--t-23 {
+		top: calc(var(--spacer-5) * 46);
+	}
+
+	.tribe-events-pro-week-grid__event--t-23-5 {
+		top: calc(var(--spacer-5) * 47);
+	}
+
+	/* -----------------------------------------------------------------------------
+	 * Event details
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__event-title {
+		flex: auto;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.tribe-events-pro-week-grid__event-datetime {
+		@mixin mobile-body-3;
+
+		color: var(--color-text-secondary);
+		white-space: nowrap;
+
+		> * {
+			vertical-align: middle;
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-datetime-featured-icon,
+	.tribe-events-pro-week-grid__event-datetime-recurring-icon {
+		display: inline-block;
+	}
+
+	.tribe-events-pro-week-grid__event-title-featured-icon,
+	.tribe-events-pro-week-grid__event-datetime-featured-icon {
+		margin-right: 3px;
+	}
+
+	.tribe-events-pro-week-grid__event-recurring-icon {
+		flex: none;
+		margin-left: 5px;
+	}
+
+	.tribe-events-pro-week-grid__event-featured-image-wrapper {
+		margin-bottom: var(--spacer-0);
+	}
+
+	.tribe-events-pro-week-grid__event-featured-image {
+		padding-bottom: 56.25%;
+	}
+
+
+	/* -----------------------------------------------------------------------------
+	 * Event Tooltip
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-events-pro-week-grid__event-tooltip {
+		position: absolute;
+		visibility: hidden; /* A11y purposes */
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-featured-image-wrapper {
+		margin-bottom: var(--spacer-2);
+		width: 206px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-featured-image-link {
+		display: block;
+		transition: var(--transition-opacity);
+
+		&:hover,
+		&:focus {
+			opacity: var(--opacity-icon-hover);
+		}
+
+		&:active {
+			opacity: var(--opacity-icon-active);
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-featured-image {
+		padding-bottom: 56.25%;
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-description {
+		margin-bottom: var(--spacer-1);
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.tribe-events-pro-week-grid__event-tooltip-cost {
+		margin-top: var(--spacer-3);
+	}
+}
