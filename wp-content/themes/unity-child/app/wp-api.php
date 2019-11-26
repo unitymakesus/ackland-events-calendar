@@ -234,8 +234,22 @@ add_filter('sage_rest_cpt_result', __NAMESPACE__ . '\\filter_api_result', 10, 2)
  * @link https://tommcfarlin.com/querying-event-post-types/
  */
 add_filter('sage_rest_api_query_args', function ($args, $params) {
-  $args['eventDisplay'] = 'list';
-  $args['start_date'] = '2015-01-01'; // arbitrary date—will switch with a param
+  // if ($params['post_type'] !== 'tribe_events') {
+  //   return $args;
+  // }
+
+  // Filtering events by date input.
+  $args['eventDisplay'] = 'custom';
+  $args['start_date'] = 'now';
+  $args['order'] = 'ASC';
+  $args['orderby'] = '_EventStartDate';
+
+  if ($params['date']) {
+    $args['eventDisplay'] = 'list';
+    $args['start_date'] = $params['date'];
+  }
+
+  unset($args['date']);
 
   return $args;
 }, 10, 2);

@@ -46,6 +46,11 @@
 
         {{-- {!! do_shortcode('[tribe_mini_calendar]') !!} --}}
 
+        <fieldset form="js-event-search" class="fieldset" name="tribe_events_date">
+          <input id="datepicker" type="date" />
+          <label class="screen-reader-text" for="datepicker">{{ __('Date') }}</label>
+        </fieldset>
+
         @if ($categories)
         <fieldset form="js-event-search" class="fieldset" name="tribe_events_audience" data-fieldset="tribe_events_audience">
           <legend>{{ __('Audience', 'sage') }}</legend>
