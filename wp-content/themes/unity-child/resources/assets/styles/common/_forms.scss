@@ -1,3 +1,5 @@
+$box-shadow: 0 0 3px 3px transparentize($brand-primary, 0.5);
+
 fieldset {
   border: 0;
   padding: 0;
@@ -47,9 +49,23 @@ legend {
   background-color: $brand-primary;
   color: white;
   appearance: none;
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:focus {
+    outline: 0;
+    box-shadow: $box-shadow;
+  }
 
   &::placeholder {
     color: inherit;
+  }
+}
+
+#datepicker {
+  border: 2px solid $brand-primary;
+
+  &:focus {
+    box-shadow: $box-shadow;
   }
 }
 
@@ -64,13 +80,19 @@ input[type="checkbox"]:checked {
 
 .checklabel {
   display: inline-block;
-  padding: 0.5rem;
+  padding: 0.1rem 0.4rem;
+  font-size: 1rem;
   margin-right: 0.25rem;
   margin-bottom: 0.5rem;
   border: 2px solid $brand-primary;
   color: $brand-primary;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+}
+
+.checklabel:hover,
+input[type="checkbox"]:focus + .checklabel {
+  box-shadow: $box-shadow;
 }
 
 input[type="radio"]:checked + .checklabel,
