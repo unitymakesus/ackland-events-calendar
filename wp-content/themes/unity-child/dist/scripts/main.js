@@ -2433,6 +2433,7 @@ function initPosts() {
   function combineFilters() {
     var filters = document.querySelectorAll('fieldset[data-fieldset]');
     var searchQuery = encodeURIComponent(document.getElementById('js-filter-search').value);
+    var date = encodeURIComponent(document.getElementById('datepicker').value);
     var options = Object(__WEBPACK_IMPORTED_MODULE_1__util_getOptions__["a" /* default */])();
 
     filters.forEach(function (filter) {
@@ -2455,6 +2456,10 @@ function initPosts() {
       if (searchQuery) {
         options.s = searchQuery;
       }
+
+      if (date) {
+        options.date = date;
+      }
     });
 
     return options;
@@ -2472,6 +2477,7 @@ function initPosts() {
   $('#js-reset-filters').on('click', function (e) {
     e.preventDefault();
     $('[data-filter]').removeAttr('checked');
+    $('#datepicker').attr('value', '');
     var options = Object(__WEBPACK_IMPORTED_MODULE_1__util_getOptions__["a" /* default */])();
     doFiltering(options);
   });
@@ -2494,6 +2500,10 @@ function initPosts() {
     doFiltering(combineFilters());
   });
 
+  $('#datepicker').on('change', function () {
+    doFiltering(combineFilters());
+  });
+
   // Load more.
   $('#js-posts-load-more').on('click', function (e) {
     var options = Object(__WEBPACK_IMPORTED_MODULE_1__util_getOptions__["a" /* default */])();
@@ -2509,6 +2519,7 @@ function initPosts() {
     // }
 
     var searchQuery = encodeURIComponent(document.getElementById('js-filter-search').value);
+    var date = encodeURIComponent(document.getElementById('datepicker').value);
     var options = Object(__WEBPACK_IMPORTED_MODULE_1__util_getOptions__["a" /* default */])();
 
     // don't do search if user pressed tab, any arrow, ctrl, apple, alt/opt, shift, caps
@@ -2519,6 +2530,10 @@ function initPosts() {
 
     if (searchQuery) {
       options.s = searchQuery;
+    }
+
+    if (date) {
+      options.date = date;
     }
 
     doFiltering(options);

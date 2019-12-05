@@ -89,6 +89,7 @@ function initPosts() {
   function combineFilters() {
     let filters = document.querySelectorAll('fieldset[data-fieldset]');
     let searchQuery = encodeURIComponent(document.getElementById('js-filter-search').value);
+    let date = encodeURIComponent(document.getElementById('datepicker').value);
     let options = getOptions();
 
     filters.forEach(filter => {
@@ -111,6 +112,10 @@ function initPosts() {
       if (searchQuery) {
         options.s = searchQuery;
       }
+
+      if (date) {
+        options.date = date;
+      }
     });
 
     return options;
@@ -128,6 +133,7 @@ function initPosts() {
   $('#js-reset-filters').on('click', e => {
     e.preventDefault();
     $('[data-filter]').removeAttr('checked');
+    $('#datepicker').attr('value', '');
     let options = getOptions();
     doFiltering(options);
   });
@@ -150,6 +156,10 @@ function initPosts() {
     doFiltering(combineFilters());
   });
 
+  $('#datepicker').on('change', () => {
+    doFiltering(combineFilters());
+  });
+
   // Load more.
   $('#js-posts-load-more').on('click', e => {
     let options = getOptions();
@@ -165,6 +175,7 @@ function initPosts() {
     // }
 
     let searchQuery = encodeURIComponent(document.getElementById('js-filter-search').value);
+    let date = encodeURIComponent(document.getElementById('datepicker').value);
     let options = getOptions();
 
     // don't do search if user pressed tab, any arrow, ctrl, apple, alt/opt, shift, caps
@@ -175,6 +186,10 @@ function initPosts() {
 
     if (searchQuery) {
       options.s = searchQuery;
+    }
+
+    if (date) {
+      options.date = date;
     }
 
     doFiltering(options);

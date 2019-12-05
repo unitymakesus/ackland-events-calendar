@@ -42,16 +42,17 @@
   <div class="container-wide">
     <div class="row">
       <div class="col s12 l4">
-        <div class="screen-reader-text">{{ __('Filter Results', 'sage') }}</div>
-
-        {{-- {!! do_shortcode('[tribe_mini_calendar]') !!} --}}
+        <fieldset form="js-event-search" class="fieldset" name="tribe_events_date">
+          <input id="datepicker" type="date" />
+          <label class="screen-reader-text" for="datepicker">{{ __('Date') }}</label>
+        </fieldset>
 
         @if ($categories)
         <fieldset form="js-event-search" class="fieldset" name="tribe_events_audience" data-fieldset="tribe_events_audience">
           <legend>{{ __('Audience', 'sage') }}</legend>
           @foreach ($audiences as $audience)
             <input
-              type="radio"
+              type="checkbox"
               name="tribe_events_audience"
               id="{{ $audience->slug }}"
               value="{{ $audience->slug }}"
@@ -78,7 +79,7 @@
         </fieldset>
         @endif
 
-        <div>
+        <div class="mb3">
           <a role="button" href="#" id="js-reset-filters" class="text-uppercase">{{ __('Reset Filters', 'sage') }}</a>
         </div>
       </div>

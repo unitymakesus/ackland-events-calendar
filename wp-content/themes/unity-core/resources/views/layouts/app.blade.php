@@ -1,7 +1,7 @@
 <!doctype html>
 @php
-  $text_size = $_COOKIE['data_text_size'];
-  $contrast = $_COOKIE['data_contrast'];
+  $text_size = $_COOKIE['data_text_size'] ?? '';
+  $contrast = $_COOKIE['data_contrast'] ?? '';
   $simple_fonts = get_theme_mod('theme_fonts');
   $simple_color = get_theme_mod('theme_color');
   $button_font = get_theme_mod('button_font');

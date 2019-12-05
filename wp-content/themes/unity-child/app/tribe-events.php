@@ -42,3 +42,10 @@ array_map('add_filter', ['template_include', 'tribe_events_after_view'],
   * @link https://theeventscalendar.com/knowledgebase/change-the-text-for-ical-and-google-calendar-export-buttons/
 */
 remove_action('tribe_events_single_event_after_the_content', [tribe( 'tec.iCal' ), 'single_event_links']);
+
+/**
+ * Add periods to 'am' and 'pm' date format in event schedule details.
+ */
+add_filter('tribe_events_event_schedule_details_inner', function($inner, $event_id) {
+  return str_replace(['am', 'pm'], ['a.m.', 'p.m.'], $inner);
+}, 10, 2);
